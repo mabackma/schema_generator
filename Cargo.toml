@@ -5,3 +5,4 @@ edition = "2021"
 
 [dependencies]
 quick-xml = "0.37.0"
+xml_schema_generator = "0.6.15"
