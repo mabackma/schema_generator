@@ -86,10 +86,9 @@ fn main() {
     }
 
     for (name, xml_struct) in &structs {
-        println!("Struct: {}\nFields: {:?}", name, xml_struct.fields);
-//        if xml_struct.fields.len() > 0 {
-//            println!("Struct: {}\nFields: {:?}", name, xml_struct.fields);
-//        }
+        if xml_struct.fields.len() > 0 {
+            println!("{}\n{:#?}\n", name, xml_struct.fields);
+        }
     }
 }
 
