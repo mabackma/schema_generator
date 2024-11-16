@@ -27,11 +27,6 @@ fn main() {
         match reader.read_event() {
             Ok(Start(ref e)) => {
                 let element_name = std::str::from_utf8(e.name().as_ref()).unwrap().to_string();
-                
-                let new_struct = XMLStruct {
-                    name: element_name.clone(),
-                    fields: Vec::new(),
-                };
 
                 // Create a new struct for this element
                 let new_struct = XMLStruct {
