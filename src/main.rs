@@ -92,14 +92,16 @@ fn main() {
 
         if xml_struct.fields.len() > 0 {
             let struct_name = name.split(":").last().unwrap(); 
-            println!("{}", struct_name);
+            println!("#[derive(Serialize, Deserialize)]");
+            println!("pub struct {} {{", struct_name);
 
             for field in &xml_struct.fields {
                 let field_type = field.name.split(":").last().unwrap();
                 let field_name = field.name.split(":").next().unwrap().to_owned() + "_" + &field_type.to_lowercase();
-                println!("#[serde(rename = \"{}\", skip_serializing_if = \"Option::is_none\")]", field_type);
-                println!("{}: Option<{}>,", field_name, field_type);
+                println!("\t#[serde(rename = \"{}\", skip_serializing_if = \"Option::is_none\")]", field_type);
+                println!("\t{}: Option<{}>,", field_name, field_type);
             }
+            println!("}}");
             println!("\n");
         } 
         
