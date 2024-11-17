@@ -3,7 +3,6 @@ use quick_xml::events::Event::{Start, End, Eof};
 use std::collections::HashMap;
 use std::fs::File;
 use std::io::{self, Read, Write};
-use xml_schema_generator::{into_struct, Options};
 
 #[derive(Debug)]
 struct XMLField {
@@ -21,18 +20,9 @@ fn main() {
     let xml_string = read_xml_file("forestpropertydata.xml");
     let mut reader = Reader::from_str(&xml_string);
 
-/*     if let Ok(root) = into_struct(&mut reader) {
-        let struct_as_string = root.to_serde_struct(&Options::quick_xml_de());
-
-        // save this result as a .rs file and use it to (de)serialize an XML document with quick_xml::de::from_str(xml)
-        let mut struct_file = File::create("src/forest_property_data.rs").unwrap();
-        struct_file.write_all(&struct_as_string.as_bytes()).unwrap();
-    } */
-
-    let mut stack: Vec<XMLStruct> = Vec::new(); // Stack of structs being constructed
     let mut structs: HashMap<String, XMLStruct> = HashMap::new(); // Finalized structs
 
-    create_structs(&mut reader, &mut stack, &mut structs);
+    create_structs(&mut reader, &mut structs);
 
     remove_fieldless_structs(&mut structs);
 
@@ -44,7 +34,9 @@ fn main() {
 }
 
 // Create structs from the XML document
-fn create_structs(reader: &mut Reader<&[u8]>, stack: &mut Vec<XMLStruct>, structs: &mut HashMap<String, XMLStruct>) {
+fn create_structs(reader: &mut Reader<&[u8]>, structs: &mut HashMap<String, XMLStruct>) {
+    let mut stack: Vec<XMLStruct> = Vec::new(); // Stack of structs being constructed
+
     loop {
         match reader.read_event() {
             Ok(Start(ref e)) => {
@@ -81,7 +73,7 @@ fn create_structs(reader: &mut Reader<&[u8]>, stack: &mut Vec<XMLStruct>, struct
                         panic!("XML structure mismatch: expected {}, found {}", completed_struct.name, element_name);
                     }
 
-                    // Ensure that we either update the struct with new fields or insert it if it doesn't exist
+                    // Update the final struct with new fields or insert it if it doesn't exist
                     if let Some(existing_struct) = structs.get_mut(&completed_struct.name.clone()) {
                         // Merge fields: add only new unique fields
                         for field in completed_struct.fields {
