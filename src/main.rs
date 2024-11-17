@@ -32,6 +32,19 @@ fn main() {
     let mut stack: Vec<XMLStruct> = Vec::new(); // Stack of structs being constructed
     let mut structs: HashMap<String, XMLStruct> = HashMap::new(); // Finalized structs
 
+    create_structs(&mut reader, &mut stack, &mut structs);
+
+    remove_fieldless_structs(&mut structs);
+
+    let struct_string = generate_structs_string(&mut structs);
+
+    // Save the generated structs to a file
+    let mut struct_file = File::create("src/structs.rs").unwrap();
+    struct_file.write_all(&struct_string.as_bytes()).unwrap();
+}
+
+// Create structs from the XML document
+fn create_structs(reader: &mut Reader<&[u8]>, stack: &mut Vec<XMLStruct>, structs: &mut HashMap<String, XMLStruct>) {
     loop {
         match reader.read_event() {
             Ok(Start(ref e)) => {
@@ -87,8 +100,10 @@ fn main() {
             _ => (),
         }
     }
+}
 
-    // Remove structs that don't have any fields
+// Removes structs that don't have any fields
+fn remove_fieldless_structs(structs: &mut HashMap<String, XMLStruct>) {
     let keys_to_remove: Vec<String> = structs
         .iter()
         .filter(|(_, xml_struct)| xml_struct.fields.is_empty())
@@ -99,10 +114,13 @@ fn main() {
         structs.remove(&key);
     }
 
+}
+
+// Generates String of Rust structs with fields 
+fn generate_structs_string(structs: &HashMap<String, XMLStruct>) -> String {
     let mut struct_string = String::new();
 
-    // Generate Rust structs from the XML structs
-    for (name, xml_struct) in &structs {
+    for (name, xml_struct) in structs {
         let struct_name = name.split(":").last().unwrap(); 
         struct_string += &format!("#[derive(Serialize, Deserialize)]\n");
         struct_string += &format!("pub struct {} {{\n", struct_name);
@@ -111,23 +129,22 @@ fn main() {
             let mut field_type = "";
 
             // Check if the field type is a struct
-            if structs.contains_key(&field.field_type) {
+            if (*structs).contains_key(&field.field_type) {
                 field_type = field.name.split(":").last().unwrap();
             } else {
                 field_type = "String";
             }
 
-            let field_name = field.name.split(":").next().unwrap().to_owned() + "_" + to_snake_case(&field_type).as_str();
-            struct_string += &format!("\t#[serde(rename = \"{}\", skip_serializing_if = \"Option::is_none\")]\n", field_type);
+            let renaming = field.name.split(":").last().unwrap();
+            let field_name = field.name.split(":").next().unwrap().to_owned() + "_" + to_snake_case(&renaming).as_str();
+            struct_string += &format!("\t#[serde(rename = \"{}\", skip_serializing_if = \"Option::is_none\")]\n", renaming);
             struct_string += &format!("\tpub {}: Option<{}>,\n", field_name, field_type);
         }
         struct_string += &format!("}}\n");
         struct_string += &format!("\n");
     }
 
-    // Save the generated structs to a file
-    let mut struct_file = File::create("src/structs.rs").unwrap();
-    struct_file.write_all(&struct_string.as_bytes()).unwrap();
+    struct_string
 }
 
 fn to_snake_case(s: &str) -> String {
