@@ -121,16 +121,18 @@ fn generate_structs_string(structs: &HashMap<String, XMLStruct>) -> String {
     let mut struct_string = String::new();
 
     for (name, xml_struct) in structs {
-        let struct_name = name.split(":").last().unwrap(); 
+        let struct_name = prefix_to_camel_case(&name); 
         struct_string += &format!("#[derive(Serialize, Deserialize)]\n");
         struct_string += &format!("pub struct {} {{\n", struct_name);
 
         for field in &xml_struct.fields {
             let mut field_type = "";
+            let mut field_type_string = String::new();
 
             // Check if the field type is a struct
             if (*structs).contains_key(&field.field_type) {
-                field_type = field.name.split(":").last().unwrap();
+                field_type_string = prefix_to_camel_case(&field.name);
+                field_type = field_type_string.as_str();
             } else {
                 field_type = "String";
             }
@@ -145,6 +147,23 @@ fn generate_structs_string(structs: &HashMap<String, XMLStruct>) -> String {
     }
 
     struct_string
+}
+
+fn prefix_to_camel_case(s: &str) -> String {
+    let mut new_string = String::new();
+
+    for c in s.chars() {
+        if c == ':' {
+            continue;
+        } else {
+            new_string.push(c);
+        }
+    }
+
+    let mut char_vec: Vec<char> = new_string.chars().collect();
+    char_vec[0] = char_vec[0].to_uppercase().next().unwrap();
+
+    char_vec.into_iter().collect()
 }
 
 fn to_snake_case(s: &str) -> String {
