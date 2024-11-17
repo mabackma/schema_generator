@@ -88,24 +88,62 @@ fn main() {
         }
     }
 
-    for (name, xml_struct) in &structs {
+    // Remove structs that don't have any fields
+    let keys_to_remove: Vec<String> = structs
+        .iter()
+        .filter(|(_, xml_struct)| xml_struct.fields.is_empty())
+        .map(|(name, _)| name.clone())
+        .collect();
 
-        if xml_struct.fields.len() > 0 {
-            let struct_name = name.split(":").last().unwrap(); 
-            println!("#[derive(Serialize, Deserialize)]");
-            println!("pub struct {} {{", struct_name);
-
-            for field in &xml_struct.fields {
-                let field_type = field.name.split(":").last().unwrap();
-                let field_name = field.name.split(":").next().unwrap().to_owned() + "_" + &field_type.to_lowercase();
-                println!("\t#[serde(rename = \"{}\", skip_serializing_if = \"Option::is_none\")]", field_type);
-                println!("\t{}: Option<{}>,", field_name, field_type);
-            }
-            println!("}}");
-            println!("\n");
-        } 
-        
+    for key in keys_to_remove {
+        structs.remove(&key);
     }
+
+    let mut struct_string = String::new();
+
+    // Generate Rust structs from the XML structs
+    for (name, xml_struct) in &structs {
+        let struct_name = name.split(":").last().unwrap(); 
+        struct_string += &format!("#[derive(Serialize, Deserialize)]\n");
+        struct_string += &format!("pub struct {} {{\n", struct_name);
+
+        for field in &xml_struct.fields {
+            let mut field_type = "";
+
+            // Check if the field type is a struct
+            if structs.contains_key(&field.field_type) {
+                field_type = field.name.split(":").last().unwrap();
+            } else {
+                field_type = "String";
+            }
+
+            let field_name = field.name.split(":").next().unwrap().to_owned() + "_" + to_snake_case(&field_type).as_str();
+            struct_string += &format!("\t#[serde(rename = \"{}\", skip_serializing_if = \"Option::is_none\")]\n", field_type);
+            struct_string += &format!("\tpub {}: Option<{}>,\n", field_name, field_type);
+        }
+        struct_string += &format!("}}\n");
+        struct_string += &format!("\n");
+    }
+
+    // Save the generated structs to a file
+    let mut struct_file = File::create("src/structs.rs").unwrap();
+    struct_file.write_all(&struct_string.as_bytes()).unwrap();
+}
+
+fn to_snake_case(s: &str) -> String {
+    let char_vec: Vec<char> = s.chars().collect();
+    let mut new_string  = String::new();
+
+    for c in char_vec {
+        if c.is_uppercase() && new_string.len() > 0 {
+            new_string.push('_');
+            new_string.push(c.to_lowercase().next().unwrap());
+        } else {
+            new_string.push(c);
+        }
+    }
+
+    new_string.to_lowercase()
 }
 
 fn read_xml_file(file_name: &str) -> String {
