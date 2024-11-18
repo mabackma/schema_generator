@@ -45,7 +45,7 @@ fn main() {
 fn create_structs(reader: &mut Reader<&[u8]>, structs: &mut HashMap<String, XMLStruct>) {
     let mut stack: Vec<XMLStruct> = Vec::new(); // Stack of structs being constructed
     let mut field_counts: HashMap<String, HashMap<String, usize>> = HashMap::new(); // Count of fields per struct
-    let mut max_counts: HashMap<String, usize> = HashMap::new(); // Maximum count of fields per struct
+    let mut max_counts: HashMap<String, HashMap<String, usize>> = HashMap::new(); // Maximum count of fields per struct
 
     loop {
         match reader.read_event() {
@@ -67,9 +67,12 @@ fn create_structs(reader: &mut Reader<&[u8]>, structs: &mut HashMap<String, XMLS
                     *child_count += 1; // Because child_count and field_count are borrowed, field_counts is updated after this line
 
                     // Update max_counts for the current parent_struct
-                    let current_max_count = max_counts.entry(parent_name.clone()).or_insert(0);
-                    if *child_count > *current_max_count {
-                        *current_max_count = *child_count;  
+                    let parent_max_counts = max_counts.entry(parent_name.clone()).or_insert_with(HashMap::new);
+
+                    // Update the count for this specific child
+                    let child_max_count = parent_max_counts.entry(element_name.clone()).or_insert(0);
+                    if *child_count > *child_max_count {
+                        *child_max_count = *child_count;
                     }
 
                     // Check that the parent doesn't contain a field with the same name
@@ -110,8 +113,11 @@ fn create_structs(reader: &mut Reader<&[u8]>, structs: &mut HashMap<String, XMLS
                         }
                     } else {
                         // No existing struct, insert the completed struct as it is
-                        structs.insert(completed_struct.name.clone(), completed_struct);
+                        structs.insert(completed_struct.name.clone(), completed_struct.clone());
                     }
+
+                    // Clear field counts for the parent element
+                    field_counts.remove(&completed_struct.name);
                 }
             },
             Ok(Eof) => break,
@@ -120,31 +126,27 @@ fn create_structs(reader: &mut Reader<&[u8]>, structs: &mut HashMap<String, XMLS
         }
     }
 
-    for (struct_name, count) in &max_counts {
-        if *count == 1 {
-            println!("{}: {}", struct_name, count);
-        }
-    }
- 
     // Remove structs that don't have any fields
     remove_fieldless_structs(structs);
 
-    let struct_keys: Vec<String> = structs.keys().cloned().collect();
+    for (parent_name, child_map) in &max_counts {
+        if let Some(parent_struct) = structs.get_mut(parent_name) {
+            // Check for fields that occur more than once
+            for (child_name, child_count) in child_map {
+                if *child_count > 1 {
+                    println!("--------{}: {} -> {}", parent_name, child_name, child_count);
 
-    // Update structs to use Vec<T> for fields with multiple occurrences
-    for (struct_name, count) in &max_counts {
-        if let Some(xml_struct) = structs.get_mut(struct_name) {
-            // Update field types to Vec<T> if the field occurs more than once
-            for field in &mut xml_struct.fields {
-                if let Some(max_count) = max_counts.get(&field.name) {
-                    if struct_keys.contains(&field.name) && *max_count > 1 {
-                        field.field_type = format!("Vec<{}>", field.name);
+                    // Update the field type to Vec<T>
+                    for field in &mut parent_struct.fields {
+                        if field.name == *child_name {
+                            field.field_type = format!("Vec<{}>", field.name);
+                        }
                     }
-                    println!("{} ------- {}", field.field_type, max_count);
                 }
             }
         }
-    }
+    } 
+
 }
 
 // Removes structs that don't have any fields
