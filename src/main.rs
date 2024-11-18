@@ -45,7 +45,8 @@ fn main() {
 fn create_structs(reader: &mut Reader<&[u8]>, structs: &mut HashMap<String, XMLStruct>) {
     let mut stack: Vec<XMLStruct> = Vec::new(); // Stack of structs being constructed
     let mut field_counts: HashMap<String, HashMap<String, usize>> = HashMap::new(); // Count of fields per struct
- 
+    let mut max_counts: HashMap<String, usize> = HashMap::new(); // Maximum count of fields per struct
+
     loop {
         match reader.read_event() {
             Ok(Start(ref e)) => {
@@ -61,9 +62,15 @@ fn create_structs(reader: &mut Reader<&[u8]>, structs: &mut HashMap<String, XMLS
                 if let Some(parent_struct) = stack.last_mut() {
                     // Count the number of fields with the same name
                     let parent_name = parent_struct.name.clone();
-                    let field_count = field_counts.entry(parent_name).or_insert(HashMap::new());
+                    let field_count = field_counts.entry(parent_struct.name.clone()).or_insert(HashMap::new());
                     let child_count = field_count.entry(element_name.clone()).or_insert(0);
                     *child_count += 1; // Because child_count and field_count are borrowed, field_counts is updated after this line
+
+                    // Update max_counts for the current parent_struct
+                    let current_max_count = max_counts.entry(parent_name.clone()).or_insert(0);
+                    if *child_count > *current_max_count {
+                        *current_max_count = *child_count;  
+                    }
 
                     // Check that the parent doesn't contain a field with the same name
                     if !parent_struct.fields.iter().any(|field| field.name == element_name) {
@@ -95,11 +102,11 @@ fn create_structs(reader: &mut Reader<&[u8]>, structs: &mut HashMap<String, XMLS
                             if !existing_struct.fields.iter().any(|f| f.name == field.name) {
                                 existing_struct.fields.push(field.clone());
                             }
-
+                            
                             // Reset the field_count for this field
-                            if field_counts.contains_key(&field.name) {
-                                field_counts.get_mut(&field.name).unwrap().insert(field.name, 0);
-                            }
+                            if let Some(field_count) = field_counts.get_mut(&field.name) {
+                                field_counts.remove(&field.name);
+                            } 
                         }
                     } else {
                         // No existing struct, insert the completed struct as it is
@@ -112,23 +119,28 @@ fn create_structs(reader: &mut Reader<&[u8]>, structs: &mut HashMap<String, XMLS
             _ => (),
         }
     }
+
+    for (struct_name, count) in &max_counts {
+        if *count == 1 {
+            println!("{}: {}", struct_name, count);
+        }
+    }
  
+    // Remove structs that don't have any fields
     remove_fieldless_structs(structs);
 
     let struct_keys: Vec<String> = structs.keys().cloned().collect();
 
     // Update structs to use Vec<T> for fields with multiple occurrences
-    for (struct_name, counts) in field_counts {
-        if let Some(xml_struct) = structs.get_mut(&struct_name) {
+    for (struct_name, count) in &max_counts {
+        if let Some(xml_struct) = structs.get_mut(struct_name) {
             // Update field types to Vec<T> if the field occurs more than once
             for field in &mut xml_struct.fields {
-                if let Some(count) = counts.get(&field.name) {
-                    if *count > 1 {
-                        if struct_keys.contains(&field.name) {
-                            field.field_type = format!("Vec<{}>", field.name);
-                        }
-                    } 
-                    println!("{} ------- {}", field.name, field.field_type);
+                if let Some(max_count) = max_counts.get(&field.name) {
+                    if struct_keys.contains(&field.name) && *max_count > 1 {
+                        field.field_type = format!("Vec<{}>", field.name);
+                    }
+                    println!("{} ------- {}", field.field_type, max_count);
                 }
             }
         }
@@ -162,11 +174,9 @@ fn generate_structs_string(structs: &HashMap<String, XMLStruct>) -> String {
             let mut field_type = "";
             let mut field_type_string = String::new();
 
-            println!("-------------------------------------{}", field.field_type);
             // Check if the field type is a struct
             if (*structs).contains_key(remove_vec(&field.field_type).as_str()) {
                 field_type_string = prefix_to_camel_case(&field.field_type);
-                println!("{}: {}", field.field_type, field_type_string);
                 field_type = field_type_string.as_str();
             } else {
                 field_type = "String";
