@@ -3,8 +3,9 @@ use quick_xml::events::Event::{Start, End, Eof};
 use std::collections::HashMap;
 use std::fs::File;
 use std::io::{self, Read, Write};
+use std::str;
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 struct XMLField {
     name: String,
     field_type: String,
@@ -16,6 +17,15 @@ struct XMLStruct {
     fields: Vec<XMLField>,
 }
 
+impl Clone for XMLStruct {
+    fn clone(&self) -> Self {
+        XMLStruct {
+            name: self.name.clone(),
+            fields: self.fields.clone(),
+        }
+    }
+}
+
 fn main() {    
     let xml_string = read_xml_file("forestpropertydata.xml");
     let mut reader = Reader::from_str(&xml_string);
@@ -23,8 +33,6 @@ fn main() {
     let mut structs: HashMap<String, XMLStruct> = HashMap::new(); // Finalized structs
 
     create_structs(&mut reader, &mut structs);
-
-    remove_fieldless_structs(&mut structs);
 
     let struct_string = generate_structs_string(&mut structs);
 
@@ -36,7 +44,8 @@ fn main() {
 // Create structs from the XML document
 fn create_structs(reader: &mut Reader<&[u8]>, structs: &mut HashMap<String, XMLStruct>) {
     let mut stack: Vec<XMLStruct> = Vec::new(); // Stack of structs being constructed
-
+    let mut field_counts: HashMap<String, HashMap<String, usize>> = HashMap::new(); // Count of fields per struct
+ 
     loop {
         match reader.read_event() {
             Ok(Start(ref e)) => {
@@ -50,6 +59,12 @@ fn create_structs(reader: &mut Reader<&[u8]>, structs: &mut HashMap<String, XMLS
 
                 // If there's a parent struct, add this struct as a field to it
                 if let Some(parent_struct) = stack.last_mut() {
+                    // Count the number of fields with the same name
+                    let parent_name = parent_struct.name.clone();
+                    let field_count = field_counts.entry(parent_name).or_insert(HashMap::new());
+                    let child_count = field_count.entry(element_name.clone()).or_insert(0);
+                    *child_count += 1; // Because child_count and field_count are borrowed, field_counts is updated after this line
+
                     // Check that the parent doesn't contain a field with the same name
                     if !parent_struct.fields.iter().any(|field| field.name == element_name) {
                         parent_struct.fields.push(XMLField {
@@ -78,7 +93,12 @@ fn create_structs(reader: &mut Reader<&[u8]>, structs: &mut HashMap<String, XMLS
                         // Merge fields: add only new unique fields
                         for field in completed_struct.fields {
                             if !existing_struct.fields.iter().any(|f| f.name == field.name) {
-                                existing_struct.fields.push(field);
+                                existing_struct.fields.push(field.clone());
+                            }
+
+                            // Reset the field_count for this field
+                            if field_counts.contains_key(&field.name) {
+                                field_counts.get_mut(&field.name).unwrap().insert(field.name, 0);
                             }
                         }
                     } else {
@@ -90,6 +110,27 @@ fn create_structs(reader: &mut Reader<&[u8]>, structs: &mut HashMap<String, XMLS
             Ok(Eof) => break,
             Err(e) => panic!("Error at position {}: {:?}", reader.buffer_position(), e),
             _ => (),
+        }
+    }
+ 
+    remove_fieldless_structs(structs);
+
+    let struct_keys: Vec<String> = structs.keys().cloned().collect();
+
+    // Update structs to use Vec<T> for fields with multiple occurrences
+    for (struct_name, counts) in field_counts {
+        if let Some(xml_struct) = structs.get_mut(&struct_name) {
+            // Update field types to Vec<T> if the field occurs more than once
+            for field in &mut xml_struct.fields {
+                if let Some(count) = counts.get(&field.name) {
+                    if *count > 1 {
+                        if struct_keys.contains(&field.name) {
+                            field.field_type = format!("Vec<{}>", field.name);
+                        }
+                    } 
+                    println!("{} ------- {}", field.name, field.field_type);
+                }
+            }
         }
     }
 }
@@ -121,9 +162,11 @@ fn generate_structs_string(structs: &HashMap<String, XMLStruct>) -> String {
             let mut field_type = "";
             let mut field_type_string = String::new();
 
+            println!("-------------------------------------{}", field.field_type);
             // Check if the field type is a struct
-            if (*structs).contains_key(&field.field_type) {
-                field_type_string = prefix_to_camel_case(&field.name);
+            if (*structs).contains_key(remove_vec(&field.field_type).as_str()) {
+                field_type_string = prefix_to_camel_case(&field.field_type);
+                println!("{}: {}", field.field_type, field_type_string);
                 field_type = field_type_string.as_str();
             } else {
                 field_type = "String";
@@ -141,19 +184,48 @@ fn generate_structs_string(structs: &HashMap<String, XMLStruct>) -> String {
     struct_string
 }
 
-fn prefix_to_camel_case(s: &str) -> String {
+fn remove_vec(s: &str) -> String {
     let mut new_string = String::new();
 
-    for c in s.chars() {
-        if c == ':' {
-            continue;
-        } else {
-            new_string.push(c);
-        }
+    if s.starts_with("Vec<") {
+        // Remove Vec< and >
+        new_string = s.chars().skip(4).take(s.len() - 5).collect();
+    } else {
+        new_string = s.to_string();
     }
 
-    let mut char_vec: Vec<char> = new_string.chars().collect();
-    char_vec[0] = char_vec[0].to_uppercase().next().unwrap();
+    new_string
+}
+
+fn prefix_to_camel_case(s: &str) -> String {
+    let mut new_string = String::new();
+    let mut char_vec: Vec<char>;
+
+    if s.starts_with("Vec<") {
+        new_string.push_str("Vec<");
+        for c in s.chars().skip(4).take(s.len() - 5) {
+            if c == ':' {
+                continue;
+            } else {
+                new_string.push(c);
+            }
+        }
+        new_string.push('>');
+
+        char_vec = new_string.chars().collect();
+        char_vec[4] = char_vec[4].to_uppercase().next().unwrap();
+    } else {
+        for c in s.chars() {
+            if c == ':' {
+                continue;
+            } else {
+                new_string.push(c);
+            }
+        }
+
+        char_vec = new_string.chars().collect();
+        char_vec[0] = char_vec[0].to_uppercase().next().unwrap();
+    }
 
     char_vec.into_iter().collect()
 }
