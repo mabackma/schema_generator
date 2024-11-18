@@ -105,7 +105,7 @@ fn create_structs(reader: &mut Reader<&[u8]>, structs: &mut HashMap<String, XMLS
                             
                             // Reset the field_count for this field
                             if let Some(field_count) = field_counts.get_mut(&field.name) {
-                                field_counts.remove(&field.name);
+                                field_count.clear();
                             } 
                         }
                     } else {
