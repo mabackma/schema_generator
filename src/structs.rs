@@ -1,19 +1,15 @@
 #[derive(Serialize, Deserialize)]
-pub struct Gmlinterior {
+pub struct Gmlexterior {
 	#[serde(rename = "LinearRing", skip_serializing_if = "Option::is_none")]
 	pub gml_linear_ring: Option<Vec<GmlLinearRing>>,
 }
 
 #[derive(Serialize, Deserialize)]
-pub struct OpAssortment {
-	#[serde(rename = "ChangeState", skip_serializing_if = "Option::is_none")]
-	pub co_change_state: Option<String>,
-	#[serde(rename = "TreeSpecies", skip_serializing_if = "Option::is_none")]
-	pub op_tree_species: Option<String>,
-	#[serde(rename = "StemType", skip_serializing_if = "Option::is_none")]
-	pub op_stem_type: Option<String>,
-	#[serde(rename = "AssortmentVolume", skip_serializing_if = "Option::is_none")]
-	pub op_assortment_volume: Option<String>,
+pub struct GmlPolygon {
+	#[serde(rename = "exterior", skip_serializing_if = "Option::is_none")]
+	pub gml_exterior: Option<Vec<Gmlexterior>>,
+	#[serde(rename = "interior", skip_serializing_if = "Option::is_none")]
+	pub gml_interior: Option<Vec<Gmlinterior>>,
 }
 
 #[derive(Serialize, Deserialize)]
@@ -23,11 +19,9 @@ pub struct GmlLinearRing {
 }
 
 #[derive(Serialize, Deserialize)]
-pub struct OpSpecification {
-	#[serde(rename = "ChangeState", skip_serializing_if = "Option::is_none")]
-	pub co_change_state: Option<String>,
-	#[serde(rename = "SpecificationCode", skip_serializing_if = "Option::is_none")]
-	pub op_specification_code: Option<String>,
+pub struct TstTreeStrata {
+	#[serde(rename = "TreeStratum", skip_serializing_if = "Option::is_none")]
+	pub tst_tree_stratum: Option<Vec<TstTreeStratum>>,
 }
 
 #[derive(Serialize, Deserialize)]
@@ -51,71 +45,57 @@ pub struct OpOperation {
 }
 
 #[derive(Serialize, Deserialize)]
-pub struct StStands {
-	#[serde(rename = "Stand", skip_serializing_if = "Option::is_none")]
-	pub st_stand: Option<Vec<StStand>>,
+pub struct OpCutting {
+	#[serde(rename = "CuttingVolume", skip_serializing_if = "Option::is_none")]
+	pub op_cutting_volume: Option<String>,
+	#[serde(rename = "Assortments", skip_serializing_if = "Option::is_none")]
+	pub op_assortments: Option<Vec<OpAssortments>>,
 }
 
 #[derive(Serialize, Deserialize)]
-pub struct GmlpointProperty {
-	#[serde(rename = "Point", skip_serializing_if = "Option::is_none")]
-	pub gml_point: Option<Vec<GmlPoint>>,
+pub struct StIdentifiers {
+	#[serde(rename = "Identifier", skip_serializing_if = "Option::is_none")]
+	pub st_identifier: Option<Vec<StIdentifier>>,
 }
 
 #[derive(Serialize, Deserialize)]
-pub struct TsTreeStandData {
-	#[serde(rename = "TreeStandDataDate", skip_serializing_if = "Option::is_none")]
-	pub ts_tree_stand_data_date: Option<Vec<TsTreeStandDataDate>>,
+pub struct Gmlinterior {
+	#[serde(rename = "LinearRing", skip_serializing_if = "Option::is_none")]
+	pub gml_linear_ring: Option<Vec<GmlLinearRing>>,
 }
 
 #[derive(Serialize, Deserialize)]
-pub struct TssTreeStandSummary {
+pub struct ReParcels {
+	#[serde(rename = "Parcel", skip_serializing_if = "Option::is_none")]
+	pub re_parcel: Option<Vec<ReParcel>>,
+}
+
+#[derive(Serialize, Deserialize)]
+pub struct GmlPoint {
+	#[serde(rename = "coordinates", skip_serializing_if = "Option::is_none")]
+	pub gml_coordinates: Option<String>,
+}
+
+#[derive(Serialize, Deserialize)]
+pub struct DtsDeadTreeStrata {
+	#[serde(rename = "DeadTreeStratum", skip_serializing_if = "Option::is_none")]
+	pub dts_dead_tree_stratum: Option<Vec<DtsDeadTreeStratum>>,
+}
+
+#[derive(Serialize, Deserialize)]
+pub struct ForestPropertyData {
+	#[serde(rename = "RealEstates", skip_serializing_if = "Option::is_none")]
+	pub re_real_estates: Option<ReRealEstates>,
+}
+
+#[derive(Serialize, Deserialize)]
+pub struct StSpecialFeature {
 	#[serde(rename = "ChangeState", skip_serializing_if = "Option::is_none")]
 	pub co_change_state: Option<String>,
-	#[serde(rename = "MeanAge", skip_serializing_if = "Option::is_none")]
-	pub tss_mean_age: Option<String>,
-	#[serde(rename = "BasalArea", skip_serializing_if = "Option::is_none")]
-	pub tss_basal_area: Option<String>,
-	#[serde(rename = "StemCount", skip_serializing_if = "Option::is_none")]
-	pub tss_stem_count: Option<String>,
-	#[serde(rename = "MeanDiameter", skip_serializing_if = "Option::is_none")]
-	pub tss_mean_diameter: Option<String>,
-	#[serde(rename = "MeanHeight", skip_serializing_if = "Option::is_none")]
-	pub tss_mean_height: Option<String>,
-	#[serde(rename = "Volume", skip_serializing_if = "Option::is_none")]
-	pub tss_volume: Option<String>,
-	#[serde(rename = "VolumeGrowth", skip_serializing_if = "Option::is_none")]
-	pub tss_volume_growth: Option<String>,
-	#[serde(rename = "Value", skip_serializing_if = "Option::is_none")]
-	pub tss_value: Option<String>,
-	#[serde(rename = "ValueGrowthPercent", skip_serializing_if = "Option::is_none")]
-	pub tss_value_growth_percent: Option<String>,
-	#[serde(rename = "SawLogVolume", skip_serializing_if = "Option::is_none")]
-	pub tss_saw_log_volume: Option<String>,
-	#[serde(rename = "PulpWoodVolume", skip_serializing_if = "Option::is_none")]
-	pub tss_pulp_wood_volume: Option<String>,
-}
-
-#[derive(Serialize, Deserialize)]
-pub struct TsTreeStandDataDate {
-	#[serde(rename = "TreeStrata", skip_serializing_if = "Option::is_none")]
-	pub tst_tree_strata: Option<Vec<TstTreeStrata>>,
-	#[serde(rename = "TreeStandSummary", skip_serializing_if = "Option::is_none")]
-	pub tss_tree_stand_summary: Option<Vec<TssTreeStandSummary>>,
-	#[serde(rename = "DeadTreeStrata", skip_serializing_if = "Option::is_none")]
-	pub dts_dead_tree_strata: Option<Vec<DtsDeadTreeStrata>>,
-}
-
-#[derive(Serialize, Deserialize)]
-pub struct StStand {
-	#[serde(rename = "StandBasicData", skip_serializing_if = "Option::is_none")]
-	pub st_stand_basic_data: Option<Vec<StStandBasicData>>,
-	#[serde(rename = "TreeStandData", skip_serializing_if = "Option::is_none")]
-	pub ts_tree_stand_data: Option<Vec<TsTreeStandData>>,
-	#[serde(rename = "Operations", skip_serializing_if = "Option::is_none")]
-	pub op_operations: Option<Vec<OpOperations>>,
-	#[serde(rename = "SpecialFeatures", skip_serializing_if = "Option::is_none")]
-	pub st_special_features: Option<Vec<StSpecialFeatures>>,
+	#[serde(rename = "FeatureCode", skip_serializing_if = "Option::is_none")]
+	pub sf_feature_code: Option<String>,
+	#[serde(rename = "FeatureAdditionalCode", skip_serializing_if = "Option::is_none")]
+	pub sf_feature_additional_code: Option<String>,
 }
 
 #[derive(Serialize, Deserialize)]
@@ -133,21 +113,55 @@ pub struct DtsDeadTreeStratum {
 }
 
 #[derive(Serialize, Deserialize)]
-pub struct TstTreeStrata {
-	#[serde(rename = "TreeStratum", skip_serializing_if = "Option::is_none")]
-	pub tst_tree_stratum: Option<Vec<TstTreeStratum>>,
+pub struct TsTreeStandDataDate {
+	#[serde(rename = "TreeStrata", skip_serializing_if = "Option::is_none")]
+	pub tst_tree_strata: Option<Vec<TstTreeStrata>>,
+	#[serde(rename = "TreeStandSummary", skip_serializing_if = "Option::is_none")]
+	pub tss_tree_stand_summary: Option<Vec<TssTreeStandSummary>>,
+	#[serde(rename = "DeadTreeStrata", skip_serializing_if = "Option::is_none")]
+	pub dts_dead_tree_strata: Option<Vec<DtsDeadTreeStrata>>,
 }
 
 #[derive(Serialize, Deserialize)]
-pub struct GmlpolygonProperty {
-	#[serde(rename = "Polygon", skip_serializing_if = "Option::is_none")]
-	pub gml_polygon: Option<Vec<GmlPolygon>>,
+pub struct OpSpecifications {
+	#[serde(rename = "Specification", skip_serializing_if = "Option::is_none")]
+	pub op_specification: Option<Vec<OpSpecification>>,
 }
 
 #[derive(Serialize, Deserialize)]
-pub struct ReParcels {
-	#[serde(rename = "Parcel", skip_serializing_if = "Option::is_none")]
-	pub re_parcel: Option<Vec<ReParcel>>,
+pub struct ReParcel {
+	#[serde(rename = "ParcelNumber", skip_serializing_if = "Option::is_none")]
+	pub re_parcel_number: Option<String>,
+	#[serde(rename = "Stands", skip_serializing_if = "Option::is_none")]
+	pub st_stands: Option<Vec<StStands>>,
+}
+
+#[derive(Serialize, Deserialize)]
+pub struct StIdentifier {
+	#[serde(rename = "IdentifierType", skip_serializing_if = "Option::is_none")]
+	pub co_identifier_type: Option<String>,
+	#[serde(rename = "IdentifierValue", skip_serializing_if = "Option::is_none")]
+	pub co_identifier_value: Option<String>,
+}
+
+#[derive(Serialize, Deserialize)]
+pub struct OpOperations {
+	#[serde(rename = "Operation", skip_serializing_if = "Option::is_none")]
+	pub op_operation: Option<Vec<OpOperation>>,
+}
+
+#[derive(Serialize, Deserialize)]
+pub struct TsTreeStandData {
+	#[serde(rename = "TreeStandDataDate", skip_serializing_if = "Option::is_none")]
+	pub ts_tree_stand_data_date: Option<Vec<TsTreeStandDataDate>>,
+}
+
+#[derive(Serialize, Deserialize)]
+pub struct OpProposalData {
+	#[serde(rename = "ProposalType", skip_serializing_if = "Option::is_none")]
+	pub op_proposal_type: Option<String>,
+	#[serde(rename = "ProposalYear", skip_serializing_if = "Option::is_none")]
+	pub op_proposal_year: Option<String>,
 }
 
 #[derive(Serialize, Deserialize)]
@@ -156,6 +170,30 @@ pub struct GdtPolygonGeometry {
 	pub gml_point_property: Option<Vec<GmlpointProperty>>,
 	#[serde(rename = "polygonProperty", skip_serializing_if = "Option::is_none")]
 	pub gml_polygon_property: Option<Vec<GmlpolygonProperty>>,
+}
+
+#[derive(Serialize, Deserialize)]
+pub struct ReRealEstate {
+	#[serde(rename = "MunicipalityNumber", skip_serializing_if = "Option::is_none")]
+	pub re_municipality_number: Option<String>,
+	#[serde(rename = "AreaNumber", skip_serializing_if = "Option::is_none")]
+	pub re_area_number: Option<String>,
+	#[serde(rename = "GroupNumber", skip_serializing_if = "Option::is_none")]
+	pub re_group_number: Option<String>,
+	#[serde(rename = "UnitNumber", skip_serializing_if = "Option::is_none")]
+	pub re_unit_number: Option<String>,
+	#[serde(rename = "RealEstateName", skip_serializing_if = "Option::is_none")]
+	pub re_real_estate_name: Option<String>,
+	#[serde(rename = "Parcels", skip_serializing_if = "Option::is_none")]
+	pub re_parcels: Option<Vec<ReParcels>>,
+}
+
+#[derive(Serialize, Deserialize)]
+pub struct OpSpecification {
+	#[serde(rename = "ChangeState", skip_serializing_if = "Option::is_none")]
+	pub co_change_state: Option<String>,
+	#[serde(rename = "SpecificationCode", skip_serializing_if = "Option::is_none")]
+	pub op_specification_code: Option<String>,
 }
 
 #[derive(Serialize, Deserialize)]
@@ -190,6 +228,30 @@ pub struct TstTreeStratum {
 	pub tst_pulp_wood_volume: Option<String>,
 	#[serde(rename = "VolumeGrowth", skip_serializing_if = "Option::is_none")]
 	pub tst_volume_growth: Option<String>,
+}
+
+#[derive(Serialize, Deserialize)]
+pub struct GmlpolygonProperty {
+	#[serde(rename = "Polygon", skip_serializing_if = "Option::is_none")]
+	pub gml_polygon: Option<Vec<GmlPolygon>>,
+}
+
+#[derive(Serialize, Deserialize)]
+pub struct StStand {
+	#[serde(rename = "StandBasicData", skip_serializing_if = "Option::is_none")]
+	pub st_stand_basic_data: Option<Vec<StStandBasicData>>,
+	#[serde(rename = "TreeStandData", skip_serializing_if = "Option::is_none")]
+	pub ts_tree_stand_data: Option<Vec<TsTreeStandData>>,
+	#[serde(rename = "Operations", skip_serializing_if = "Option::is_none")]
+	pub op_operations: Option<Vec<OpOperations>>,
+	#[serde(rename = "SpecialFeatures", skip_serializing_if = "Option::is_none")]
+	pub st_special_features: Option<Vec<StSpecialFeatures>>,
+}
+
+#[derive(Serialize, Deserialize)]
+pub struct GmlpointProperty {
+	#[serde(rename = "Point", skip_serializing_if = "Option::is_none")]
+	pub gml_point: Option<Vec<GmlPoint>>,
 }
 
 #[derive(Serialize, Deserialize)]
@@ -241,107 +303,43 @@ pub struct StStandBasicData {
 }
 
 #[derive(Serialize, Deserialize)]
-pub struct OpOperations {
-	#[serde(rename = "Operation", skip_serializing_if = "Option::is_none")]
-	pub op_operation: Option<Vec<OpOperation>>,
+pub struct TssTreeStandSummary {
+	#[serde(rename = "ChangeState", skip_serializing_if = "Option::is_none")]
+	pub co_change_state: Option<String>,
+	#[serde(rename = "MeanAge", skip_serializing_if = "Option::is_none")]
+	pub tss_mean_age: Option<String>,
+	#[serde(rename = "BasalArea", skip_serializing_if = "Option::is_none")]
+	pub tss_basal_area: Option<String>,
+	#[serde(rename = "StemCount", skip_serializing_if = "Option::is_none")]
+	pub tss_stem_count: Option<String>,
+	#[serde(rename = "MeanDiameter", skip_serializing_if = "Option::is_none")]
+	pub tss_mean_diameter: Option<String>,
+	#[serde(rename = "MeanHeight", skip_serializing_if = "Option::is_none")]
+	pub tss_mean_height: Option<String>,
+	#[serde(rename = "Volume", skip_serializing_if = "Option::is_none")]
+	pub tss_volume: Option<String>,
+	#[serde(rename = "VolumeGrowth", skip_serializing_if = "Option::is_none")]
+	pub tss_volume_growth: Option<String>,
+	#[serde(rename = "Value", skip_serializing_if = "Option::is_none")]
+	pub tss_value: Option<String>,
+	#[serde(rename = "ValueGrowthPercent", skip_serializing_if = "Option::is_none")]
+	pub tss_value_growth_percent: Option<String>,
+	#[serde(rename = "SawLogVolume", skip_serializing_if = "Option::is_none")]
+	pub tss_saw_log_volume: Option<String>,
+	#[serde(rename = "PulpWoodVolume", skip_serializing_if = "Option::is_none")]
+	pub tss_pulp_wood_volume: Option<String>,
 }
 
 #[derive(Serialize, Deserialize)]
-pub struct StIdentifier {
-	#[serde(rename = "IdentifierType", skip_serializing_if = "Option::is_none")]
-	pub co_identifier_type: Option<String>,
-	#[serde(rename = "IdentifierValue", skip_serializing_if = "Option::is_none")]
-	pub co_identifier_value: Option<String>,
-}
-
-#[derive(Serialize, Deserialize)]
-pub struct StIdentifiers {
-	#[serde(rename = "Identifier", skip_serializing_if = "Option::is_none")]
-	pub st_identifier: Option<Vec<StIdentifier>>,
-}
-
-#[derive(Serialize, Deserialize)]
-pub struct ReRealEstate {
-	#[serde(rename = "MunicipalityNumber", skip_serializing_if = "Option::is_none")]
-	pub re_municipality_number: Option<String>,
-	#[serde(rename = "AreaNumber", skip_serializing_if = "Option::is_none")]
-	pub re_area_number: Option<String>,
-	#[serde(rename = "GroupNumber", skip_serializing_if = "Option::is_none")]
-	pub re_group_number: Option<String>,
-	#[serde(rename = "UnitNumber", skip_serializing_if = "Option::is_none")]
-	pub re_unit_number: Option<String>,
-	#[serde(rename = "RealEstateName", skip_serializing_if = "Option::is_none")]
-	pub re_real_estate_name: Option<String>,
-	#[serde(rename = "Parcels", skip_serializing_if = "Option::is_none")]
-	pub re_parcels: Option<Vec<ReParcels>>,
-}
-
-#[derive(Serialize, Deserialize)]
-pub struct OpSpecifications {
-	#[serde(rename = "Specification", skip_serializing_if = "Option::is_none")]
-	pub op_specification: Option<Vec<OpSpecification>>,
-}
-
-#[derive(Serialize, Deserialize)]
-pub struct ReParcel {
-	#[serde(rename = "ParcelNumber", skip_serializing_if = "Option::is_none")]
-	pub re_parcel_number: Option<String>,
-	#[serde(rename = "Stands", skip_serializing_if = "Option::is_none")]
-	pub st_stands: Option<Vec<StStands>>,
-}
-
-#[derive(Serialize, Deserialize)]
-pub struct ReRealEstates {
-	#[serde(rename = "RealEstate", skip_serializing_if = "Option::is_none")]
-	pub re_real_estate: Option<ReRealEstate>,
-}
-
-#[derive(Serialize, Deserialize)]
-pub struct StSpecialFeatures {
-	#[serde(rename = "SpecialFeature", skip_serializing_if = "Option::is_none")]
-	pub st_special_feature: Option<Vec<StSpecialFeature>>,
-}
-
-#[derive(Serialize, Deserialize)]
-pub struct OpProposalData {
-	#[serde(rename = "ProposalType", skip_serializing_if = "Option::is_none")]
-	pub op_proposal_type: Option<String>,
-	#[serde(rename = "ProposalYear", skip_serializing_if = "Option::is_none")]
-	pub op_proposal_year: Option<String>,
-}
-
-#[derive(Serialize, Deserialize)]
-pub struct ForestPropertyData {
-	#[serde(rename = "RealEstates", skip_serializing_if = "Option::is_none")]
-	pub re_real_estates: Option<ReRealEstates>,
-}
-
-#[derive(Serialize, Deserialize)]
-pub struct GmlPolygon {
-	#[serde(rename = "exterior", skip_serializing_if = "Option::is_none")]
-	pub gml_exterior: Option<Vec<Gmlexterior>>,
-	#[serde(rename = "interior", skip_serializing_if = "Option::is_none")]
-	pub gml_interior: Option<Vec<Gmlinterior>>,
-}
-
-#[derive(Serialize, Deserialize)]
-pub struct OpCompletionData {
-	#[serde(rename = "CompletionDate", skip_serializing_if = "Option::is_none")]
-	pub op_completion_date: Option<String>,
-}
-
-#[derive(Serialize, Deserialize)]
-pub struct GmlPoint {
-	#[serde(rename = "coordinates", skip_serializing_if = "Option::is_none")]
-	pub gml_coordinates: Option<String>,
-}
-
-#[derive(Serialize, Deserialize)]
-pub struct OpCutting {
-	#[serde(rename = "CuttingVolume", skip_serializing_if = "Option::is_none")]
-	pub op_cutting_volume: Option<String>,
-	#[serde(rename = "Assortments", skip_serializing_if = "Option::is_none")]
-	pub op_assortments: Option<Vec<OpAssortments>>,
+pub struct OpAssortment {
+	#[serde(rename = "ChangeState", skip_serializing_if = "Option::is_none")]
+	pub co_change_state: Option<String>,
+	#[serde(rename = "TreeSpecies", skip_serializing_if = "Option::is_none")]
+	pub op_tree_species: Option<String>,
+	#[serde(rename = "StemType", skip_serializing_if = "Option::is_none")]
+	pub op_stem_type: Option<String>,
+	#[serde(rename = "AssortmentVolume", skip_serializing_if = "Option::is_none")]
+	pub op_assortment_volume: Option<String>,
 }
 
 #[derive(Serialize, Deserialize)]
@@ -351,24 +349,26 @@ pub struct OpAssortments {
 }
 
 #[derive(Serialize, Deserialize)]
-pub struct StSpecialFeature {
-	#[serde(rename = "ChangeState", skip_serializing_if = "Option::is_none")]
-	pub co_change_state: Option<String>,
-	#[serde(rename = "FeatureCode", skip_serializing_if = "Option::is_none")]
-	pub sf_feature_code: Option<String>,
-	#[serde(rename = "FeatureAdditionalCode", skip_serializing_if = "Option::is_none")]
-	pub sf_feature_additional_code: Option<String>,
+pub struct StSpecialFeatures {
+	#[serde(rename = "SpecialFeature", skip_serializing_if = "Option::is_none")]
+	pub st_special_feature: Option<Vec<StSpecialFeature>>,
 }
 
 #[derive(Serialize, Deserialize)]
-pub struct DtsDeadTreeStrata {
-	#[serde(rename = "DeadTreeStratum", skip_serializing_if = "Option::is_none")]
-	pub dts_dead_tree_stratum: Option<Vec<DtsDeadTreeStratum>>,
+pub struct StStands {
+	#[serde(rename = "Stand", skip_serializing_if = "Option::is_none")]
+	pub st_stand: Option<Vec<StStand>>,
 }
 
 #[derive(Serialize, Deserialize)]
-pub struct Gmlexterior {
-	#[serde(rename = "LinearRing", skip_serializing_if = "Option::is_none")]
-	pub gml_linear_ring: Option<Vec<GmlLinearRing>>,
+pub struct ReRealEstates {
+	#[serde(rename = "RealEstate", skip_serializing_if = "Option::is_none")]
+	pub re_real_estate: Option<ReRealEstate>,
+}
+
+#[derive(Serialize, Deserialize)]
+pub struct OpCompletionData {
+	#[serde(rename = "CompletionDate", skip_serializing_if = "Option::is_none")]
+	pub op_completion_date: Option<String>,
 }
 
