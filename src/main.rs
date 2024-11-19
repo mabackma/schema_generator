@@ -223,7 +223,7 @@ fn generate_structs_string(structs: &HashMap<String, XMLStruct>) -> String {
 }
 
 // Adds fields to the struct string
-fn fields_to_struct_string(field: &XMLField, field_type: &str, mut struct_string: String, ) -> String {
+fn fields_to_struct_string(field: &XMLField, field_type: &str, mut struct_string: String) -> String {
     // Check if the field is an attribute or text
     if field.name.starts_with("$") {
         struct_string += &format!("\t#[serde(rename = \"{}\", skip_serializing_if = \"Option::is_none\")]\n", field.name);
