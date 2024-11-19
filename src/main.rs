@@ -53,11 +53,14 @@ fn create_structs(reader: &mut Reader<&[u8]>, structs: &mut HashMap<String, XMLS
                 let element_name = std::str::from_utf8(e.name().as_ref()).unwrap().to_string();
 
                 // Create a new struct for this element
-                let new_struct = XMLStruct {
+                let mut new_struct = XMLStruct {
                     name: element_name.clone(),
                     fields: Vec::new(),
                 };
-
+                
+                // Parse attributes and add them as fields
+                parse_attributes(e.clone(), &mut new_struct);
+                
                 // If there's a parent struct, add this struct as a field to it
                 if let Some(parent_struct) = stack.last_mut() {
                     // Count the number of fields with the same name
@@ -149,6 +152,25 @@ fn create_structs(reader: &mut Reader<&[u8]>, structs: &mut HashMap<String, XMLS
 
 }
 
+// Parse attributes and add them as fields
+fn parse_attributes(e: quick_xml::events::BytesStart, new_struct: &mut XMLStruct) {
+    for attr in e.attributes() {
+        if let Ok(attr) = attr {
+            let attr_name = std::str::from_utf8(attr.key.as_ref()).unwrap().to_string();
+            let attr_value = std::str::from_utf8(&attr.value).unwrap();
+
+            // Handle attribute naming
+            let field_name = format!("@{}", attr_name);
+
+            // Add attribute as a field to the current struct
+            new_struct.fields.push(XMLField {
+                name: field_name.clone(),
+                field_type: "String".to_string(), // Attributes are strings
+            });
+        }
+    }
+}
+
 // Removes structs that don't have any fields
 fn remove_fieldless_structs(structs: &mut HashMap<String, XMLStruct>) {
     let keys_to_remove: Vec<String> = structs
@@ -182,6 +204,13 @@ fn generate_structs_string(structs: &HashMap<String, XMLStruct>) -> String {
                 field_type = field_type_string.as_str();
             } else {
                 field_type = "String";
+            }
+
+            // Check if the field is an attribute
+            if field.name.starts_with("@") {
+                struct_string += &format!("\t#[serde(rename = \"@{}\")]\n", field.name.chars().skip(1).collect::<String>());
+                struct_string += &format!("\tpub {}: {},\n", field.name.chars().skip(1).collect::<String>().replace(":", "_"), field_type);
+                continue;
             }
 
             let renaming = field.name.split(":").last().unwrap();
