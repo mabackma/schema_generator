@@ -59,7 +59,7 @@ fn create_structs(reader: &mut Reader<&[u8]>, structs: &mut HashMap<String, XMLS
                 };
                 
                 parse_attributes(e.clone(), &mut new_struct);
-                
+
                 // If there's a parent struct, add this struct as a field to it
                 if let Some(parent_struct) = stack.last_mut() {
                     let field_count = field_counts.entry(parent_struct.name.clone()).or_insert(HashMap::new());
@@ -170,20 +170,25 @@ fn parse_attributes(e: quick_xml::events::BytesStart, new_struct: &mut XMLStruct
             });
         }
     }
+
+    // Add text field
+    new_struct.fields.push(XMLField {
+        name: "$text".to_string(),
+        field_type: "String".to_string(),
+    });
 }
 
 // Removes the structs that don't have any fields
 fn remove_fieldless_structs(structs: &mut HashMap<String, XMLStruct>) {
     let keys_to_remove: Vec<String> = structs
         .iter()
-        .filter(|(_, xml_struct)| xml_struct.fields.is_empty())
+        .filter(|(_, xml_struct)| xml_struct.fields.len() == 1 && xml_struct.fields[0].name == "$text")
         .map(|(name, _)| name.clone())
         .collect();
 
     for key in keys_to_remove {
         structs.remove(&key);
     }
-
 }
 
 // Generates String for Rust structs with fields 
@@ -219,14 +224,20 @@ fn generate_structs_string(structs: &HashMap<String, XMLStruct>) -> String {
 
 // Adds fields to the struct string
 fn fields_to_struct_string(field: &XMLField, field_type: &str, mut struct_string: String, ) -> String {
-    // Check if the field is an attribute
-    if field.name.starts_with("@") {
+    // Check if the field is an attribute or text
+    if field.name.starts_with("$") {
+        struct_string += &format!("\t#[serde(rename = \"{}\", skip_serializing_if = \"Option::is_none\")]\n", field.name);
+        struct_string += &format!("\tpub {}: Option<{}>,\n", field.name.replace("$", ""), field_type);
+    } else if field.name.starts_with("@") {
+        // Check if the field is a type attribute
         if field.name.ends_with("_type") {
             struct_string += &format!("\t#[serde(rename = \"@type\")]\n");
             struct_string += &format!("\tpub {}: {},\n", field.name.replace("@", ""), field_type);
         } else {
             struct_string += &format!("\t#[serde(rename = \"@{}\")]\n", field.name.chars().skip(1).collect::<String>());
-            struct_string += &format!("\tpub {}: {},\n", field.name.chars().skip(1).collect::<String>().replace(":", "_"), field_type);
+
+            let field_name = field.name.chars().skip(1).collect::<String>().replace(":", "_");
+            struct_string += &format!("\tpub {}: {},\n", to_snake_case(&field_name), field_type);
         }
     } else {
         let renaming = field.name.split(":").last().unwrap();
