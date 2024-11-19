@@ -58,21 +58,18 @@ fn create_structs(reader: &mut Reader<&[u8]>, structs: &mut HashMap<String, XMLS
                     fields: Vec::new(),
                 };
                 
-                // Parse attributes and add them as fields
                 parse_attributes(e.clone(), &mut new_struct);
                 
                 // If there's a parent struct, add this struct as a field to it
                 if let Some(parent_struct) = stack.last_mut() {
-                    // Count the number of fields with the same name
-                    let parent_name = parent_struct.name.clone();
                     let field_count = field_counts.entry(parent_struct.name.clone()).or_insert(HashMap::new());
                     let child_count = field_count.entry(element_name.clone()).or_insert(0);
                     *child_count += 1; // Because child_count and field_count are borrowed, field_counts is updated after this line
 
                     // Update max_counts for the current parent_struct
-                    let parent_max_counts = max_counts.entry(parent_name.clone()).or_insert_with(HashMap::new);
+                    let parent_max_counts = max_counts.entry(parent_struct.name.clone()).or_insert_with(HashMap::new);
 
-                    // Update the count for this specific child
+                    // Update the count for the child
                     let child_max_count = parent_max_counts.entry(element_name.clone()).or_insert(0);
                     if *child_count > *child_max_count {
                         *child_max_count = *child_count;
@@ -129,7 +126,6 @@ fn create_structs(reader: &mut Reader<&[u8]>, structs: &mut HashMap<String, XMLS
         }
     }
 
-    // Remove structs that don't have any fields
     remove_fieldless_structs(structs);
 
     for (parent_name, child_map) in &max_counts {
@@ -157,9 +153,6 @@ fn parse_attributes(e: quick_xml::events::BytesStart, new_struct: &mut XMLStruct
     for attr in e.attributes() {
         if let Ok(attr) = attr {
             let attr_name = std::str::from_utf8(attr.key.as_ref()).unwrap().to_string();
-            let attr_value = std::str::from_utf8(&attr.value).unwrap();
-
-            // Handle attribute naming
             let field_name = format!("@{}", attr_name);
 
             // Add attribute as a field to the current struct
@@ -171,7 +164,7 @@ fn parse_attributes(e: quick_xml::events::BytesStart, new_struct: &mut XMLStruct
     }
 }
 
-// Removes structs that don't have any fields
+// Removes the structs that don't have any fields
 fn remove_fieldless_structs(structs: &mut HashMap<String, XMLStruct>) {
     let keys_to_remove: Vec<String> = structs
         .iter()
@@ -185,12 +178,12 @@ fn remove_fieldless_structs(structs: &mut HashMap<String, XMLStruct>) {
 
 }
 
-// Generates String of Rust structs with fields 
+// Generates String for Rust structs with fields 
 fn generate_structs_string(structs: &HashMap<String, XMLStruct>) -> String {
     let mut struct_string = String::new();
 
     for (name, xml_struct) in structs {
-        let struct_name = prefix_to_camel_case(&name); 
+        let struct_name = to_camel_case_with_prefix(&name); 
         struct_string += &format!("#[derive(Serialize, Deserialize)]\n");
         struct_string += &format!("pub struct {} {{\n", struct_name);
 
@@ -200,24 +193,15 @@ fn generate_structs_string(structs: &HashMap<String, XMLStruct>) -> String {
 
             // Check if the field type is a struct
             if (*structs).contains_key(remove_vec(&field.field_type).as_str()) {
-                field_type_string = prefix_to_camel_case(&field.field_type);
+                field_type_string = to_camel_case_with_prefix(&field.field_type);
                 field_type = field_type_string.as_str();
             } else {
                 field_type = "String";
             }
 
-            // Check if the field is an attribute
-            if field.name.starts_with("@") {
-                struct_string += &format!("\t#[serde(rename = \"@{}\")]\n", field.name.chars().skip(1).collect::<String>());
-                struct_string += &format!("\tpub {}: {},\n", field.name.chars().skip(1).collect::<String>().replace(":", "_"), field_type);
-                continue;
-            }
-
-            let renaming = field.name.split(":").last().unwrap();
-            let field_name = field.name.split(":").next().unwrap().to_owned() + "_" + to_snake_case(&renaming).as_str();
-            struct_string += &format!("\t#[serde(rename = \"{}\", skip_serializing_if = \"Option::is_none\")]\n", renaming);
-            struct_string += &format!("\tpub {}: Option<{}>,\n", field_name, field_type);
+            struct_string = fields_to_struct_string(field, field_type, struct_string.clone());
         }
+
         struct_string += &format!("}}\n");
         struct_string += &format!("\n");
     }
@@ -225,11 +209,27 @@ fn generate_structs_string(structs: &HashMap<String, XMLStruct>) -> String {
     struct_string
 }
 
+// Adds fields to the struct string
+fn fields_to_struct_string(field: &XMLField, field_type: &str, mut struct_string: String) -> String {
+    // Check if the field is an attribute
+    if field.name.starts_with("@") {
+        struct_string += &format!("\t#[serde(rename = \"@{}\")]\n", field.name.chars().skip(1).collect::<String>());
+        struct_string += &format!("\tpub {}: {},\n", field.name.chars().skip(1).collect::<String>().replace(":", "_"), field_type);
+    } else {
+        let renaming = field.name.split(":").last().unwrap();
+        let field_name = field.name.split(":").next().unwrap().to_owned() + "_" + to_snake_case(&renaming).as_str();
+        struct_string += &format!("\t#[serde(rename = \"{}\", skip_serializing_if = \"Option::is_none\")]\n", renaming);
+        struct_string += &format!("\tpub {}: Option<{}>,\n", field_name, field_type);
+    }
+
+    struct_string
+}
+
+// Removes Vec< and > from a string
 fn remove_vec(s: &str) -> String {
     let mut new_string = String::new();
 
     if s.starts_with("Vec<") {
-        // Remove Vec< and >
         new_string = s.chars().skip(4).take(s.len() - 5).collect();
     } else {
         new_string = s.to_string();
@@ -238,7 +238,8 @@ fn remove_vec(s: &str) -> String {
     new_string
 }
 
-fn prefix_to_camel_case(s: &str) -> String {
+// Converts a string to camel case and adds prefix. Used for struct names and field types
+fn to_camel_case_with_prefix(s: &str) -> String {
     let mut new_string = String::new();
     let mut char_vec: Vec<char>;
 
@@ -271,6 +272,7 @@ fn prefix_to_camel_case(s: &str) -> String {
     char_vec.into_iter().collect()
 }
 
+// Converts a string to snake case. Used for field names
 fn to_snake_case(s: &str) -> String {
     let char_vec: Vec<char> = s.chars().collect();
     let mut new_string  = String::new();
@@ -287,6 +289,7 @@ fn to_snake_case(s: &str) -> String {
     new_string.to_lowercase()
 }
 
+// Reads an XML file and returns its contents as a string
 fn read_xml_file(file_name: &str) -> String {
     let mut file = File::open(file_name).unwrap();
     let mut xml_string = String::new();
