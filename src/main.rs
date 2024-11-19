@@ -153,7 +153,15 @@ fn parse_attributes(e: quick_xml::events::BytesStart, new_struct: &mut XMLStruct
     for attr in e.attributes() {
         if let Ok(attr) = attr {
             let attr_name = std::str::from_utf8(attr.key.as_ref()).unwrap().to_string();
-            let field_name = format!("@{}", attr_name);
+            let mut field_name= String::new();
+
+            // Check if the attribute is a type attribute
+            if attr_name == "type" {
+                let element_name = e.name().0.to_vec().as_slice().to_vec().iter().map(|&c| c as char).collect::<String>();
+                field_name = format!("@{}_type", to_snake_case(&to_camel_case_with_prefix(&element_name)));
+            } else {
+                field_name = format!("@{}", attr_name);
+            }
 
             // Add attribute as a field to the current struct
             new_struct.fields.push(XMLField {
@@ -210,11 +218,16 @@ fn generate_structs_string(structs: &HashMap<String, XMLStruct>) -> String {
 }
 
 // Adds fields to the struct string
-fn fields_to_struct_string(field: &XMLField, field_type: &str, mut struct_string: String) -> String {
+fn fields_to_struct_string(field: &XMLField, field_type: &str, mut struct_string: String, ) -> String {
     // Check if the field is an attribute
     if field.name.starts_with("@") {
-        struct_string += &format!("\t#[serde(rename = \"@{}\")]\n", field.name.chars().skip(1).collect::<String>());
-        struct_string += &format!("\tpub {}: {},\n", field.name.chars().skip(1).collect::<String>().replace(":", "_"), field_type);
+        if field.name.ends_with("_type") {
+            struct_string += &format!("\t#[serde(rename = \"@type\")]\n");
+            struct_string += &format!("\tpub {}: {},\n", field.name.replace("@", ""), field_type);
+        } else {
+            struct_string += &format!("\t#[serde(rename = \"@{}\")]\n", field.name.chars().skip(1).collect::<String>());
+            struct_string += &format!("\tpub {}: {},\n", field.name.chars().skip(1).collect::<String>().replace(":", "_"), field_type);
+        }
     } else {
         let renaming = field.name.split(":").last().unwrap();
         let field_name = field.name.split(":").next().unwrap().to_owned() + "_" + to_snake_case(&renaming).as_str();
