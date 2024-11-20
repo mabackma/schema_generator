@@ -252,7 +252,7 @@ fn generate_structs_string(structs: &HashMap<String, XMLStruct>) -> String {
                 "String".to_string()
             };
 
-            struct_string = fields_to_struct_string(field, &field_type, struct_string.clone());
+            struct_string = field_to_struct_string(field, &field_type, struct_string.clone());
         }
 
         struct_string += &format!("}}\n");
@@ -262,9 +262,9 @@ fn generate_structs_string(structs: &HashMap<String, XMLStruct>) -> String {
     struct_string
 }
 
-// Adds fields to the struct string
-fn fields_to_struct_string(field: &XMLField, field_type: &str, mut struct_string: String) -> String {
-    // Check if the field is an attribute or text
+// Adds field to the struct string
+fn field_to_struct_string(field: &XMLField, field_type: &str, mut struct_string: String) -> String {
+    // Check if the field is text
     if field.name.starts_with("$") {
         struct_string += &format!("\t#[serde(rename = \"{}\", skip_serializing_if = \"Option::is_none\")]\n", field.name);
         struct_string += &format!("\tpub {}: Option<{}>,\n", field.name.replace("$", ""), field_type);
@@ -274,12 +274,14 @@ fn fields_to_struct_string(field: &XMLField, field_type: &str, mut struct_string
             struct_string += &format!("\t#[serde(rename = \"@type\")]\n");
             struct_string += &format!("\tpub {}: {},\n", field.name.replace("@", ""), field_type);
         } else {
+            // Handle other attributes
             struct_string += &format!("\t#[serde(rename = \"@{}\")]\n", field.name.chars().skip(1).collect::<String>());
 
             let field_name = field.name.chars().skip(1).collect::<String>().replace(":", "_");
             struct_string += &format!("\tpub {}: {},\n", to_snake_case(&field_name), field_type);
         }
     } else {
+        // Handle regular fields
         let renaming = field.name.split(":").last().unwrap();
         let field_name = field.name.split(":").next().unwrap().to_owned() + "_" + to_snake_case(&renaming).as_str();
         struct_string += &format!("\t#[serde(rename = \"{}\", skip_serializing_if = \"Option::is_none\")]\n", renaming);
