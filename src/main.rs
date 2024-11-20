@@ -1,5 +1,5 @@
 use quick_xml::reader::Reader;
-use quick_xml::events::Event::{Start, End, Eof};
+use quick_xml::events::Event::{Start, Empty, End, Eof};
 use std::collections::HashMap;
 use std::fs::File;
 use std::io::{self, Read, Write};
@@ -30,9 +30,7 @@ fn main() {
     let xml_string = read_xml_file("forestpropertydata.xml");
     let mut reader = Reader::from_str(&xml_string);
 
-    let mut structs: HashMap<String, XMLStruct> = HashMap::new(); // Finalized structs
-
-    create_structs(&mut reader, &mut structs);
+    let mut structs = create_structs(&mut reader);
 
     let struct_string = generate_structs_string(&mut structs);
 
@@ -42,8 +40,10 @@ fn main() {
 }
 
 // Create structs from the XML document
-fn create_structs(reader: &mut Reader<&[u8]>, structs: &mut HashMap<String, XMLStruct>) {
+fn create_structs(reader: &mut Reader<&[u8]>) -> HashMap<String, XMLStruct> {
     let mut stack: Vec<XMLStruct> = Vec::new(); // Stack of structs being constructed
+    let mut empty_structs: HashMap<String, XMLStruct> = HashMap::new(); // Structs from self-closing tags
+    let mut structs: HashMap<String, XMLStruct> = HashMap::new(); // Finalized structs
     let mut field_counts: HashMap<String, HashMap<String, usize>> = HashMap::new(); // Count of fields per struct
     let mut max_counts: HashMap<String, HashMap<String, usize>> = HashMap::new(); // Maximum count of fields per struct
 
@@ -89,6 +89,29 @@ fn create_structs(reader: &mut Reader<&[u8]>, structs: &mut HashMap<String, XMLS
                     stack.push(new_struct);
                 }
             },
+            Ok(Empty(ref e)) => {
+                let element_name = std::str::from_utf8(e.name().as_ref()).unwrap().to_string();
+
+                // Create a new struct for this element
+                let mut new_struct = XMLStruct {
+                    name: element_name.clone(),
+                    fields: Vec::new(),
+                };
+
+                parse_attributes(e.clone(), &mut new_struct);
+
+                empty_structs.insert(element_name.clone(), new_struct.clone());
+
+                // If there's a parent struct, add this struct as a field to it
+                if let Some(parent_struct) = stack.last_mut() {
+                    if !parent_struct.fields.iter().any(|field| field.name == element_name) {
+                        parent_struct.fields.push(XMLField {
+                            name: element_name.clone(),
+                            field_type: element_name.clone(),
+                        });
+                    }
+                }
+            },
             Ok(End(ref e)) => {
                 let element_name = std::str::from_utf8(e.name().as_ref()).unwrap().to_string();
 
@@ -126,7 +149,13 @@ fn create_structs(reader: &mut Reader<&[u8]>, structs: &mut HashMap<String, XMLS
         }
     }
 
-    remove_fieldless_structs(structs);
+    remove_fieldless_structs(&mut structs);
+
+    remove_text_field(&mut empty_structs);
+
+    for s in empty_structs.values() {
+        structs.insert(s.name.clone(), s.clone());
+    }
 
     for (parent_name, child_map) in &max_counts {
         if let Some(parent_struct) = structs.get_mut(parent_name) {
@@ -146,6 +175,7 @@ fn create_structs(reader: &mut Reader<&[u8]>, structs: &mut HashMap<String, XMLS
         }
     } 
 
+    structs
 }
 
 // Parse attributes and add them as fields
@@ -188,6 +218,13 @@ fn remove_fieldless_structs(structs: &mut HashMap<String, XMLStruct>) {
 
     for key in keys_to_remove {
         structs.remove(&key);
+    }
+}
+
+// Remove the text field from the empty structs
+fn remove_text_field(empty_structs: &mut HashMap<String, XMLStruct>) {
+    for (_, xml_struct) in empty_structs {
+        xml_struct.fields.retain(|field| field.name != "$text");
     }
 }
 
