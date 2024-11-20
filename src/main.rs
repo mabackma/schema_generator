@@ -284,6 +284,7 @@ fn field_to_struct_string(field: &XMLField, field_type: &str, mut struct_string:
         // Handle regular fields
         let renaming = field.name.split(":").last().unwrap();
         let field_name = field.name.split(":").next().unwrap().to_owned() + "_" + to_snake_case(&renaming).as_str();
+        
         struct_string += &format!("\t#[serde(rename = \"{}\", skip_serializing_if = \"Option::is_none\")]\n", renaming);
         struct_string += &format!("\tpub {}: Option<{}>,\n", field_name, field_type);
     }
