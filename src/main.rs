@@ -2,7 +2,7 @@ use quick_xml::reader::Reader;
 use quick_xml::events::Event::{Start, Empty, End, Eof};
 use std::collections::HashMap;
 use std::fs::File;
-use std::io::{self, Read, Write};
+use std::io::{Read, Write};
 use std::str;
 
 #[derive(Debug, Clone)]
@@ -163,15 +163,14 @@ fn parse_attributes(e: quick_xml::events::BytesStart, new_struct: &mut XMLStruct
     for attr in e.attributes() {
         if let Ok(attr) = attr {
             let attr_name = std::str::from_utf8(attr.key.as_ref()).unwrap().to_string();
-            let mut field_name= String::new();
 
-            // Check if the attribute is a type attribute
-            if attr_name == "type" {
+            // Check if the attribute is a type attribute, if so, add _type to the field name
+            let field_name = if attr_name == "type" {
                 let element_name = e.name().0.to_vec().as_slice().to_vec().iter().map(|&c| c as char).collect::<String>();
-                field_name = format!("@{}_type", to_snake_case(&to_camel_case_with_prefix(&element_name)));
+                format!("@{}_type", to_snake_case(&to_camel_case_with_prefix(&element_name)))
             } else {
-                field_name = format!("@{}", attr_name);
-            }
+                format!("@{}", attr_name)
+            };
 
             // Add attribute as a field to the current struct
             new_struct.fields.push(XMLField {
@@ -245,18 +244,15 @@ fn generate_structs_string(structs: &HashMap<String, XMLStruct>) -> String {
         struct_string += &format!("pub struct {} {{\n", struct_name);
 
         for field in &xml_struct.fields {
-            let mut field_type = "";
-            let mut field_type_string = String::new();
 
-            // Check if the field type is a struct
-            if (*structs).contains_key(remove_vec(&field.field_type).as_str()) {
-                field_type_string = to_camel_case_with_prefix(&field.field_type);
-                field_type = field_type_string.as_str();
+            // Check if the field type is a struct, if so, use the struct name. Otherwise, use String
+            let field_type = if (*structs).contains_key(remove_vec(&field.field_type).as_str()) {
+                to_camel_case_with_prefix(&field.field_type)
             } else {
-                field_type = "String";
-            }
+                "String".to_string()
+            };
 
-            struct_string = fields_to_struct_string(field, field_type, struct_string.clone());
+            struct_string = fields_to_struct_string(field, &field_type, struct_string.clone());
         }
 
         struct_string += &format!("}}\n");
@@ -295,15 +291,11 @@ fn fields_to_struct_string(field: &XMLField, field_type: &str, mut struct_string
 
 // Removes Vec< and > from a string
 fn remove_vec(s: &str) -> String {
-    let mut new_string = String::new();
-
     if s.starts_with("Vec<") {
-        new_string = s.chars().skip(4).take(s.len() - 5).collect();
+        s.chars().skip(4).take(s.len() - 5).collect()
     } else {
-        new_string = s.to_string();
+        s.to_string()
     }
-
-    new_string
 }
 
 // Converts a string to camel case and adds prefix. Used for struct names and field types
