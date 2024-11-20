@@ -151,29 +151,9 @@ fn create_structs(reader: &mut Reader<&[u8]>) -> HashMap<String, XMLStruct> {
 
     remove_fieldless_structs(&mut structs);
 
-    remove_text_field(&mut empty_structs);
+    add_empty_structs(&mut structs, &mut empty_structs);
 
-    for s in empty_structs.values() {
-        structs.insert(s.name.clone(), s.clone());
-    }
-
-    for (parent_name, child_map) in &max_counts {
-        if let Some(parent_struct) = structs.get_mut(parent_name) {
-            // Check for fields that occur more than once
-            for (child_name, child_count) in child_map {
-                if *child_count > 1 {
-                    println!("--------{}: {} -> {}", parent_name, child_name, child_count);
-
-                    // Update the field type to Vec<T>
-                    for field in &mut parent_struct.fields {
-                        if field.name == *child_name {
-                            field.field_type = format!("Vec<{}>", field.name);
-                        }
-                    }
-                }
-            }
-        }
-    } 
+    update_field_types(&mut structs, &max_counts);
 
     structs
 }
@@ -221,11 +201,38 @@ fn remove_fieldless_structs(structs: &mut HashMap<String, XMLStruct>) {
     }
 }
 
-// Remove the text field from the empty structs
-fn remove_text_field(empty_structs: &mut HashMap<String, XMLStruct>) {
-    for (_, xml_struct) in empty_structs {
+// Add the empty structs to the final structs
+fn add_empty_structs(structs: &mut HashMap<String, XMLStruct>, empty_structs: &mut HashMap<String, XMLStruct>) {
+    // Remove the $text field from empty structs
+    for (_, xml_struct) in &mut *empty_structs {
         xml_struct.fields.retain(|field| field.name != "$text");
     }
+
+    // Add the empty structs to the final structs
+    for s in empty_structs.values() {
+        structs.insert(s.name.clone(), s.clone());
+    }
+}
+
+// Update the field types for fields that occur more than once to Vec<T>
+fn update_field_types(structs: &mut HashMap<String, XMLStruct>, max_counts: &HashMap<String, HashMap<String, usize>>) {
+    for (parent_name, child_map) in max_counts {
+        if let Some(parent_struct) = structs.get_mut(parent_name) {
+            // Check for fields that occur more than once
+            for (child_name, child_count) in child_map {
+                if *child_count > 1 {
+                    println!("--------{}: {} -> {}", parent_name, child_name, child_count);
+
+                    // Update the field type to Vec<T>
+                    for field in &mut parent_struct.fields {
+                        if field.name == *child_name {
+                            field.field_type = format!("Vec<{}>", field.name);
+                        }
+                    }
+                }
+            }
+        }
+    } 
 }
 
 // Generates String for Rust structs with fields 
