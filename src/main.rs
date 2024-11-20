@@ -1,8 +1,8 @@
 use quick_xml::reader::Reader;
-use quick_xml::events::Event::{Start, End, Eof};
+use quick_xml::events::Event::{Start, Empty, End, Eof};
 use std::collections::HashMap;
 use std::fs::File;
-use std::io::{self, Read, Write};
+use std::io::{Read, Write};
 use std::str;
 
 #[derive(Debug, Clone)]
@@ -30,9 +30,7 @@ fn main() {
     let xml_string = read_xml_file("forestpropertydata.xml");
     let mut reader = Reader::from_str(&xml_string);
 
-    let mut structs: HashMap<String, XMLStruct> = HashMap::new(); // Finalized structs
-
-    create_structs(&mut reader, &mut structs);
+    let mut structs = create_structs(&mut reader);
 
     let struct_string = generate_structs_string(&mut structs);
 
@@ -42,8 +40,10 @@ fn main() {
 }
 
 // Create structs from the XML document
-fn create_structs(reader: &mut Reader<&[u8]>, structs: &mut HashMap<String, XMLStruct>) {
+fn create_structs(reader: &mut Reader<&[u8]>) -> HashMap<String, XMLStruct> {
     let mut stack: Vec<XMLStruct> = Vec::new(); // Stack of structs being constructed
+    let mut empty_structs: HashMap<String, XMLStruct> = HashMap::new(); // Structs from self-closing tags
+    let mut structs: HashMap<String, XMLStruct> = HashMap::new(); // Finalized structs
     let mut field_counts: HashMap<String, HashMap<String, usize>> = HashMap::new(); // Count of fields per struct
     let mut max_counts: HashMap<String, HashMap<String, usize>> = HashMap::new(); // Maximum count of fields per struct
 
@@ -89,6 +89,29 @@ fn create_structs(reader: &mut Reader<&[u8]>, structs: &mut HashMap<String, XMLS
                     stack.push(new_struct);
                 }
             },
+            Ok(Empty(ref e)) => {
+                let element_name = std::str::from_utf8(e.name().as_ref()).unwrap().to_string();
+
+                // Create a new struct for this element
+                let mut new_struct = XMLStruct {
+                    name: element_name.clone(),
+                    fields: Vec::new(),
+                };
+
+                parse_attributes(e.clone(), &mut new_struct);
+
+                empty_structs.insert(element_name.clone(), new_struct.clone());
+
+                // If there's a parent struct, add this struct as a field to it
+                if let Some(parent_struct) = stack.last_mut() {
+                    if !parent_struct.fields.iter().any(|field| field.name == element_name) {
+                        parent_struct.fields.push(XMLField {
+                            name: element_name.clone(),
+                            field_type: element_name.clone(),
+                        });
+                    }
+                }
+            },
             Ok(End(ref e)) => {
                 let element_name = std::str::from_utf8(e.name().as_ref()).unwrap().to_string();
 
@@ -126,26 +149,13 @@ fn create_structs(reader: &mut Reader<&[u8]>, structs: &mut HashMap<String, XMLS
         }
     }
 
-    remove_fieldless_structs(structs);
+    remove_fieldless_structs(&mut structs);
 
-    for (parent_name, child_map) in &max_counts {
-        if let Some(parent_struct) = structs.get_mut(parent_name) {
-            // Check for fields that occur more than once
-            for (child_name, child_count) in child_map {
-                if *child_count > 1 {
-                    println!("--------{}: {} -> {}", parent_name, child_name, child_count);
+    add_empty_structs(&mut structs, &mut empty_structs);
 
-                    // Update the field type to Vec<T>
-                    for field in &mut parent_struct.fields {
-                        if field.name == *child_name {
-                            field.field_type = format!("Vec<{}>", field.name);
-                        }
-                    }
-                }
-            }
-        }
-    } 
+    update_field_types(&mut structs, &max_counts);
 
+    structs
 }
 
 // Parse attributes and add them as fields
@@ -153,15 +163,14 @@ fn parse_attributes(e: quick_xml::events::BytesStart, new_struct: &mut XMLStruct
     for attr in e.attributes() {
         if let Ok(attr) = attr {
             let attr_name = std::str::from_utf8(attr.key.as_ref()).unwrap().to_string();
-            let mut field_name= String::new();
 
-            // Check if the attribute is a type attribute
-            if attr_name == "type" {
+            // Check if the attribute is a type attribute, if so, add _type to the field name
+            let field_name = if attr_name == "type" {
                 let element_name = e.name().0.to_vec().as_slice().to_vec().iter().map(|&c| c as char).collect::<String>();
-                field_name = format!("@{}_type", to_snake_case(&to_camel_case_with_prefix(&element_name)));
+                format!("@{}_type", to_snake_case(&to_camel_case_with_prefix(&element_name)))
             } else {
-                field_name = format!("@{}", attr_name);
-            }
+                format!("@{}", attr_name)
+            };
 
             // Add attribute as a field to the current struct
             new_struct.fields.push(XMLField {
@@ -191,6 +200,40 @@ fn remove_fieldless_structs(structs: &mut HashMap<String, XMLStruct>) {
     }
 }
 
+// Add the empty structs to the final structs
+fn add_empty_structs(structs: &mut HashMap<String, XMLStruct>, empty_structs: &mut HashMap<String, XMLStruct>) {
+    // Remove the $text field from empty structs
+    for (_, xml_struct) in &mut *empty_structs {
+        xml_struct.fields.retain(|field| field.name != "$text");
+    }
+
+    // Add the empty structs to the final structs
+    for s in empty_structs.values() {
+        structs.insert(s.name.clone(), s.clone());
+    }
+}
+
+// Update the field types for fields that occur more than once to Vec<T>
+fn update_field_types(structs: &mut HashMap<String, XMLStruct>, max_counts: &HashMap<String, HashMap<String, usize>>) {
+    for (parent_name, child_map) in max_counts {
+        if let Some(parent_struct) = structs.get_mut(parent_name) {
+            // Check for fields that occur more than once
+            for (child_name, child_count) in child_map {
+                if *child_count > 1 {
+                    println!("--------{}: {} -> {}", parent_name, child_name, child_count);
+
+                    // Update the field type to Vec<T>
+                    for field in &mut parent_struct.fields {
+                        if field.name == *child_name {
+                            field.field_type = format!("Vec<{}>", field.name);
+                        }
+                    }
+                }
+            }
+        }
+    } 
+}
+
 // Generates String for Rust structs with fields 
 fn generate_structs_string(structs: &HashMap<String, XMLStruct>) -> String {
     let mut struct_string = String::new();
@@ -201,18 +244,15 @@ fn generate_structs_string(structs: &HashMap<String, XMLStruct>) -> String {
         struct_string += &format!("pub struct {} {{\n", struct_name);
 
         for field in &xml_struct.fields {
-            let mut field_type = "";
-            let mut field_type_string = String::new();
 
-            // Check if the field type is a struct
-            if (*structs).contains_key(remove_vec(&field.field_type).as_str()) {
-                field_type_string = to_camel_case_with_prefix(&field.field_type);
-                field_type = field_type_string.as_str();
+            // Check if the field type is a struct, if so, use the struct name. Otherwise, use String
+            let field_type = if (*structs).contains_key(remove_vec(&field.field_type).as_str()) {
+                to_camel_case_with_prefix(&field.field_type)
             } else {
-                field_type = "String";
-            }
+                "String".to_string()
+            };
 
-            struct_string = fields_to_struct_string(field, field_type, struct_string.clone());
+            struct_string = field_to_struct_string(field, &field_type, struct_string.clone());
         }
 
         struct_string += &format!("}}\n");
@@ -222,9 +262,9 @@ fn generate_structs_string(structs: &HashMap<String, XMLStruct>) -> String {
     struct_string
 }
 
-// Adds fields to the struct string
-fn fields_to_struct_string(field: &XMLField, field_type: &str, mut struct_string: String) -> String {
-    // Check if the field is an attribute or text
+// Adds field to the struct string
+fn field_to_struct_string(field: &XMLField, field_type: &str, mut struct_string: String) -> String {
+    // Check if the field is text
     if field.name.starts_with("$") {
         struct_string += &format!("\t#[serde(rename = \"{}\", skip_serializing_if = \"Option::is_none\")]\n", field.name);
         struct_string += &format!("\tpub {}: Option<{}>,\n", field.name.replace("$", ""), field_type);
@@ -234,12 +274,14 @@ fn fields_to_struct_string(field: &XMLField, field_type: &str, mut struct_string
             struct_string += &format!("\t#[serde(rename = \"@type\")]\n");
             struct_string += &format!("\tpub {}: {},\n", field.name.replace("@", ""), field_type);
         } else {
+            // Handle other attributes
             struct_string += &format!("\t#[serde(rename = \"@{}\")]\n", field.name.chars().skip(1).collect::<String>());
 
             let field_name = field.name.chars().skip(1).collect::<String>().replace(":", "_");
             struct_string += &format!("\tpub {}: {},\n", to_snake_case(&field_name), field_type);
         }
     } else {
+        // Handle regular fields
         let renaming = field.name.split(":").last().unwrap();
         let field_name = field.name.split(":").next().unwrap().to_owned() + "_" + to_snake_case(&renaming).as_str();
         struct_string += &format!("\t#[serde(rename = \"{}\", skip_serializing_if = \"Option::is_none\")]\n", renaming);
@@ -251,15 +293,11 @@ fn fields_to_struct_string(field: &XMLField, field_type: &str, mut struct_string
 
 // Removes Vec< and > from a string
 fn remove_vec(s: &str) -> String {
-    let mut new_string = String::new();
-
     if s.starts_with("Vec<") {
-        new_string = s.chars().skip(4).take(s.len() - 5).collect();
+        s.chars().skip(4).take(s.len() - 5).collect()
     } else {
-        new_string = s.to_string();
+        s.to_string()
     }
-
-    new_string
 }
 
 // Converts a string to camel case and adds prefix. Used for struct names and field types
