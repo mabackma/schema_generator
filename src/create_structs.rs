@@ -195,7 +195,9 @@ fn add_empty_structs(structs: &mut HashMap<String, XMLStruct>, empty_structs: &m
 
     // Add the empty structs to the final structs
     for s in empty_structs.values() {
-        structs.insert(s.name.clone(), s.clone());
+        if !structs.contains_key(&s.name) {
+            structs.insert(s.name.clone(), s.clone());
+        }
     }
 }
 
