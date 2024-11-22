@@ -16,7 +16,7 @@ fn main() {
     let file_xml_string = read_xml_file("forestpropertydata.xml");
     create_structs_and_save_to_file(&file_xml_string, "src/file_structs.rs");
 
-    // Convert the file XML content to structs and save them to a file
+    // Convert the file XML content to json and save to a file
     let file_property = file_content_to_structs("forestpropertydata.xml");
     match serde_json::to_string_pretty(&file_property) {
         Ok(json) => json_to_file("file_forestpropertydata.json", &json),
@@ -28,7 +28,7 @@ fn main() {
     let url_xml_string = fetch_xml_url(url).unwrap();
     create_structs_and_save_to_file(&url_xml_string, "src/url_structs.rs");
 
-    // Convert the URL XML content to structs and save them to a file
+    // Convert the URL XML content to json and save to a file
     let url_property = string_content_to_structs(&url_xml_string);
     match serde_json::to_string_pretty(&url_property) {
         Ok(json) => json_to_file("url_forestpropertydata.json", &json),
