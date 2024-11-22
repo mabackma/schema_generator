@@ -12,7 +12,7 @@ use std::str;
 use std::fs;
 
 fn main() {    
-    // Create structs from a file
+/*     // Create structs from a file
     let file_xml_string = read_xml_file("forestpropertydata.xml");
     create_structs_and_save_to_file(&file_xml_string, "src/file_structs.rs");
 
@@ -33,7 +33,8 @@ fn main() {
     match serde_json::to_string_pretty(&url_property) {
         Ok(json) => json_to_file("url_forestpropertydata.json", &json),
         Err(e) => println!("Error: {}", e),
-    }
+    } */
+   json_to_xml("file_forestpropertydata.json");
 }
 
 // Reads an XML file and returns its contents as a string
@@ -93,4 +94,11 @@ fn string_content_to_structs(xml: &str) -> UrlForestPropertyData {
 fn json_to_file(file_name: &str, data: &str) {
     let mut file = File::create(file_name).expect("Unable to create file");
     file.write_all(data.as_bytes()).expect("Unable to write data");
+}
+
+// Convert Json to XML
+fn json_to_xml(path: &str) {
+    let json = fs::read_to_string(path).expect("Could not read the JSON file");
+    let json_value: serde_json::Value = serde_json::from_str(&json).unwrap();
+    println!("{:#?}", json_value);
 }
