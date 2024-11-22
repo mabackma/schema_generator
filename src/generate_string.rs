@@ -6,10 +6,11 @@ use std::collections::HashMap;
 // Generates String for Rust structs with fields 
 pub fn generate_structs_string(structs: &HashMap<String, XMLStruct>) -> String {
     let mut struct_string = String::new();
+    struct_string += &format!("use serde::{{Serialize, Deserialize}};\n\n");
 
     for (name, xml_struct) in structs {
         let struct_name = to_camel_case_with_prefix(&name); 
-        struct_string += &format!("#[derive(Serialize, Deserialize)]\n");
+        struct_string += &format!("#[derive(Serialize, Deserialize, Debug)]\n");
         struct_string += &format!("pub struct {} {{\n", struct_name);
 
         for field in &xml_struct.fields {
@@ -38,8 +39,14 @@ fn field_to_struct_string(field: &XMLField, field_type: &str, mut struct_string:
         struct_string += &format!("\t#[serde(rename = \"{}\", skip_serializing_if = \"Option::is_none\")]\n", field.name);
         struct_string += &format!("\tpub {}: Option<{}>,\n", field.name.replace("$", ""), field_type);
     } else if field.name.starts_with("@") {
+        // Check if the field is schema instance type
+        if field.name.starts_with("@xsi") {
+            struct_string += &format!("\t#[serde(rename = \"{}\")]\n", field.name.replace("xsi:", ""));
+
+            let field_name = field.name.chars().skip(1).collect::<String>().replace(":", "_");
+            struct_string += &format!("\tpub {}: {},\n", to_snake_case(&field_name), field_type);
         // Check if the field is a type attribute
-        if field.name.ends_with("_type") {
+        } else if field.name.ends_with("_type") {
             struct_string += &format!("\t#[serde(rename = \"@type\")]\n");
             struct_string += &format!("\tpub {}: {},\n", field.name.replace("@", ""), field_type);
         } else {
