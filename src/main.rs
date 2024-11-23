@@ -10,30 +10,27 @@ use std::fs::File;
 use std::io::{Read, Write};
 use std::str;
 use std::fs;
+use std::any::type_name;
 
 fn main() {    
-/*     // Create structs from a file
+    // Create structs schema from a file
     let file_xml_string = read_xml_file("forestpropertydata.xml");
     create_structs_and_save_to_file(&file_xml_string, "src/file_structs.rs");
 
-    // Convert the file XML content to json and save to a file
+    // Convert the file XML content to structs according to the schema
     let file_property = file_content_to_structs("forestpropertydata.xml");
-    match serde_json::to_string_pretty(&file_property) {
-        Ok(json) => json_to_file("file_forestpropertydata.json", &json),
-        Err(e) => println!("Error: {}", e),
-    }
 
-    // Create structs from a URL
+    // Create structs schema from a URL
     let url = "https://avoin.metsakeskus.fi/rest/mvrest/FRStandData/v1/ByPolygon?wktPolygon=POLYGON%20((393960.156%206801453.126,%20394798.608%206801657.878,%20394930.512%206801670.111,%20395028.723%206802116.858,%20394258.945%206801929.148,%20394261.711%206801810.541,%20394091.166%206801665.961,%20393960.156%206801453.126))&stdVersion=MV1.9";
     let url_xml_string = fetch_xml_url(url).unwrap();
     create_structs_and_save_to_file(&url_xml_string, "src/url_structs.rs");
 
-    // Convert the URL XML content to json and save to a file
+    // Convert the URL XML content to structs according to the schema
     let url_property = string_content_to_structs(&url_xml_string);
-    match serde_json::to_string_pretty(&url_property) {
-        Ok(json) => json_to_file("url_forestpropertydata.json", &json),
-        Err(e) => println!("Error: {}", e),
-    } */
+
+    // Convert the structs to json and save to a json file
+    property_to_json(Some(file_property), Some(url_property));
+
    json_to_xml("file_forestpropertydata.json");
 }
 
@@ -90,15 +87,49 @@ fn string_content_to_structs(xml: &str) -> UrlForestPropertyData {
     from_str(&xml).expect("Could not parse the XML")
 }
 
-// Creates json from structs
-fn json_to_file(file_name: &str, data: &str) {
-    let mut file = File::create(file_name).expect("Unable to create file");
-    file.write_all(data.as_bytes()).expect("Unable to write data");
+// Converts structs to json and saves them to a json file
+fn property_to_json(file_property: Option<FileForestPropertyData>, url_property: Option<UrlForestPropertyData>) {
+    if file_property.is_some() {
+        let file_property = file_property.unwrap();
+        let type_name = type_name_of(&file_property);
+
+        let property = serde_json::json!({
+            type_name.split("::").last().unwrap(): file_property
+        });
+
+        match serde_json::to_string_pretty(&property) {
+            Ok(json) => std::fs::write("file_forestpropertydata.json", &json).expect("Unable to write data"),
+            Err(e) => println!("Error: {}", e),
+        }
+    } 
+    
+    if url_property.is_some() {
+        let url_property = url_property.unwrap();
+        let type_name = type_name_of(&url_property);
+
+        let property = serde_json::json!({
+            type_name.split("::").last().unwrap(): url_property
+        });
+
+        match serde_json::to_string_pretty(&property) {
+            Ok(json) => std::fs::write("url_forestpropertydata.json", &json).expect("Unable to write data"),
+            Err(e) => println!("Error: {}", e),
+        }
+    }
+}
+
+// Get the type name of a struct
+fn type_name_of<T>(_: &T) -> &'static str {
+    type_name::<T>()
 }
 
 // Convert Json to XML
 fn json_to_xml(path: &str) {
     let json = fs::read_to_string(path).expect("Could not read the JSON file");
     let json_value: serde_json::Value = serde_json::from_str(&json).unwrap();
-    println!("{:#?}", json_value);
+    //println!("{:#?}", json_value);
+
+    let xml = serde_xml_rs::to_string(&json_value).expect("Could not convert JSON to XML");
+    println!("{:#?}", xml);
+    std::fs::write("file_forestpropertydata.xml", &xml).expect("Unable to write data");
 }
