@@ -152,14 +152,20 @@ fn create_xml_element(json_data: &Value, writer: &mut Writer<Cursor<Vec<u8>>>, p
 
             // Process key-value pairs
             for (key, value) in map {
+                // Write self-closing tag if the object is empty
+                if value.is_object() && value.as_object().unwrap().is_empty() {
+                    writer
+                        .write_event(Event::Empty(BytesStart::new(key)))
+                        .expect("Unable to write self-closing tag");
+                    continue;
+                }
+
                 if key.starts_with('@') {
                     // Process attributes (keys starting with '@')
                     let attr_name = &key[1..];  // Remove '@' from the attribute name
                     if let Value::String(attr_value) = value {
                         element.push_attribute((attr_name, attr_value.as_str()));
                     }
-
-                    println!("element: {:#?}", element);
                 } else {
                     element = BytesStart::new(key);
                     // If it's not an attribute, it's a nested element, so recursively process it
@@ -174,13 +180,6 @@ fn create_xml_element(json_data: &Value, writer: &mut Writer<Cursor<Vec<u8>>>, p
                         .write_event(Event::End(BytesEnd::new(key)))
                         .expect("Unable to write end tag");
                 }
-            }
-
-            // If the object is empty, write a self-closing tag
-            if map.is_empty() {
-                writer
-                    .write_event(Event::Empty(element))
-                    .expect("Unable to write self-closing tag");
             }
         },
         // Handle arrays by processing each item inside the array
