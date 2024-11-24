@@ -158,7 +158,10 @@ fn create_xml_element(json_data: &Value, writer: &mut Writer<Cursor<Vec<u8>>>, p
                     if let Value::String(attr_value) = value {
                         element.push_attribute((attr_name, attr_value.as_str()));
                     }
+
+                    println!("element: {:#?}", element);
                 } else {
+                    element = BytesStart::new(key);
                     // If it's not an attribute, it's a nested element, so recursively process it
                     writer
                         .write_event(Event::Start(element.to_owned()))
