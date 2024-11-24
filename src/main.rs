@@ -167,14 +167,17 @@ fn create_xml_element(json_data: &Value, writer: &mut Writer<Cursor<Vec<u8>>>, p
                         element.push_attribute((attr_name, attr_value.as_str()));
                     }
                 } else {
-                    element = BytesStart::new(key);
-                    // If it's not an attribute, it's a nested element, so recursively process it
+                    // Write the start tag for the element
                     writer
                         .write_event(Event::Start(element.to_owned()))
                         .expect("Unable to write start tag");
 
-                    create_xml_element(value, writer, key);
+                    // Reset the element for the next iteration
+                    //element = BytesStart::new(key);
 
+                    // Recursively process nested elements
+                    create_xml_element(value, writer, key);
+                    
                     // Write the closing tag
                     writer
                         .write_event(Event::End(BytesEnd::new(key)))
