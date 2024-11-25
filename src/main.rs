@@ -136,7 +136,7 @@ fn json_to_xml(path: &str) {
     let mut writer = Writer::new_with_indent(Cursor::new(Vec::new()), b' ', 2); // 2-space indentation
 
     // Write XML header
-    let root = "ForestPropertyData";
+    let root = "root!";
     writer.write_event(Event::Decl(BytesDecl::new("1.0", Some("UTF-8"), None))).expect("Unable to write XML declaration");
     create_xml_element(&json_value, &mut writer, root);
 
@@ -166,14 +166,14 @@ fn create_xml_element(json_data: &Value, writer: &mut Writer<Cursor<Vec<u8>>>, p
                     if let Value::String(attr_value) = value {
                         element.push_attribute((attr_name, attr_value.as_str()));
                     }
-                } else {
+                } else {                    
+                    // Reset the element for the next iteration
+                    element = BytesStart::new(key);
+
                     // Write the start tag for the element
                     writer
                         .write_event(Event::Start(element.to_owned()))
                         .expect("Unable to write start tag");
-
-                    // Reset the element for the next iteration
-                    //element = BytesStart::new(key);
 
                     // Recursively process nested elements
                     create_xml_element(value, writer, key);
@@ -181,7 +181,7 @@ fn create_xml_element(json_data: &Value, writer: &mut Writer<Cursor<Vec<u8>>>, p
                     // Write the closing tag
                     writer
                         .write_event(Event::End(BytesEnd::new(key)))
-                        .expect("Unable to write end tag");
+                        .expect("Unable to write end tag"); 
                 }
             }
         },
