@@ -10,7 +10,9 @@ use quick_xml::reader::Reader;
 use quick_xml::de::from_str;
 use reqwest::blocking::get;
 use serde_json::Value;
+use std::collections::HashMap;
 use std::fs::File;
+use std::hash::Hash;
 use std::io::{Read, Write, Cursor};
 use std::str;
 use std::fs;
@@ -149,6 +151,7 @@ fn create_xml_element(json_data: &Value, writer: &mut Writer<Cursor<Vec<u8>>>, p
         // Handle objects, which may include both attributes and nested elements
         Value::Object(map) => {
             let mut element = BytesStart::new(parent_tag);
+            let mut attributes = HashMap::new();
 
             // Process key-value pairs
             for (key, value) in map {
@@ -161,23 +164,41 @@ fn create_xml_element(json_data: &Value, writer: &mut Writer<Cursor<Vec<u8>>>, p
                 }
 
                 if key.starts_with('@') {
+                    attributes.insert(&key[1..], value);
                     continue;
-                } else {                    
-                    // Reset the element for the next iteration
-                    element = BytesStart::new(key);
+                } else { 				  
+					// Add attributes to the element
+					for (attr_key, attr_value) in &attributes {
+						if let Value::String(value) = attr_value {
+							element.push_attribute((*attr_key, value.as_str()));
+						}
+					}    			
+					
+/*                     if !attributes.is_empty() {
+                        // Write the start tag for the element
+                        writer
+                            .write_event(Event::Start(element.to_owned()))
+                            .expect("Unable to write start tag");                					            					
+
+                        // Clear the attributes
+                        attributes.clear();
+                    }
+ */
+					// Reset the element for the next iteration
+					element = BytesStart::new(key);
 
                     // Write the start tag for the element
                     writer
                         .write_event(Event::Start(element.to_owned()))
-                        .expect("Unable to write start tag");
+                        .expect("Unable to write start tag");   
 
-                    // Recursively process nested elements
-                    create_xml_element(value, writer, key);
-                    
-                    // Write the closing tag
-                    writer
-                        .write_event(Event::End(BytesEnd::new(key)))
-                        .expect("Unable to write end tag"); 
+					// Recursively process nested elements
+					create_xml_element(value, writer, key);
+					
+					// Write the closing tag
+					writer
+						.write_event(Event::End(BytesEnd::new(key)))
+						.expect("Unable to write end tag"); 
                 }
             }
         },
