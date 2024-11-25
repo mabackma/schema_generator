@@ -136,7 +136,7 @@ fn json_to_xml(path: &str) {
     let mut writer = Writer::new_with_indent(Cursor::new(Vec::new()), b' ', 2); // 2-space indentation
 
     // Write XML header
-    let root = "root!";
+    let root = "root";
     writer.write_event(Event::Decl(BytesDecl::new("1.0", Some("UTF-8"), None))).expect("Unable to write XML declaration");
     create_xml_element(&json_value, &mut writer, root);
 
@@ -161,11 +161,7 @@ fn create_xml_element(json_data: &Value, writer: &mut Writer<Cursor<Vec<u8>>>, p
                 }
 
                 if key.starts_with('@') {
-                    // Process attributes (keys starting with '@')
-                    let attr_name = &key[1..];  // Remove '@' from the attribute name
-                    if let Value::String(attr_value) = value {
-                        element.push_attribute((attr_name, attr_value.as_str()));
-                    }
+                    continue;
                 } else {                    
                     // Reset the element for the next iteration
                     element = BytesStart::new(key);
