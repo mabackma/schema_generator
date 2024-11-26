@@ -19,7 +19,7 @@ use std::fs;
 use std::any::type_name;
 
 fn main() {    
-/*     // Create structs schema from a file
+    // Create structs schema from a file
     let file_xml_string = read_xml_file("forestpropertydata.xml");
     create_structs_and_save_to_file(&file_xml_string, "src/file_structs.rs");
 
@@ -36,7 +36,7 @@ fn main() {
 
     // Convert the structs to json and save to a json file
     property_to_json(Some(file_property), Some(url_property));
- */
+
     json_to_xml("file_forestpropertydata.json");
 }
 

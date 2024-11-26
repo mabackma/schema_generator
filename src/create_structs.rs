@@ -32,11 +32,14 @@ pub fn create_structs(reader: &mut Reader<&[u8]>) -> HashMap<String, XMLStruct> 
     let mut structs: HashMap<String, XMLStruct> = HashMap::new(); // Finalized structs
     let mut field_counts: HashMap<String, HashMap<String, usize>> = HashMap::new(); // Count of fields per struct
     let mut max_counts: HashMap<String, HashMap<String, usize>> = HashMap::new(); // Maximum count of fields per struct
+    let mut start_tags: Vec<String> = Vec::new(); // Start tags for elements
 
     loop {
         match reader.read_event() {
             Ok(Start(ref e)) => {
                 let element_name = std::str::from_utf8(e.name().as_ref()).unwrap().to_string();
+
+                start_tags.push(element_name.clone());
 
                 // Create a new struct for this element
                 let mut new_struct = XMLStruct {
@@ -136,6 +139,9 @@ pub fn create_structs(reader: &mut Reader<&[u8]>) -> HashMap<String, XMLStruct> 
     }
 
     remove_fieldless_structs(&mut structs);
+
+    // Remove empty structs that have had content (start tags)
+    empty_structs.retain(|name, _| !start_tags.contains(&name));
 
     add_empty_structs(&mut structs, &mut empty_structs);
 
