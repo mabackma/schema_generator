@@ -1,4 +1,3 @@
-use quick_xml::writer;
 use schema_generator::generate_string::generate_structs_string;
 use schema_generator::create_structs::create_structs;
 use schema_generator::file_structs::ForestPropertyData as FileForestPropertyData;
@@ -12,11 +11,9 @@ use reqwest::blocking::get;
 use serde_json::Value;
 use std::collections::HashMap;
 use std::fs::File;
-use std::hash::Hash;
 use std::io::{Read, Write, Cursor};
 use std::str;
 use std::fs;
-use std::any::type_name;
 
 fn main() {    
     // Create structs schema from a file
@@ -97,13 +94,8 @@ fn string_content_to_structs(xml: &str) -> UrlForestPropertyData {
 fn property_to_json(file_property: Option<FileForestPropertyData>, url_property: Option<UrlForestPropertyData>) {
     if file_property.is_some() {
         let file_property = file_property.unwrap();
-        let type_name = type_name_of(&file_property);
 
-        let property = serde_json::json!({
-            type_name.split("::").last().unwrap(): file_property
-        });
-
-        match serde_json::to_string_pretty(&property) {
+        match serde_json::to_string_pretty(&file_property) {
             Ok(json) => std::fs::write("file_forestpropertydata.json", &json).expect("Unable to write data"),
             Err(e) => println!("Error: {}", e),
         }
@@ -111,22 +103,12 @@ fn property_to_json(file_property: Option<FileForestPropertyData>, url_property:
     
     if url_property.is_some() {
         let url_property = url_property.unwrap();
-        let type_name = type_name_of(&url_property);
 
-        let property = serde_json::json!({
-            type_name.split("::").last().unwrap(): url_property
-        });
-
-        match serde_json::to_string_pretty(&property) {
+        match serde_json::to_string_pretty(&url_property) {
             Ok(json) => std::fs::write("url_forestpropertydata.json", &json).expect("Unable to write data"),
             Err(e) => println!("Error: {}", e),
         }
     }
-}
-
-// Get the type name of a struct
-fn type_name_of<T>(_: &T) -> &'static str {
-    type_name::<T>()
 }
 
 // Convert Json to XML
@@ -138,9 +120,14 @@ fn json_to_xml(path: &str) {
     let mut writer = Writer::new_with_indent(Cursor::new(Vec::new()), b' ', 2); // 2-space indentation
 
     // Write XML header
-    let root = "root";
+    let root = "ForestPropertyData";
     writer.write_event(Event::Decl(BytesDecl::new("1.0", Some("UTF-8"), None))).expect("Unable to write XML declaration");
     create_xml_element(&json_value, &mut writer, root);
+
+    // Write the closing tag
+    writer
+        .write_event(Event::End(BytesEnd::new(root)))
+        .expect("Unable to write end tag"); 
 
     let xml_output = String::from_utf8(writer.into_inner().into_inner()).expect("Failed to convert to UTF-8");
     std::fs::write("file_back_to_xml.xml", &xml_output).expect("Unable to write data");
@@ -153,6 +140,27 @@ fn create_xml_element(json_data: &Value, writer: &mut Writer<Cursor<Vec<u8>>>, p
             let mut element = BytesStart::new(parent_tag);
             let mut attributes = HashMap::new();
 
+            // Look for attributes in the object
+            for (key, value) in map {
+                if key.starts_with('@') {
+                    attributes.insert(&key[1..], value);
+                    continue;
+                }
+            } 
+
+            if !attributes.is_empty() {
+                // Write the start tag with attributes
+                for (key, value) in &attributes {
+                    element.push_attribute((*key, value.as_str().unwrap()));
+                }
+
+                writer
+                    .write_event(Event::Start(element.to_owned()))
+                    .expect("Unable to write start tag");
+
+                attributes.clear();
+            }
+
             // Process key-value pairs
             for (key, value) in map {
                 // Write self-closing tag if the object is empty
@@ -163,50 +171,80 @@ fn create_xml_element(json_data: &Value, writer: &mut Writer<Cursor<Vec<u8>>>, p
                     continue;
                 }
 
+                // Skip attributes
                 if key.starts_with('@') {
-                    attributes.insert(&key[1..], value);
                     continue;
                 } else { 				  
-					// Add attributes to the element
-					for (attr_key, attr_value) in &attributes {
-						if let Value::String(value) = attr_value {
-							element.push_attribute((*attr_key, value.as_str()));
-						}
-					}    			
-					
-/*                     if !attributes.is_empty() {
-                        // Write the start tag for the element
-                        writer
-                            .write_event(Event::Start(element.to_owned()))
-                            .expect("Unable to write start tag");                					            					
-
-                        // Clear the attributes
-                        attributes.clear();
-                    }
- */
 					// Reset the element for the next iteration
 					element = BytesStart::new(key);
 
-                    // Write the start tag for the element
-                    writer
-                        .write_event(Event::Start(element.to_owned()))
-                        .expect("Unable to write start tag");   
+                    // Check if the first key of the object is an attribute
+                    let is_attribute_key = |value: &Value| {
+                        value.is_object()
+                            && value.as_object()
+                                .unwrap()
+                                .keys()
+                                .next()
+                                .map(|key| key.starts_with('@'))
+                                .unwrap_or(false)
+                    };
+                    
+                    // Check if the first key of the first object in array is an attribute
+                    let is_array_with_attribute_key = |value: &Value| {
+                        value.is_array()
+                            && value.as_array()
+                                .unwrap()
+                                .first()
+                                .map(|v| is_attribute_key(v))
+                                .unwrap_or(false)
+                    };
+                    
+                    // Write the start tag if the value is not an attribute or an array with an attribute key
+                    if !(is_attribute_key(value) || is_array_with_attribute_key(value)) {
+                        writer
+                            .write_event(Event::Start(element.to_owned()))
+                            .expect("Unable to write start tag");
+                    }
 
 					// Recursively process nested elements
 					create_xml_element(value, writer, key);
 					
-					// Write the closing tag
-					writer
-						.write_event(Event::End(BytesEnd::new(key)))
-						.expect("Unable to write end tag"); 
+                    // Write the closing tag if the value is not an array
+                    if !value.is_array() {
+                        writer
+                            .write_event(Event::End(BytesEnd::new(key)))
+                            .expect("Unable to write end tag");
+                    }
                 }
             }
         },
         // Handle arrays by processing each item inside the array
         Value::Array(arr) => {
+            let mut first_element = true;
+
             for value in arr {
+                // Get the first key of the object 
+                if value.is_object() {
+                    let first_key = value.as_object().unwrap().keys().next().unwrap();
+                    let first_value = value.as_object().unwrap().get(first_key).unwrap();
+
+                    // Write the start tag for all elements except the first one
+                    if first_value.is_object() && !first_element {
+                        writer
+                            .write_event(Event::Start(BytesStart::new(parent_tag)))
+                            .expect("Unable to write start tag"); 
+                    }
+                }
+                
                 // Process each element of the array as a separate XML tag
                 create_xml_element(value, writer, parent_tag);
+
+                // Write the closing tag
+                writer
+                    .write_event(Event::End(BytesEnd::new(parent_tag)))
+                    .expect("Unable to write end tag"); 
+
+                first_element = false;
             }
         },
         // Handle strings as text content
@@ -218,5 +256,4 @@ fn create_xml_element(json_data: &Value, writer: &mut Writer<Cursor<Vec<u8>>>, p
         _ => {}  // Skip unsupported types (e.g., Null)
     }
 }
-
 
