@@ -34,7 +34,8 @@ fn main() {
     // Convert the structs to json and save to a json file
     property_to_json(Some(file_property), Some(url_property));
 
-    json_to_xml("file_forestpropertydata.json");
+    json_to_xml("file_forestpropertydata.json", "file_back_to_xml.xml");
+    json_to_xml("url_forestpropertydata.json", "url_back_to_xml.xml");
 }
 
 // Reads an XML file and returns its contents as a string
@@ -112,7 +113,7 @@ fn property_to_json(file_property: Option<FileForestPropertyData>, url_property:
 }
 
 // Convert Json to XML
-fn json_to_xml(path: &str) {
+fn json_to_xml(path: &str, file_name: &str) {
     let json = fs::read_to_string(path).expect("Could not read the JSON file");
     let json_value: serde_json::Value = serde_json::from_str(&json).unwrap();
 
@@ -130,7 +131,7 @@ fn json_to_xml(path: &str) {
         .expect("Unable to write end tag"); 
 
     let xml_output = String::from_utf8(writer.into_inner().into_inner()).expect("Failed to convert to UTF-8");
-    std::fs::write("file_back_to_xml.xml", &xml_output).expect("Unable to write data");
+    std::fs::write(file_name, &xml_output).expect("Unable to write data");
 }
 
 fn create_xml_element(json_data: &Value, writer: &mut Writer<Cursor<Vec<u8>>>, parent_tag: &str) {
@@ -224,12 +225,11 @@ fn create_xml_element(json_data: &Value, writer: &mut Writer<Cursor<Vec<u8>>>, p
 
             for value in arr {
                 // Get the first key of the object 
-                if value.is_object() {
+                if value.is_object() || value.is_array() {
                     let first_key = value.as_object().unwrap().keys().next().unwrap();
-                    let first_value = value.as_object().unwrap().get(first_key).unwrap();
-
+                    
                     // Write the start tag for all elements except the first one
-                    if first_value.is_object() && !first_element {
+                    if !first_key.starts_with('@') && !first_element {
                         writer
                             .write_event(Event::Start(BytesStart::new(parent_tag)))
                             .expect("Unable to write start tag"); 
