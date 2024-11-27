@@ -140,6 +140,11 @@ fn json_to_xml(path: &str) {
     writer.write_event(Event::Decl(BytesDecl::new("1.0", Some("UTF-8"), None))).expect("Unable to write XML declaration");
     create_xml_element(&json_value, &mut writer, root);
 
+    // Write the closing tag
+    writer
+        .write_event(Event::End(BytesEnd::new(root)))
+        .expect("Unable to write end tag"); 
+
     let xml_output = String::from_utf8(writer.into_inner().into_inner()).expect("Failed to convert to UTF-8");
     std::fs::write("file_back_to_xml.xml", &xml_output).expect("Unable to write data");
 }
@@ -226,17 +231,27 @@ fn create_xml_element(json_data: &Value, writer: &mut Writer<Cursor<Vec<u8>>>, p
                             .write_event(Event::End(BytesEnd::new(key)))
                             .expect("Unable to write end tag");
                     }
-
-/* 					// Write the closing tag
-					writer
-						.write_event(Event::End(BytesEnd::new(key)))
-						.expect("Unable to write end tag");  */
                 }
             }
         },
         // Handle arrays by processing each item inside the array
         Value::Array(arr) => {
+            let mut first_element = true;
+
             for value in arr {
+                // Get the first key of the object 
+                if value.is_object() {
+                    let first_key = value.as_object().unwrap().keys().next().unwrap();
+                    let first_value = value.as_object().unwrap().get(first_key).unwrap();
+
+                    // Write the start tag for all elements except the first one
+                    if first_value.is_object() && !first_element {
+                        writer
+                            .write_event(Event::Start(BytesStart::new(parent_tag)))
+                            .expect("Unable to write start tag"); 
+                    }
+                }
+                
                 // Process each element of the array as a separate XML tag
                 create_xml_element(value, writer, parent_tag);
 
@@ -244,6 +259,8 @@ fn create_xml_element(json_data: &Value, writer: &mut Writer<Cursor<Vec<u8>>>, p
                 writer
                     .write_event(Event::End(BytesEnd::new(parent_tag)))
                     .expect("Unable to write end tag"); 
+
+                first_element = false;
             }
         },
         // Handle strings as text content
