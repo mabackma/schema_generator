@@ -14,7 +14,6 @@ use std::fs::File;
 use std::io::{Read, Write, Cursor};
 use std::str;
 use std::fs;
-use std::any::type_name;
 
 fn main() {    
     // Create structs schema from a file
@@ -95,11 +94,6 @@ fn string_content_to_structs(xml: &str) -> UrlForestPropertyData {
 fn property_to_json(file_property: Option<FileForestPropertyData>, url_property: Option<UrlForestPropertyData>) {
     if file_property.is_some() {
         let file_property = file_property.unwrap();
-/*         let type_name = type_name_of(&file_property);
-
-        let property = serde_json::json!({
-            type_name.split("::").last().unwrap(): file_property
-        }); */
 
         match serde_json::to_string_pretty(&file_property) {
             Ok(json) => std::fs::write("file_forestpropertydata.json", &json).expect("Unable to write data"),
@@ -109,22 +103,12 @@ fn property_to_json(file_property: Option<FileForestPropertyData>, url_property:
     
     if url_property.is_some() {
         let url_property = url_property.unwrap();
-/*         let type_name = type_name_of(&url_property);
-
-        let property = serde_json::json!({
-            type_name.split("::").last().unwrap(): url_property
-        }); */
 
         match serde_json::to_string_pretty(&url_property) {
             Ok(json) => std::fs::write("url_forestpropertydata.json", &json).expect("Unable to write data"),
             Err(e) => println!("Error: {}", e),
         }
     }
-}
-
-// Get the type name of a struct
-fn type_name_of<T>(_: &T) -> &'static str {
-    type_name::<T>()
 }
 
 // Convert Json to XML
