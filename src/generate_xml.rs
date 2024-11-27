@@ -9,27 +9,26 @@ pub fn create_xml_element(json_data: &Value, writer: &mut Writer<Cursor<Vec<u8>>
         // Handle objects, which may include both attributes and nested elements
         Value::Object(map) => {
             let mut element = BytesStart::new(parent_tag);
-            let mut attributes = HashMap::new();
 
-            // Look for attributes in the object
-            for (key, value) in map {
-                if key.starts_with('@') {
-                    attributes.insert(&key[1..], value);
-                    continue;
+            // Extract attributes
+            let attributes: HashMap<_, _> = map
+                .iter()
+                .filter(|(key, _)| key.starts_with('@'))
+                .map(|(key, value)| (&key[1..], value))
+                .collect();
+
+            // Add attributes to the element
+            for (key, value) in &attributes {
+                if let Some(value_str) = value.as_str() {
+                    element.push_attribute((*key, value_str));
                 }
-            } 
+            }
 
+            // Write start tag with attributes, if any
             if !attributes.is_empty() {
-                // Write the start tag with attributes
-                for (key, value) in &attributes {
-                    element.push_attribute((*key, value.as_str().unwrap()));
-                }
-
                 writer
                     .write_event(Event::Start(element.to_owned()))
                     .expect("Unable to write start tag");
-
-                attributes.clear();
             }
 
             // Process key-value pairs
@@ -48,29 +47,8 @@ pub fn create_xml_element(json_data: &Value, writer: &mut Writer<Cursor<Vec<u8>>
                 } else { 				  
 					// Reset the element for the next iteration
 					element = BytesStart::new(key);
-
-                    // Check if the first key of the object is an attribute
-                    let is_attribute_key = |value: &Value| {
-                        value.is_object()
-                            && value.as_object()
-                                .unwrap()
-                                .keys()
-                                .next()
-                                .map(|key| key.starts_with('@'))
-                                .unwrap_or(false)
-                    };
                     
-                    // Check if the first key of the first object in array is an attribute
-                    let is_array_with_attribute_key = |value: &Value| {
-                        value.is_array()
-                            && value.as_array()
-                                .unwrap()
-                                .first()
-                                .map(|v| is_attribute_key(v))
-                                .unwrap_or(false)
-                    };
-                    
-                    // Write the start tag if the value is not an attribute or an array with an attribute key
+                    // Write the start tag if the value is not an attribute or an array with a first key as an attribute
                     if !(is_attribute_key(value) || is_array_with_attribute_key(value)) {
                         writer
                             .write_event(Event::Start(element.to_owned()))
@@ -91,15 +69,13 @@ pub fn create_xml_element(json_data: &Value, writer: &mut Writer<Cursor<Vec<u8>>
         },
         // Handle arrays by processing each item inside the array
         Value::Array(arr) => {
-            let mut first_element = true;
-
-            for value in arr {
+            for (i, value) in arr.iter().enumerate() {
                 // Get the first key of the object 
-                if value.is_object() || value.is_array() {
+                if value.is_object() {
                     let first_key = value.as_object().unwrap().keys().next().unwrap();
-                    
-                    // Write the start tag for all elements except the first one
-                    if !first_key.starts_with('@') && !first_element {
+
+                    // Write the start tag for all non-attribute elements, skipping the first one
+                    if !first_key.starts_with('@') && i > 0 {
                         writer
                             .write_event(Event::Start(BytesStart::new(parent_tag)))
                             .expect("Unable to write start tag"); 
@@ -112,9 +88,7 @@ pub fn create_xml_element(json_data: &Value, writer: &mut Writer<Cursor<Vec<u8>>
                 // Write the closing tag
                 writer
                     .write_event(Event::End(BytesEnd::new(parent_tag)))
-                    .expect("Unable to write end tag"); 
-
-                first_element = false;
+                    .expect("Unable to write end tag");
             }
         },
         // Handle strings as text content
@@ -125,4 +99,25 @@ pub fn create_xml_element(json_data: &Value, writer: &mut Writer<Cursor<Vec<u8>>
         },
         _ => {}  // Skip unsupported types (e.g., Null)
     }
+}
+
+// Check if the first key of the object is an attribute
+fn is_attribute_key(value: &Value) -> bool {
+    value.is_object()
+        && value.as_object()
+            .unwrap()
+            .keys()
+            .next()
+            .map(|key| key.starts_with('@'))
+            .unwrap_or(false)
+}
+
+// Check if the first key of the first object in array is an attribute
+fn is_array_with_attribute_key(value: &Value) -> bool {
+    value.is_array()
+        && value.as_array()
+            .unwrap()
+            .first()
+            .map(|v| is_attribute_key(v))
+            .unwrap_or(false)
 }
