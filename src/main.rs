@@ -257,4 +257,3 @@ fn create_xml_element(json_data: &Value, writer: &mut Writer<Cursor<Vec<u8>>>, p
     }
 }
 
-// Check if the value is an object, in which case check the first key
