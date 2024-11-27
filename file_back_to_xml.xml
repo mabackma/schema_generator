@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ForestPropertyData xmlns:gdt="http://standardit.tapio.fi/schemas/forestData/common/geometricDataTypes" xmlns:gml="http://www.opengis.net/gml" xmlns:tst="http://standardit.tapio.fi/schemas/forestData/treeStratum" xmlns="http://standardit.tapio.fi/schemas/forestData" xmlns:re="http://standardit.tapio.fi/schemas/forestData/realEstate" xmlns:st="http://standardit.tapio.fi/schemas/forestData/stand/2010/08/31" xmlns:dts="http://standardit.tapio.fi/schemas/forestData/deadTreeStrata" schemaLocation="http://standardit.tapio.fi/schemas/forestData ForestData.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ts="http://standardit.tapio.fi/schemas/forestData/treeStand" xmlns:op="http://standardit.tapio.fi/schemas/forestData/operation" xmlns:sf="http://standardit.tapio.fi/schemas/forestData/specialFeature/2010/08/31" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:tss="http://standardit.tapio.fi/schemas/forestData/treeStandSummary" xmlns:co="http://standardit.tapio.fi/schemas/forestData/common">
+<ForestPropertyData xmlns="http://standardit.tapio.fi/schemas/forestData" xmlns:ts="http://standardit.tapio.fi/schemas/forestData/treeStand" xmlns:tst="http://standardit.tapio.fi/schemas/forestData/treeStratum" xmlns:st="http://standardit.tapio.fi/schemas/forestData/stand/2010/08/31" schemaLocation="http://standardit.tapio.fi/schemas/forestData ForestData.xsd" xmlns:re="http://standardit.tapio.fi/schemas/forestData/realEstate" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tss="http://standardit.tapio.fi/schemas/forestData/treeStandSummary" xmlns:dts="http://standardit.tapio.fi/schemas/forestData/deadTreeStrata" xmlns:gml="http://www.opengis.net/gml" xmlns:gdt="http://standardit.tapio.fi/schemas/forestData/common/geometricDataTypes" xmlns:co="http://standardit.tapio.fi/schemas/forestData/common" xmlns:op="http://standardit.tapio.fi/schemas/forestData/operation" xmlns:sf="http://standardit.tapio.fi/schemas/forestData/specialFeature/2010/08/31">
   <RealEstates>
     <RealEstate id="526637">
       <AreaNumber>893</AreaNumber>
@@ -55,7 +55,7 @@
                     <ProposalYear>2025</ProposalYear>
                   </ProposalData>
                 </Operation>
-                <Operation id="1823595" mainType="2">
+                <Operation mainType="2" id="1823595">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2018-08-16T15:54:47</ChangeTime>
                   <OperationType>510</OperationType>
@@ -295,7 +295,7 @@
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate type="2" date="2016-10-28">
+                <TreeStandDataDate date="2016-10-28" type="2">
                   <TreeStandSummary id="4983765">
                     <BasalArea>8.6</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -398,7 +398,7 @@
                 <SubGroup>1</SubGroup>
               </StandBasicData>
               <TreeStandData>
-                <TreeStandDataDate type="1" date="2015-09-28">
+                <TreeStandDataDate date="2015-09-28" type="1">
                   <TreeStandSummary id="4983766">
                     <BasalArea>16.5</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -580,7 +580,7 @@
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate date="2016-10-28" type="2">
+                <TreeStandDataDate type="2" date="2016-10-28">
                   <TreeStandSummary id="4983769">
                     <BasalArea>2.5</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -794,7 +794,7 @@
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate type="2" date="2016-10-28">
+                <TreeStandDataDate date="2016-10-28" type="2">
                   <TreeStandSummary id="4983771">
                     <BasalArea>18.2</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -1171,7 +1171,7 @@
             </Stand>
             <Stand id="2553947">
               <Operations>
-                <Operation mainType="1" id="1194513">
+                <Operation id="1194513" mainType="1">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2018-08-16T15:54:48</ChangeTime>
                   <Cutting>
@@ -1209,7 +1209,7 @@
                     <ProposalYear>2016</ProposalYear>
                   </ProposalData>
                 </Operation>
-                <Operation mainType="2" id="1823601">
+                <Operation id="1823601" mainType="2">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2018-08-16T15:54:48</ChangeTime>
                   <OperationType>520</OperationType>
@@ -1219,7 +1219,7 @@
                   </ProposalData>
                   <Silviculture/>
                 </Operation>
-                <Operation mainType="2" id="1823602">
+                <Operation id="1823602" mainType="2">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2018-08-16T15:54:48</ChangeTime>
                   <OperationType>302</OperationType>
@@ -1284,7 +1284,7 @@
                 <SubGroup>2</SubGroup>
               </StandBasicData>
               <TreeStandData>
-                <TreeStandDataDate type="1" date="2015-09-28">
+                <TreeStandDataDate date="2015-09-28" type="1">
                   <DeadTreeStrata>
                     <DeadTreeStratum id="97311">
                       <ChangeState>0</ChangeState>
@@ -1332,7 +1332,7 @@
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate type="2" date="2016-10-28">
+                <TreeStandDataDate date="2016-10-28" type="2">
                   <TreeStandSummary id="4983775">
                     <BasalArea>18.1</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -1628,7 +1628,7 @@
             </Stand>
             <Stand id="2553949">
               <Operations>
-                <Operation id="1194515" mainType="1">
+                <Operation mainType="1" id="1194515">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2018-08-16T15:54:48</ChangeTime>
                   <Cutting>
@@ -1694,7 +1694,7 @@
                   </ProposalData>
                   <Silviculture/>
                 </Operation>
-                <Operation id="1823605" mainType="2">
+                <Operation mainType="2" id="1823605">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2018-08-16T15:54:48</ChangeTime>
                   <OperationType>102</OperationType>
@@ -1757,7 +1757,7 @@
                 <SubGroup>2</SubGroup>
               </StandBasicData>
               <TreeStandData>
-                <TreeStandDataDate date="2015-11-30" type="1">
+                <TreeStandDataDate type="1" date="2015-11-30">
                   <TreeStandSummary id="4983778">
                     <BasalArea>16.8</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -1825,7 +1825,7 @@
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate type="2" date="2016-10-28">
+                <TreeStandDataDate date="2016-10-28" type="2">
                   <TreeStandSummary id="4983779">
                     <BasalArea>16.8</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -1971,7 +1971,7 @@
                     </Specification>
                   </Specifications>
                 </Operation>
-                <Operation id="1823606" mainType="2">
+                <Operation mainType="2" id="1823606">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2018-08-16T15:54:48</ChangeTime>
                   <OperationType>301</OperationType>
@@ -1991,7 +1991,7 @@
                   </ProposalData>
                   <Silviculture/>
                 </Operation>
-                <Operation id="1823608" mainType="2">
+                <Operation mainType="2" id="1823608">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2018-08-16T15:54:48</ChangeTime>
                   <OperationType>520</OperationType>
@@ -2047,7 +2047,7 @@
                 <SubGroup>1</SubGroup>
               </StandBasicData>
               <TreeStandData>
-                <TreeStandDataDate date="2015-09-28" type="1">
+                <TreeStandDataDate type="1" date="2015-09-28">
                   <TreeStandSummary id="4983780">
                     <BasalArea>11</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -2227,7 +2227,7 @@
                     <ProposalYear>2025</ProposalYear>
                   </ProposalData>
                 </Operation>
-                <Operation id="1823609" mainType="2">
+                <Operation mainType="2" id="1823609">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2018-08-16T15:54:48</ChangeTime>
                   <OperationType>301</OperationType>
@@ -2237,7 +2237,7 @@
                   </ProposalData>
                   <Silviculture/>
                 </Operation>
-                <Operation mainType="2" id="1823610">
+                <Operation id="1823610" mainType="2">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2018-08-16T15:54:48</ChangeTime>
                   <OperationType>522</OperationType>
@@ -2247,7 +2247,7 @@
                   </ProposalData>
                   <Silviculture/>
                 </Operation>
-                <Operation id="1823611" mainType="2">
+                <Operation mainType="2" id="1823611">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2018-08-16T15:54:48</ChangeTime>
                   <OperationType>940</OperationType>
@@ -2524,7 +2524,7 @@
                 <SubGroup>2</SubGroup>
               </StandBasicData>
               <TreeStandData>
-                <TreeStandDataDate date="1999-08-25" type="1">
+                <TreeStandDataDate type="1" date="1999-08-25">
                   <DeadTreeStrata>
                     <DeadTreeStratum id="97313">
                       <ChangeState>0</ChangeState>
@@ -2587,7 +2587,7 @@
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate type="2" date="2016-10-28">
+                <TreeStandDataDate date="2016-10-28" type="2">
                   <TreeStandSummary id="4983785">
                     <BasalArea>25.3</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -2722,7 +2722,7 @@
                 <SubGroup>3</SubGroup>
               </StandBasicData>
               <TreeStandData>
-                <TreeStandDataDate date="2015-09-28" type="1">
+                <TreeStandDataDate type="1" date="2015-09-28">
                   <TreeStandSummary id="4983786">
                     <BasalArea>8.5</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -2779,7 +2779,7 @@
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate type="2" date="2016-10-28">
+                <TreeStandDataDate date="2016-10-28" type="2">
                   <TreeStandSummary id="4983787">
                     <BasalArea>9.1</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -2924,7 +2924,7 @@
                   </ProposalData>
                   <Silviculture/>
                 </Operation>
-                <Operation id="1823613" mainType="2">
+                <Operation mainType="2" id="1823613">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2018-08-16T15:54:49</ChangeTime>
                   <OperationType>302</OperationType>
@@ -2976,7 +2976,7 @@
                 <SubGroup>1</SubGroup>
               </StandBasicData>
               <TreeStandData>
-                <TreeStandDataDate date="2015-09-28" type="1">
+                <TreeStandDataDate type="1" date="2015-09-28">
                   <TreeStandSummary id="4983788">
                     <BasalArea>12</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -3044,7 +3044,7 @@
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate type="2" date="2016-10-28">
+                <TreeStandDataDate date="2016-10-28" type="2">
                   <TreeStandSummary id="4983789">
                     <BasalArea>12.5</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -3146,7 +3146,7 @@
             </Stand>
             <Stand id="2553955">
               <Operations>
-                <Operation mainType="1" id="1194519">
+                <Operation id="1194519" mainType="1">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2018-08-16T15:54:49</ChangeTime>
                   <Cutting>
@@ -3182,7 +3182,7 @@
                   </ProposalData>
                   <Silviculture/>
                 </Operation>
-                <Operation id="1823615" mainType="2">
+                <Operation mainType="2" id="1823615">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2018-08-16T15:54:49</ChangeTime>
                   <OperationType>940</OperationType>
@@ -3465,7 +3465,7 @@
                 <SubGroup>3</SubGroup>
               </StandBasicData>
               <TreeStandData>
-                <TreeStandDataDate type="1" date="2015-11-05">
+                <TreeStandDataDate date="2015-11-05" type="1">
                   <DeadTreeStrata>
                     <DeadTreeStratum id="97317">
                       <ChangeState>0</ChangeState>
@@ -3550,7 +3550,7 @@
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate date="2016-10-28" type="2">
+                <TreeStandDataDate type="2" date="2016-10-28">
                   <TreeStandSummary id="4983793">
                     <BasalArea>14</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -3655,7 +3655,7 @@
             </Stand>
             <Stand id="2553957">
               <Operations>
-                <Operation mainType="1" id="1194520">
+                <Operation id="1194520" mainType="1">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2018-08-16T15:54:49</ChangeTime>
                   <Cutting>
@@ -3831,7 +3831,7 @@
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate type="2" date="2016-10-28">
+                <TreeStandDataDate date="2016-10-28" type="2">
                   <TreeStandSummary id="4983795">
                     <BasalArea>22.6</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -3995,7 +3995,7 @@
                 <SubGroup>1</SubGroup>
               </StandBasicData>
               <TreeStandData>
-                <TreeStandDataDate type="1" date="2015-11-05">
+                <TreeStandDataDate date="2015-11-05" type="1">
                   <TreeStandSummary id="4983796">
                     <BasalArea>13.7</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -4062,7 +4062,7 @@
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate date="2016-10-28" type="2">
+                <TreeStandDataDate type="2" date="2016-10-28">
                   <TreeStandSummary id="4983797">
                     <BasalArea>13.8</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -4161,7 +4161,7 @@
             </Stand>
             <Stand id="2553959">
               <Operations>
-                <Operation mainType="2" id="1823617">
+                <Operation id="1823617" mainType="2">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2018-08-16T15:54:49</ChangeTime>
                   <OperationType>740</OperationType>
@@ -4304,7 +4304,7 @@
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate type="2" date="2016-10-28">
+                <TreeStandDataDate date="2016-10-28" type="2">
                   <TreeStandSummary id="4983799">
                     <BasalArea>7.7</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -4676,7 +4676,7 @@
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate type="2" date="2016-10-28">
+                <TreeStandDataDate date="2016-10-28" type="2">
                   <TreeStandSummary id="4983803">
                     <BasalArea>16.1</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -4761,7 +4761,7 @@
             </Stand>
             <Stand id="2553963">
               <Operations>
-                <Operation id="1194522" mainType="1">
+                <Operation mainType="1" id="1194522">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2018-08-16T15:54:50</ChangeTime>
                   <Cutting>
@@ -4892,7 +4892,7 @@
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate type="2" date="2016-10-28">
+                <TreeStandDataDate date="2016-10-28" type="2">
                   <TreeStandSummary id="4983807">
                     <BasalArea>14.4</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -4960,7 +4960,7 @@
             </Stand>
             <Stand id="2553964">
               <Operations>
-                <Operation mainType="1" id="1194523">
+                <Operation id="1194523" mainType="1">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2018-08-16T15:54:50</ChangeTime>
                   <Cutting>
@@ -5223,7 +5223,7 @@
             </Stand>
             <Stand id="2553965">
               <Operations>
-                <Operation id="1194524" mainType="1">
+                <Operation mainType="1" id="1194524">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2018-08-16T15:54:50</ChangeTime>
                   <Cutting>
@@ -5309,7 +5309,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                 <SubGroup>1</SubGroup>
               </StandBasicData>
               <TreeStandData>
-                <TreeStandDataDate date="2015-09-28" type="1">
+                <TreeStandDataDate type="1" date="2015-09-28">
                   <TreeStandSummary id="4983810">
                     <BasalArea>16</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -5367,7 +5367,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate date="2016-10-28" type="2">
+                <TreeStandDataDate type="2" date="2016-10-28">
                   <TreeStandSummary id="4983811">
                     <BasalArea>16.4</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -5496,7 +5496,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                 <SubGroup>3</SubGroup>
               </StandBasicData>
               <TreeStandData>
-                <TreeStandDataDate type="1" date="2015-09-28">
+                <TreeStandDataDate date="2015-09-28" type="1">
                   <TreeStandSummary id="4983812">
                     <BasalArea>16</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -5543,7 +5543,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate date="2016-10-28" type="2">
+                <TreeStandDataDate type="2" date="2016-10-28">
                   <TreeStandSummary id="4983813">
                     <BasalArea>16.1</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -5729,7 +5729,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                 <SubGroup>1</SubGroup>
               </StandBasicData>
               <TreeStandData>
-                <TreeStandDataDate type="1" date="2015-09-28">
+                <TreeStandDataDate date="2015-09-28" type="1">
                   <DeadTreeStrata>
                     <DeadTreeStratum id="97334">
                       <ChangeState>0</ChangeState>
@@ -5795,7 +5795,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate date="2016-10-28" type="2">
+                <TreeStandDataDate type="2" date="2016-10-28">
                   <TreeStandSummary id="4983815">
                     <BasalArea>17.2</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -6126,7 +6126,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate type="2" date="2016-10-28">
+                <TreeStandDataDate date="2016-10-28" type="2">
                   <TreeStandSummary id="4983819">
                     <BasalArea>5</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -6336,7 +6336,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate date="2019-03-23" type="2">
+                <TreeStandDataDate type="2" date="2019-03-23">
                   <TreeStandSummary id="7383542">
                     <BasalArea>24.6</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -6417,7 +6417,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                   </ProposalData>
                   <Silviculture/>
                 </Operation>
-                <Operation id="1823627" mainType="2">
+                <Operation mainType="2" id="1823627">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2019-03-23T13:30:03</ChangeTime>
                   <OperationType>510</OperationType>
@@ -6480,7 +6480,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
             </Stand>
             <Stand id="2553981">
               <Operations>
-                <Operation id="1194528" mainType="1">
+                <Operation mainType="1" id="1194528">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2018-09-04T09:20:33</ChangeTime>
                   <CompletionData>
@@ -6509,7 +6509,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                     <ProposalYear>2000</ProposalYear>
                   </ProposalData>
                 </Operation>
-                <Operation id="1194529" mainType="1">
+                <Operation mainType="1" id="1194529">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2018-09-04T09:20:33</ChangeTime>
                   <Cutting>
@@ -6545,7 +6545,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                   </ProposalData>
                   <Silviculture/>
                 </Operation>
-                <Operation id="1823629" mainType="2">
+                <Operation mainType="2" id="1823629">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2018-09-04T09:20:33</ChangeTime>
                   <OperationType>201</OperationType>
@@ -6606,7 +6606,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                 <SubGroup>1</SubGroup>
               </StandBasicData>
               <TreeStandData>
-                <TreeStandDataDate type="1" date="2015-11-16">
+                <TreeStandDataDate date="2015-11-16" type="1">
                   <TreeStandSummary id="4983840">
                     <BasalArea>16</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -7040,7 +7040,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
             </Stand>
             <Stand id="2553984">
               <Operations>
-                <Operation mainType="1" id="1194531">
+                <Operation id="1194531" mainType="1">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2019-03-23T13:30:03</ChangeTime>
                   <Cutting>
@@ -7102,7 +7102,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                     <ProposalYear>2018</ProposalYear>
                   </ProposalData>
                 </Operation>
-                <Operation mainType="2" id="1823631">
+                <Operation id="1823631" mainType="2">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2019-03-23T13:30:03</ChangeTime>
                   <OperationType>410</OperationType>
@@ -7118,7 +7118,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                     </Specification>
                   </Specifications>
                 </Operation>
-                <Operation mainType="2" id="1823632">
+                <Operation id="1823632" mainType="2">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2019-03-23T13:30:03</ChangeTime>
                   <OperationType>102</OperationType>
@@ -7179,7 +7179,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                 <SubGroup>2</SubGroup>
               </StandBasicData>
               <TreeStandData>
-                <TreeStandDataDate date="2015-11-16" type="1">
+                <TreeStandDataDate type="1" date="2015-11-16">
                   <DeadTreeStrata>
                     <DeadTreeStratum id="97348">
                       <ChangeState>0</ChangeState>
@@ -7540,7 +7540,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                 <SubGroup>3</SubGroup>
               </StandBasicData>
               <TreeStandData>
-                <TreeStandDataDate type="1" date="2015-09-28">
+                <TreeStandDataDate date="2015-09-28" type="1">
                   <TreeStandSummary id="4983850">
                     <BasalArea>21.5</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -7609,7 +7609,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate type="2" date="2016-10-28">
+                <TreeStandDataDate date="2016-10-28" type="2">
                   <TreeStandSummary id="4983851">
                     <BasalArea>21.9</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -7777,7 +7777,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                 <SubGroup>2</SubGroup>
               </StandBasicData>
               <TreeStandData>
-                <TreeStandDataDate type="1" date="2015-09-28">
+                <TreeStandDataDate date="2015-09-28" type="1">
                   <TreeStandSummary id="4983854">
                     <BasalArea>18.5</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -7846,7 +7846,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate date="2016-10-28" type="2">
+                <TreeStandDataDate type="2" date="2016-10-28">
                   <TreeStandSummary id="4983855">
                     <BasalArea>19.4</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -8263,7 +8263,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate date="2016-10-28" type="2">
+                <TreeStandDataDate type="2" date="2016-10-28">
                   <TreeStandSummary id="4983859">
                     <BasalArea>10.1</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -8367,7 +8367,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                 <SubGroup>3</SubGroup>
               </StandBasicData>
               <TreeStandData>
-                <TreeStandDataDate date="2015-09-28" type="1">
+                <TreeStandDataDate type="1" date="2015-09-28">
                   <DeadTreeStrata>
                     <DeadTreeStratum id="97355">
                       <ChangeState>0</ChangeState>
@@ -8434,7 +8434,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate type="2" date="2016-10-28">
+                <TreeStandDataDate date="2016-10-28" type="2">
                   <TreeStandSummary id="4983863">
                     <BasalArea>15.2</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -8598,7 +8598,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                   </ProposalData>
                   <Silviculture/>
                 </Operation>
-                <Operation mainType="2" id="1823638">
+                <Operation id="1823638" mainType="2">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2018-08-16T15:54:54</ChangeTime>
                   <OperationType>102</OperationType>
@@ -8659,7 +8659,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                 <SubGroup>1</SubGroup>
               </StandBasicData>
               <TreeStandData>
-                <TreeStandDataDate type="1" date="2015-09-28">
+                <TreeStandDataDate date="2015-09-28" type="1">
                   <TreeStandSummary id="4983864">
                     <BasalArea>15.5</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -8717,7 +8717,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate type="2" date="2016-10-28">
+                <TreeStandDataDate date="2016-10-28" type="2">
                   <TreeStandSummary id="4983865">
                     <BasalArea>15.7</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -8805,7 +8805,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
             </Stand>
             <Stand id="2553994">
               <Operations>
-                <Operation id="1194534" mainType="1">
+                <Operation mainType="1" id="1194534">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2018-08-16T15:54:54</ChangeTime>
                   <Cutting>
@@ -8837,7 +8837,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                     <ProposalYear>2017</ProposalYear>
                   </ProposalData>
                 </Operation>
-                <Operation id="1823639" mainType="2">
+                <Operation mainType="2" id="1823639">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2018-08-16T15:54:54</ChangeTime>
                   <OperationType>450</OperationType>
@@ -8902,7 +8902,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                 <SubGroup>1</SubGroup>
               </StandBasicData>
               <TreeStandData>
-                <TreeStandDataDate date="2015-09-28" type="1">
+                <TreeStandDataDate type="1" date="2015-09-28">
                   <TreeStandSummary id="4983866">
                     <BasalArea>12.5</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -9117,7 +9117,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                 <SubGroup>3</SubGroup>
               </StandBasicData>
               <TreeStandData>
-                <TreeStandDataDate date="1999-08-24" type="1">
+                <TreeStandDataDate type="1" date="1999-08-24">
                   <TreeStrata>
                     <TreeStratum id="18108434">
                       <Age>70</Age>
@@ -9239,7 +9239,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                   </ProposalData>
                   <Silviculture/>
                 </Operation>
-                <Operation id="1823641" mainType="2">
+                <Operation mainType="2" id="1823641">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2018-08-16T15:54:54</ChangeTime>
                   <OperationType>101</OperationType>
@@ -9312,7 +9312,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                 <SubGroup>1</SubGroup>
               </StandBasicData>
               <TreeStandData>
-                <TreeStandDataDate date="2015-09-28" type="1">
+                <TreeStandDataDate type="1" date="2015-09-28">
                   <DeadTreeStrata>
                     <DeadTreeStratum id="97356">
                       <ChangeState>0</ChangeState>
@@ -9377,7 +9377,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate date="2016-10-28" type="2">
+                <TreeStandDataDate type="2" date="2016-10-28">
                   <TreeStandSummary id="4983871">
                     <BasalArea>10.8</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -9503,7 +9503,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                 <SubGroup>3</SubGroup>
               </StandBasicData>
               <TreeStandData>
-                <TreeStandDataDate type="1" date="2015-09-28">
+                <TreeStandDataDate date="2015-09-28" type="1">
                   <TreeStandSummary id="4983872">
                     <BasalArea>2.6</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -9638,7 +9638,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                     <ProposalYear>2016</ProposalYear>
                   </ProposalData>
                 </Operation>
-                <Operation id="1823698" mainType="2">
+                <Operation mainType="2" id="1823698">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2018-08-16T15:55:16</ChangeTime>
                   <OperationType>522</OperationType>
@@ -9648,7 +9648,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                   </ProposalData>
                   <Silviculture/>
                 </Operation>
-                <Operation mainType="2" id="1823699">
+                <Operation id="1823699" mainType="2">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2018-08-16T15:55:16</ChangeTime>
                   <OperationType>302</OperationType>
@@ -9704,7 +9704,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                 <SubGroup>2</SubGroup>
               </StandBasicData>
               <TreeStandData>
-                <TreeStandDataDate date="2015-09-28" type="1">
+                <TreeStandDataDate type="1" date="2015-09-28">
                   <TreeStandSummary id="4984182">
                     <BasalArea>23</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -9751,7 +9751,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate date="2016-10-28" type="2">
+                <TreeStandDataDate type="2" date="2016-10-28">
                   <TreeStandSummary id="4984183">
                     <BasalArea>23.2</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -9951,7 +9951,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
             </Stand>
             <Stand id="2554647">
               <Operations>
-                <Operation id="1194823" mainType="1">
+                <Operation mainType="1" id="1194823">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2018-08-16T15:56:54</ChangeTime>
                   <Cutting>
@@ -9989,7 +9989,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                     <ProposalYear>2026</ProposalYear>
                   </ProposalData>
                 </Operation>
-                <Operation id="1824026" mainType="2">
+                <Operation mainType="2" id="1824026">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2018-08-16T15:56:54</ChangeTime>
                   <OperationType>301</OperationType>
@@ -10066,7 +10066,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                 <SubGroup>1</SubGroup>
               </StandBasicData>
               <TreeStandData>
-                <TreeStandDataDate date="2016-09-28" type="1">
+                <TreeStandDataDate type="1" date="2016-09-28">
                   <TreeStandSummary id="4985118">
                     <BasalArea>21.8</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -10138,7 +10138,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate date="2016-09-28" type="2">
+                <TreeStandDataDate type="2" date="2016-09-28">
                   <TreeStandSummary id="4985119">
                     <BasalArea>21.8</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -10236,7 +10236,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
             </Stand>
             <Stand id="2554648">
               <Operations>
-                <Operation id="1194824" mainType="1">
+                <Operation mainType="1" id="1194824">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2018-08-16T15:56:55</ChangeTime>
                   <Cutting>
@@ -10408,7 +10408,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate date="2016-10-11" type="2">
+                <TreeStandDataDate type="2" date="2016-10-11">
                   <TreeStandSummary id="4985121">
                     <BasalArea>36</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -10546,7 +10546,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                 <SubGroup>3</SubGroup>
               </StandBasicData>
               <TreeStandData>
-                <TreeStandDataDate type="1" date="2016-09-28">
+                <TreeStandDataDate date="2016-09-28" type="1">
                   <TreeStandSummary id="4985122">
                     <BasalArea>7</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -10594,7 +10594,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate type="2" date="2016-10-11">
+                <TreeStandDataDate date="2016-10-11" type="2">
                   <TreeStandSummary id="4985123">
                     <BasalArea>7.1</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -10715,7 +10715,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                 <SubGroup>3</SubGroup>
               </StandBasicData>
               <TreeStandData>
-                <TreeStandDataDate type="1" date="2016-09-28">
+                <TreeStandDataDate date="2016-09-28" type="1">
                   <TreeStandSummary id="4985124">
                     <BasalArea>13</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -10763,7 +10763,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate date="2016-10-28" type="2">
+                <TreeStandDataDate type="2" date="2016-10-28">
                   <TreeStandSummary id="4985125">
                     <BasalArea>13</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -10941,7 +10941,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                 <SubGroup>1</SubGroup>
               </StandBasicData>
               <TreeStandData>
-                <TreeStandDataDate date="2016-09-29" type="1">
+                <TreeStandDataDate type="1" date="2016-09-29">
                   <TreeStandSummary id="4985126">
                     <BasalArea>18.8</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -11117,7 +11117,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
             </Stand>
             <Stand id="2554652">
               <Operations>
-                <Operation mainType="1" id="1194826">
+                <Operation id="1194826" mainType="1">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2018-08-16T15:56:57</ChangeTime>
                   <Cutting>
@@ -11218,7 +11218,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                 <SubGroup>1</SubGroup>
               </StandBasicData>
               <TreeStandData>
-                <TreeStandDataDate date="2016-09-28" type="1">
+                <TreeStandDataDate type="1" date="2016-09-28">
                   <TreeStandSummary id="4985128">
                     <BasalArea>20</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -11462,7 +11462,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                 <SubGroup>1</SubGroup>
               </StandBasicData>
               <TreeStandData>
-                <TreeStandDataDate type="1" date="2016-09-29">
+                <TreeStandDataDate date="2016-09-29" type="1">
                   <TreeStandSummary id="4985130">
                     <BasalArea>34</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -11534,7 +11534,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate type="2" date="2016-09-29">
+                <TreeStandDataDate date="2016-09-29" type="2">
                   <TreeStandSummary id="4985131">
                     <BasalArea>34</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -11863,7 +11863,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
             </Stand>
             <Stand id="2554656">
               <Operations>
-                <Operation mainType="1" id="1194827">
+                <Operation id="1194827" mainType="1">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2018-08-16T15:56:59</ChangeTime>
                   <Cutting>
@@ -11955,7 +11955,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                 <SubGroup>1</SubGroup>
               </StandBasicData>
               <TreeStandData>
-                <TreeStandDataDate date="2016-09-29" type="1">
+                <TreeStandDataDate type="1" date="2016-09-29">
                   <TreeStandSummary id="4985134">
                     <BasalArea>21</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -12037,7 +12037,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate type="2" date="2016-09-29">
+                <TreeStandDataDate date="2016-09-29" type="2">
                   <TreeStandSummary id="4985135">
                     <BasalArea>21</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -12236,7 +12236,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                 <SubGroup>2</SubGroup>
               </StandBasicData>
               <TreeStandData>
-                <TreeStandDataDate date="2016-09-29" type="1">
+                <TreeStandDataDate type="1" date="2016-09-29">
                   <TreeStandSummary id="4985136">
                     <BasalArea>24.5</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -12445,7 +12445,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                 <SubGroup>1</SubGroup>
               </StandBasicData>
               <TreeStandData>
-                <TreeStandDataDate type="1" date="2016-09-29">
+                <TreeStandDataDate date="2016-09-29" type="1">
                   <TreeStandSummary id="4985138">
                     <BasalArea>10.1</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -12527,7 +12527,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate type="2" date="2016-09-29">
+                <TreeStandDataDate date="2016-09-29" type="2">
                   <TreeStandSummary id="4985139">
                     <BasalArea>10.1</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -12859,7 +12859,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                 <SubGroup>3</SubGroup>
               </StandBasicData>
               <TreeStandData>
-                <TreeStandDataDate date="2016-09-29" type="1">
+                <TreeStandDataDate type="1" date="2016-09-29">
                   <TreeStandSummary id="4985142">
                     <BasalArea>1.1</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -12885,7 +12885,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate date="2016-09-29" type="2">
+                <TreeStandDataDate type="2" date="2016-09-29">
                   <TreeStandSummary id="4985143">
                     <BasalArea>1.1</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -13053,7 +13053,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate type="2" date="2016-09-29">
+                <TreeStandDataDate date="2016-09-29" type="2">
                   <TreeStandSummary id="4985145">
                     <BasalArea>6.2</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -13167,7 +13167,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
             </Stand>
             <Stand id="2554662">
               <Operations>
-                <Operation id="1194829" mainType="1">
+                <Operation mainType="1" id="1194829">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2018-08-16T15:57:02</ChangeTime>
                   <Cutting>
@@ -13368,7 +13368,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate type="2" date="2016-09-29">
+                <TreeStandDataDate date="2016-09-29" type="2">
                   <TreeStandSummary id="4985147">
                     <BasalArea>29.3</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -13549,7 +13549,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate type="2" date="2016-09-29">
+                <TreeStandDataDate date="2016-09-29" type="2">
                   <TreeStandSummary id="4985149">
                     <BasalArea>10</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -13701,7 +13701,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate date="2016-09-29" type="2">
+                <TreeStandDataDate type="2" date="2016-09-29">
                   <TreeStandSummary id="4985151">
                     <BasalArea>12</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -13824,7 +13824,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                 <SubGroup>2</SubGroup>
               </StandBasicData>
               <TreeStandData>
-                <TreeStandDataDate date="2016-09-29" type="1">
+                <TreeStandDataDate type="1" date="2016-09-29">
                   <DeadTreeStrata>
                     <DeadTreeStratum id="97883">
                       <ChangeState>0</ChangeState>
@@ -14266,7 +14266,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
             </Stand>
             <Stand id="2554667">
               <Operations>
-                <Operation id="1194830" mainType="1">
+                <Operation mainType="1" id="1194830">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2018-08-16T15:57:03</ChangeTime>
                   <Cutting>
@@ -14511,7 +14511,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
             </Stand>
             <Stand id="2554668">
               <Operations>
-                <Operation id="1194831" mainType="1">
+                <Operation mainType="1" id="1194831">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2018-08-16T15:57:03</ChangeTime>
                   <Cutting>
@@ -14607,7 +14607,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                 <SubGroup>2</SubGroup>
               </StandBasicData>
               <TreeStandData>
-                <TreeStandDataDate type="1" date="2016-09-29">
+                <TreeStandDataDate date="2016-09-29" type="1">
                   <TreeStandSummary id="4985158">
                     <BasalArea>19</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -14784,7 +14784,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                 <SubGroup>1</SubGroup>
               </StandBasicData>
               <TreeStandData>
-                <TreeStandDataDate date="2016-09-29" type="1">
+                <TreeStandDataDate type="1" date="2016-09-29">
                   <TreeStandSummary id="4985160">
                     <BasalArea>17</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -14834,7 +14834,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate date="2016-09-29" type="2">
+                <TreeStandDataDate type="2" date="2016-09-29">
                   <TreeStandSummary id="4985161">
                     <BasalArea>17</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -15115,7 +15115,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                 <SubGroup>2</SubGroup>
               </StandBasicData>
               <TreeStandData>
-                <TreeStandDataDate date="2016-09-28" type="1">
+                <TreeStandDataDate type="1" date="2016-09-28">
                   <TreeStandSummary id="4985164">
                     <BasalArea>13.8</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -15223,7 +15223,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate date="2016-10-28" type="2">
+                <TreeStandDataDate type="2" date="2016-10-28">
                   <TreeStandSummary id="4985165">
                     <BasalArea>22.2</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -15378,7 +15378,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
             </Stand>
             <Stand id="2554672">
               <Operations>
-                <Operation mainType="1" id="1194833">
+                <Operation id="1194833" mainType="1">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2018-08-16T15:57:04</ChangeTime>
                   <Cutting>
@@ -15779,7 +15779,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate date="2016-10-11" type="2">
+                <TreeStandDataDate type="2" date="2016-10-11">
                   <TreeStandSummary id="4985169">
                     <BasalArea>16.9</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -15966,7 +15966,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                 <SubGroup>3</SubGroup>
               </StandBasicData>
               <TreeStandData>
-                <TreeStandDataDate type="1" date="2016-09-28">
+                <TreeStandDataDate date="2016-09-28" type="1">
                   <TreeStandSummary id="4985170">
                     <BasalArea>19</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -16113,7 +16113,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
             </Stand>
             <Stand id="2554675">
               <Operations>
-                <Operation id="1824031" mainType="2">
+                <Operation mainType="2" id="1824031">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2018-08-16T15:57:04</ChangeTime>
                   <OperationInfo>Metsurity n</OperationInfo>
@@ -16192,7 +16192,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                 <SubGroup>2</SubGroup>
               </StandBasicData>
               <TreeStandData>
-                <TreeStandDataDate type="1" date="2016-09-29">
+                <TreeStandDataDate date="2016-09-29" type="1">
                   <TreeStandSummary id="4985172">
                     <BasalArea>18.4</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -16424,7 +16424,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate date="2016-09-28" type="2">
+                <TreeStandDataDate type="2" date="2016-09-28">
                   <TreeStandSummary id="4985175">
                     <BasalArea>8</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -16998,7 +16998,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                 <SubGroup>3</SubGroup>
               </StandBasicData>
               <TreeStandData>
-                <TreeStandDataDate date="2016-09-28" type="1">
+                <TreeStandDataDate type="1" date="2016-09-28">
                   <TreeStandSummary id="4985180">
                     <BasalArea>14.8</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -17069,7 +17069,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate type="2" date="2016-10-11">
+                <TreeStandDataDate date="2016-10-11" type="2">
                   <TreeStandSummary id="4985181">
                     <BasalArea>15.2</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -17174,7 +17174,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
             </Stand>
             <Stand id="2554680">
               <Operations>
-                <Operation mainType="1" id="1194837">
+                <Operation id="1194837" mainType="1">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2018-08-16T15:57:06</ChangeTime>
                   <Cutting>
@@ -17456,7 +17456,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                   </ProposalData>
                   <Silviculture/>
                 </Operation>
-                <Operation mainType="2" id="1824035">
+                <Operation id="1824035" mainType="2">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2018-08-16T15:57:06</ChangeTime>
                   <OperationType>410</OperationType>
@@ -17540,7 +17540,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                 <SubGroup>1</SubGroup>
               </StandBasicData>
               <TreeStandData>
-                <TreeStandDataDate date="1999-08-02" type="1">
+                <TreeStandDataDate type="1" date="1999-08-02">
                   <DeadTreeStrata>
                     <DeadTreeStratum id="97888">
                       <ChangeState>0</ChangeState>
@@ -17749,7 +17749,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                 <SubGroup>1</SubGroup>
               </StandBasicData>
               <TreeStandData>
-                <TreeStandDataDate date="2016-09-28" type="1">
+                <TreeStandDataDate type="1" date="2016-09-28">
                   <DeadTreeStrata>
                     <DeadTreeStratum id="97889">
                       <ChangeState>0</ChangeState>
@@ -17827,7 +17827,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate type="2" date="2016-11-01">
+                <TreeStandDataDate date="2016-11-01" type="2">
                   <TreeStandSummary id="4985187">
                     <BasalArea>18.1</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -18062,7 +18062,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate date="2016-11-01" type="2">
+                <TreeStandDataDate type="2" date="2016-11-01">
                   <TreeStandSummary id="4985189">
                     <BasalArea>7.8</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -18150,7 +18150,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
             </Stand>
             <Stand id="2554684">
               <Operations>
-                <Operation mainType="1" id="1194839">
+                <Operation id="1194839" mainType="1">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2018-08-16T15:57:07</ChangeTime>
                   <Cutting>
@@ -18246,7 +18246,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                 <SubGroup>1</SubGroup>
               </StandBasicData>
               <TreeStandData>
-                <TreeStandDataDate type="1" date="2016-09-28">
+                <TreeStandDataDate date="2016-09-28" type="1">
                   <TreeStandSummary id="4985190">
                     <BasalArea>16.5</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -18293,7 +18293,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate date="2016-11-01" type="2">
+                <TreeStandDataDate type="2" date="2016-11-01">
                   <TreeStandSummary id="4985191">
                     <BasalArea>16.5</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -18462,7 +18462,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                 <SubGroup>1</SubGroup>
               </StandBasicData>
               <TreeStandData>
-                <TreeStandDataDate date="1999-08-18" type="1">
+                <TreeStandDataDate type="1" date="1999-08-18">
                   <DeadTreeStrata>
                     <DeadTreeStratum id="97892">
                       <ChangeState>0</ChangeState>
@@ -18508,7 +18508,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate date="2016-11-01" type="2">
+                <TreeStandDataDate type="2" date="2016-11-01">
                   <TreeStandSummary id="4985193">
                     <BasalArea>33.3</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -18812,7 +18812,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
             </Stand>
             <Stand id="2554687">
               <Operations>
-                <Operation id="1194842" mainType="1">
+                <Operation mainType="1" id="1194842">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2018-08-16T15:57:08</ChangeTime>
                   <Cutting>
@@ -19114,7 +19114,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                 <SubGroup>1</SubGroup>
               </StandBasicData>
               <TreeStandData>
-                <TreeStandDataDate type="1" date="2016-09-28">
+                <TreeStandDataDate date="2016-09-28" type="1">
                   <TreeStandSummary id="4985200">
                     <BasalArea>20.5</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -19260,7 +19260,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
             </Stand>
             <Stand id="2554690">
               <Operations>
-                <Operation mainType="1" id="1194843">
+                <Operation id="1194843" mainType="1">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2018-08-16T15:57:08</ChangeTime>
                   <Cutting>
@@ -19419,7 +19419,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate type="2" date="2016-11-01">
+                <TreeStandDataDate date="2016-11-01" type="2">
                   <TreeStandSummary id="4985203">
                     <BasalArea>19</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -19490,7 +19490,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
             </Stand>
             <Stand id="2554691">
               <Operations>
-                <Operation mainType="1" id="1194844">
+                <Operation id="1194844" mainType="1">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2018-08-16T15:57:09</ChangeTime>
                   <Cutting>
@@ -19526,7 +19526,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                   </ProposalData>
                   <Silviculture/>
                 </Operation>
-                <Operation mainType="2" id="1824038">
+                <Operation id="1824038" mainType="2">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2018-08-16T15:57:09</ChangeTime>
                   <OperationType>301</OperationType>
@@ -19583,7 +19583,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                 <SubGroup>1</SubGroup>
               </StandBasicData>
               <TreeStandData>
-                <TreeStandDataDate date="2016-09-28" type="1">
+                <TreeStandDataDate type="1" date="2016-09-28">
                   <DeadTreeStrata>
                     <DeadTreeStratum id="97894">
                       <ChangeState>0</ChangeState>
@@ -19625,7 +19625,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate date="2016-11-01" type="2">
+                <TreeStandDataDate type="2" date="2016-11-01">
                   <TreeStandSummary id="4985205">
                     <BasalArea>20</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -19662,7 +19662,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
             </Stand>
             <Stand id="2554692">
               <Operations>
-                <Operation mainType="1" id="1194845">
+                <Operation id="1194845" mainType="1">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2018-08-16T15:57:09</ChangeTime>
                   <Cutting>
@@ -19688,7 +19688,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                     <ProposalYear>2018</ProposalYear>
                   </ProposalData>
                 </Operation>
-                <Operation mainType="2" id="1824039">
+                <Operation id="1824039" mainType="2">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2018-08-16T15:57:09</ChangeTime>
                   <OperationType>520</OperationType>
@@ -19813,7 +19813,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate date="2016-11-01" type="2">
+                <TreeStandDataDate type="2" date="2016-11-01">
                   <TreeStandSummary id="4985207">
                     <BasalArea>20.5</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -20084,7 +20084,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                 <SubGroup>3</SubGroup>
               </StandBasicData>
               <TreeStandData>
-                <TreeStandDataDate date="1999-08-18" type="1">
+                <TreeStandDataDate type="1" date="1999-08-18">
                   <TreeStrata>
                     <TreeStratum id="18112866">
                       <Age>60</Age>
@@ -20110,7 +20110,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate date="2016-11-01" type="2">
+                <TreeStandDataDate type="2" date="2016-11-01">
                   <TreeStandSummary id="4985211">
                     <BasalArea>7.6</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -20302,7 +20302,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate date="2016-11-01" type="2">
+                <TreeStandDataDate type="2" date="2016-11-01">
                   <TreeStandSummary id="4985213">
                     <BasalArea>19.5</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -20417,7 +20417,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                 <SubGroup>1</SubGroup>
               </StandBasicData>
               <TreeStandData>
-                <TreeStandDataDate type="1" date="1999-08-18">
+                <TreeStandDataDate date="1999-08-18" type="1">
                   <TreeStrata>
                     <TreeStratum id="18112876">
                       <Age>60</Age>
@@ -20525,7 +20525,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
             </Stand>
             <Stand id="2554697">
               <Operations>
-                <Operation id="1824041" mainType="2">
+                <Operation mainType="2" id="1824041">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2018-08-16T15:57:12</ChangeTime>
                   <OperationType>740</OperationType>
@@ -20578,7 +20578,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                 <SubGroup>3</SubGroup>
               </StandBasicData>
               <TreeStandData>
-                <TreeStandDataDate type="1" date="1999-08-18">
+                <TreeStandDataDate date="1999-08-18" type="1">
                   <TreeStrata>
                     <TreeStratum id="18112882">
                       <Age>12</Age>
@@ -20724,7 +20724,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                   </ProposalData>
                   <Silviculture/>
                 </Operation>
-                <Operation id="1824043" mainType="2">
+                <Operation mainType="2" id="1824043">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2018-08-16T15:57:12</ChangeTime>
                   <OperationType>410</OperationType>
@@ -20740,7 +20740,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                     </Specification>
                   </Specifications>
                 </Operation>
-                <Operation id="1824044" mainType="2">
+                <Operation mainType="2" id="1824044">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2018-08-16T15:57:12</ChangeTime>
                   <OperationType>201</OperationType>
@@ -20821,7 +20821,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                 <SubGroup>1</SubGroup>
               </StandBasicData>
               <TreeStandData>
-                <TreeStandDataDate date="2016-09-29" type="1">
+                <TreeStandDataDate type="1" date="2016-09-29">
                   <DeadTreeStrata>
                     <DeadTreeStratum id="97902">
                       <ChangeState>0</ChangeState>
@@ -21018,7 +21018,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
             </Stand>
             <Stand id="2554699">
               <Operations>
-                <Operation id="1194847" mainType="1">
+                <Operation mainType="1" id="1194847">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2018-08-16T15:57:13</ChangeTime>
                   <Cutting>
@@ -21098,7 +21098,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                   </ProposalData>
                   <Silviculture/>
                 </Operation>
-                <Operation mainType="2" id="1824048">
+                <Operation id="1824048" mainType="2">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2018-08-16T15:57:13</ChangeTime>
                   <OperationType>640</OperationType>
@@ -21201,7 +21201,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate type="2" date="2016-10-31">
+                <TreeStandDataDate date="2016-10-31" type="2">
                   <TreeStandSummary id="4985221">
                     <BasalArea>15</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -21318,7 +21318,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                 <SubGroup>2</SubGroup>
               </StandBasicData>
               <TreeStandData>
-                <TreeStandDataDate type="1" date="1999-07-29">
+                <TreeStandDataDate date="1999-07-29" type="1">
                   <DeadTreeStrata>
                     <DeadTreeStratum id="97905">
                       <ChangeState>0</ChangeState>
@@ -21371,7 +21371,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate type="2" date="2016-11-01">
+                <TreeStandDataDate date="2016-11-01" type="2">
                   <TreeStandSummary id="4985223">
                     <BasalArea>17.5</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -21692,7 +21692,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                 <SubGroup>3</SubGroup>
               </StandBasicData>
               <TreeStandData>
-                <TreeStandDataDate type="1" date="1999-07-29">
+                <TreeStandDataDate date="1999-07-29" type="1">
                   <TreeStrata>
                     <TreeStratum id="18112916">
                       <Age>50</Age>
@@ -21707,7 +21707,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate type="2" date="2016-11-01">
+                <TreeStandDataDate date="2016-11-01" type="2">
                   <TreeStandSummary id="4985227">
                     <BasalArea>1.4</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -21743,7 +21743,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
             </Stand>
             <Stand id="2554703">
               <Operations>
-                <Operation id="1194848" mainType="1">
+                <Operation mainType="1" id="1194848">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2018-08-16T15:57:14</ChangeTime>
                   <Cutting>
@@ -21764,7 +21764,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                     <ProposalYear>2016</ProposalYear>
                   </ProposalData>
                 </Operation>
-                <Operation id="1824049" mainType="2">
+                <Operation mainType="2" id="1824049">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2018-08-16T15:57:14</ChangeTime>
                   <OperationType>302</OperationType>
@@ -21839,7 +21839,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                 <SubGroup>1</SubGroup>
               </StandBasicData>
               <TreeStandData>
-                <TreeStandDataDate type="1" date="2016-09-29">
+                <TreeStandDataDate date="2016-09-29" type="1">
                   <TreeStandSummary id="4985228">
                     <BasalArea>10.6</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -21937,7 +21937,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate date="2016-11-01" type="2">
+                <TreeStandDataDate type="2" date="2016-11-01">
                   <TreeStandSummary id="4985229">
                     <BasalArea>13</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -22058,7 +22058,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
             </Stand>
             <Stand id="2554704">
               <Operations>
-                <Operation id="1194849" mainType="1">
+                <Operation mainType="1" id="1194849">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2018-08-16T15:57:14</ChangeTime>
                   <Cutting>
@@ -22133,7 +22133,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                 <SubGroup>3</SubGroup>
               </StandBasicData>
               <TreeStandData>
-                <TreeStandDataDate type="1" date="2016-09-29">
+                <TreeStandDataDate date="2016-09-29" type="1">
                   <TreeStandSummary id="4985230">
                     <BasalArea>19</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -22213,7 +22213,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate date="2016-10-31" type="2">
+                <TreeStandDataDate type="2" date="2016-10-31">
                   <TreeStandSummary id="4985231">
                     <BasalArea>20</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -22374,7 +22374,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                 <SubGroup>3</SubGroup>
               </StandBasicData>
               <TreeStandData>
-                <TreeStandDataDate date="1999-07-29" type="1">
+                <TreeStandDataDate type="1" date="1999-07-29">
                   <TreeStrata>
                     <TreeStratum id="18112942">
                       <Age>60</Age>
@@ -22570,7 +22570,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate type="2" date="2016-11-01">
+                <TreeStandDataDate date="2016-11-01" type="2">
                   <TreeStandSummary id="4985235">
                     <BasalArea>5.2</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -22657,7 +22657,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
             </Stand>
             <Stand id="2554707">
               <Operations>
-                <Operation mainType="1" id="1194850">
+                <Operation id="1194850" mainType="1">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2018-08-16T15:57:15</ChangeTime>
                   <Cutting>
@@ -22669,7 +22669,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                     <ProposalYear>2029</ProposalYear>
                   </ProposalData>
                 </Operation>
-                <Operation id="1824051" mainType="2">
+                <Operation mainType="2" id="1824051">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2018-08-16T15:57:15</ChangeTime>
                   <OperationType>410</OperationType>
@@ -22685,7 +22685,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                     </Specification>
                   </Specifications>
                 </Operation>
-                <Operation mainType="2" id="1824052">
+                <Operation id="1824052" mainType="2">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2018-08-16T15:57:15</ChangeTime>
                   <OperationType>102</OperationType>
@@ -22802,7 +22802,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate date="2016-11-01" type="2">
+                <TreeStandDataDate type="2" date="2016-11-01">
                   <TreeStandSummary id="4985237">
                     <BasalArea>13.2</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -23358,7 +23358,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                 <SubGroup>1</SubGroup>
               </StandBasicData>
               <TreeStandData>
-                <TreeStandDataDate type="1" date="2016-09-29">
+                <TreeStandDataDate date="2016-09-29" type="1">
                   <TreeStandSummary id="4985242">
                     <BasalArea>23.7</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -23416,7 +23416,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate type="2" date="2016-11-01">
+                <TreeStandDataDate date="2016-11-01" type="2">
                   <TreeStandSummary id="4985243">
                     <BasalArea>24.8</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -23504,7 +23504,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
             </Stand>
             <Stand id="2554711">
               <Operations>
-                <Operation mainType="2" id="1824054">
+                <Operation id="1824054" mainType="2">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2018-08-16T15:57:15</ChangeTime>
                   <OperationType>302</OperationType>
@@ -23514,7 +23514,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                   </ProposalData>
                   <Silviculture/>
                 </Operation>
-                <Operation id="1824055" mainType="2">
+                <Operation mainType="2" id="1824055">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2018-08-16T15:57:15</ChangeTime>
                   <OperationType>410</OperationType>
@@ -23534,7 +23534,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                   </ProposalData>
                   <Silviculture/>
                 </Operation>
-                <Operation mainType="2" id="1824057">
+                <Operation id="1824057" mainType="2">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2018-08-16T15:57:15</ChangeTime>
                   <OperationType>640</OperationType>
@@ -23699,7 +23699,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                 <SubGroup>1</SubGroup>
               </StandBasicData>
               <TreeStandData>
-                <TreeStandDataDate type="1" date="2016-09-28">
+                <TreeStandDataDate date="2016-09-28" type="1">
                   <TreeStandSummary id="4985244">
                     <BasalArea>27</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -23939,7 +23939,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                 <SubGroup>1</SubGroup>
               </StandBasicData>
               <TreeStandData>
-                <TreeStandDataDate date="2016-09-28" type="1">
+                <TreeStandDataDate type="1" date="2016-09-28">
                   <DeadTreeStrata>
                     <DeadTreeStratum id="97914">
                       <ChangeState>0</ChangeState>
@@ -24007,7 +24007,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate date="2016-11-01" type="2">
+                <TreeStandDataDate type="2" date="2016-11-01">
                   <TreeStandSummary id="4985247">
                     <BasalArea>26.3</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -24220,7 +24220,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate type="2" date="2016-11-01">
+                <TreeStandDataDate date="2016-11-01" type="2">
                   <TreeStandSummary id="4985249">
                     <BasalArea>8.1</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -24311,7 +24311,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                   </ProposalData>
                   <Silviculture/>
                 </Operation>
-                <Operation id="1824061" mainType="2">
+                <Operation mainType="2" id="1824061">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2018-08-16T15:57:16</ChangeTime>
                   <OperationType>520</OperationType>
@@ -24415,7 +24415,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                 <SubGroup>1</SubGroup>
               </StandBasicData>
               <TreeStandData>
-                <TreeStandDataDate date="2016-09-29" type="1">
+                <TreeStandDataDate type="1" date="2016-09-29">
                   <TreeStandSummary id="4985250">
                     <BasalArea>5.3</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -24601,7 +24601,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
             </Stand>
             <Stand id="2554718">
               <Operations>
-                <Operation id="1194855" mainType="1">
+                <Operation mainType="1" id="1194855">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2018-08-16T15:57:17</ChangeTime>
                   <Cutting>
@@ -25062,7 +25062,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate type="2" date="2016-11-01">
+                <TreeStandDataDate date="2016-11-01" type="2">
                   <TreeStandSummary id="4985257">
                     <BasalArea>12</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -25178,7 +25178,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                 <SubGroup>1</SubGroup>
               </StandBasicData>
               <TreeStandData>
-                <TreeStandDataDate type="1" date="2016-09-28">
+                <TreeStandDataDate date="2016-09-28" type="1">
                   <TreeStandSummary id="4985258">
                     <BasalArea>21</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -25696,7 +25696,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
             </Stand>
             <Stand id="2554725">
               <Operations>
-                <Operation id="1194858" mainType="1">
+                <Operation mainType="1" id="1194858">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2018-08-16T15:57:20</ChangeTime>
                   <Cutting>
@@ -25778,7 +25778,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                 <SubGroup>2</SubGroup>
               </StandBasicData>
               <TreeStandData>
-                <TreeStandDataDate date="2016-09-28" type="1">
+                <TreeStandDataDate type="1" date="2016-09-28">
                   <DeadTreeStrata>
                     <DeadTreeStratum id="97915">
                       <ChangeState>0</ChangeState>
@@ -25971,7 +25971,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
             </Stand>
             <Stand id="2554726">
               <Operations>
-                <Operation mainType="1" id="1194859">
+                <Operation id="1194859" mainType="1">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2018-08-16T15:57:21</ChangeTime>
                   <Cutting>
@@ -26385,7 +26385,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
             </Stand>
             <Stand id="2554728">
               <Operations>
-                <Operation mainType="1" id="1194860">
+                <Operation id="1194860" mainType="1">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2018-08-16T15:57:21</ChangeTime>
                   <Cutting>
@@ -26826,7 +26826,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                 <SubGroup>1</SubGroup>
               </StandBasicData>
               <TreeStandData>
-                <TreeStandDataDate date="2016-09-30" type="1">
+                <TreeStandDataDate type="1" date="2016-09-30">
                   <DeadTreeStrata>
                     <DeadTreeStratum id="97917">
                       <ChangeState>0</ChangeState>
@@ -27016,7 +27016,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
             </Stand>
             <Stand id="2554731">
               <Operations>
-                <Operation id="1194862" mainType="1">
+                <Operation mainType="1" id="1194862">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2018-08-16T15:57:22</ChangeTime>
                   <Cutting>
@@ -27383,7 +27383,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                 <SubGroup>2</SubGroup>
               </StandBasicData>
               <TreeStandData>
-                <TreeStandDataDate date="2016-09-28" type="1">
+                <TreeStandDataDate type="1" date="2016-09-28">
                   <TreeStandSummary id="4985276">
                     <BasalArea>15.9</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -27444,7 +27444,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate date="2016-11-01" type="2">
+                <TreeStandDataDate type="2" date="2016-11-01">
                   <TreeStandSummary id="4985277">
                     <BasalArea>16.3</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -27532,7 +27532,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
             </Stand>
             <Stand id="2554733">
               <Operations>
-                <Operation id="1194864" mainType="1">
+                <Operation mainType="1" id="1194864">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2018-08-16T15:57:22</ChangeTime>
                   <Cutting>
@@ -27576,7 +27576,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                     <ProposalYear>2017</ProposalYear>
                   </ProposalData>
                 </Operation>
-                <Operation mainType="2" id="1824064">
+                <Operation id="1824064" mainType="2">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2018-08-16T15:57:22</ChangeTime>
                   <OperationType>302</OperationType>
@@ -27596,7 +27596,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                   </ProposalData>
                   <Silviculture/>
                 </Operation>
-                <Operation id="1824066" mainType="2">
+                <Operation mainType="2" id="1824066">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2018-08-16T15:57:22</ChangeTime>
                   <OperationType>550</OperationType>
@@ -27804,7 +27804,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
             </Stand>
             <Stand id="2554735">
               <Operations>
-                <Operation id="1194865" mainType="1">
+                <Operation mainType="1" id="1194865">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2018-08-16T15:57:22</ChangeTime>
                   <Cutting>
@@ -28320,7 +28320,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
             </Stand>
             <Stand id="2554737">
               <Operations>
-                <Operation id="1194867" mainType="1">
+                <Operation mainType="1" id="1194867">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2018-08-16T15:57:23</ChangeTime>
                   <Cutting>
@@ -28620,7 +28620,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                 <SubGroup>1</SubGroup>
               </StandBasicData>
               <TreeStandData>
-                <TreeStandDataDate type="1" date="2016-09-30">
+                <TreeStandDataDate date="2016-09-30" type="1">
                   <TreeStandSummary id="4985286">
                     <BasalArea>23.5</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -28928,7 +28928,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate type="2" date="2016-11-01">
+                <TreeStandDataDate date="2016-11-01" type="2">
                   <TreeStandSummary id="4985289">
                     <BasalArea>23.6</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -29046,7 +29046,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                 <SubGroup>1</SubGroup>
               </StandBasicData>
               <TreeStandData>
-                <TreeStandDataDate date="2016-09-30" type="1">
+                <TreeStandDataDate type="1" date="2016-09-30">
                   <DeadTreeStrata>
                     <DeadTreeStratum id="97923">
                       <ChangeState>0</ChangeState>
@@ -29262,7 +29262,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                 <SubGroup>1</SubGroup>
               </StandBasicData>
               <TreeStandData>
-                <TreeStandDataDate date="2016-09-28" type="1">
+                <TreeStandDataDate type="1" date="2016-09-28">
                   <TreeStandSummary id="4985292">
                     <BasalArea>10.3</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -29722,7 +29722,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate date="2016-11-01" type="2">
+                <TreeStandDataDate type="2" date="2016-11-01">
                   <TreeStandSummary id="4985295">
                     <BasalArea>14.3</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -29878,7 +29878,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
             </Stand>
             <Stand id="2554744">
               <Operations>
-                <Operation id="1194870" mainType="1">
+                <Operation mainType="1" id="1194870">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2018-08-16T15:57:24</ChangeTime>
                   <Cutting>
@@ -30014,7 +30014,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate type="2" date="2016-11-01">
+                <TreeStandDataDate date="2016-11-01" type="2">
                   <TreeStandSummary id="4985297">
                     <BasalArea>18.1</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -30216,7 +30216,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                 <SubGroup>1</SubGroup>
               </StandBasicData>
               <TreeStandData>
-                <TreeStandDataDate date="2016-09-30" type="1">
+                <TreeStandDataDate type="1" date="2016-09-30">
                   <DeadTreeStrata>
                     <DeadTreeStratum id="97926">
                       <ChangeState>0</ChangeState>
@@ -30695,7 +30695,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate type="2" date="2016-11-01">
+                <TreeStandDataDate date="2016-11-01" type="2">
                   <TreeStandSummary id="4985303">
                     <BasalArea>11.7</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -30897,7 +30897,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                 <SubGroup>1</SubGroup>
               </StandBasicData>
               <TreeStandData>
-                <TreeStandDataDate date="2016-10-11" type="1">
+                <TreeStandDataDate type="1" date="2016-10-11">
                   <DeadTreeStrata>
                     <DeadTreeStratum id="97927">
                       <ChangeState>0</ChangeState>
@@ -30979,7 +30979,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate type="2" date="2016-11-01">
+                <TreeStandDataDate date="2016-11-01" type="2">
                   <TreeStandSummary id="4985305">
                     <BasalArea>20.4</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -31237,7 +31237,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate type="2" date="2016-11-01">
+                <TreeStandDataDate date="2016-11-01" type="2">
                   <TreeStandSummary id="4985307">
                     <BasalArea>12.7</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -31427,7 +31427,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate type="2" date="2016-11-01">
+                <TreeStandDataDate date="2016-11-01" type="2">
                   <TreeStandSummary id="4985309">
                     <BasalArea>8.6</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -31632,7 +31632,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
             </Stand>
             <Stand id="2554752">
               <Operations>
-                <Operation id="1194874" mainType="1">
+                <Operation mainType="1" id="1194874">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2018-08-16T15:57:28</ChangeTime>
                   <Cutting>
@@ -31791,7 +31791,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate date="2016-11-01" type="2">
+                <TreeStandDataDate type="2" date="2016-11-01">
                   <TreeStandSummary id="4985313">
                     <BasalArea>19.2</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -31963,7 +31963,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate date="2016-11-01" type="2">
+                <TreeStandDataDate type="2" date="2016-11-01">
                   <TreeStandSummary id="9736616">
                     <BasalArea>8.1</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -32079,7 +32079,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                 <SubGroup>3</SubGroup>
               </StandBasicData>
               <TreeStandData>
-                <TreeStandDataDate date="2016-09-30" type="1">
+                <TreeStandDataDate type="1" date="2016-09-30">
                   <TreeStandSummary id="4985314">
                     <BasalArea>11</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -32169,7 +32169,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
             </Stand>
             <Stand id="2554754">
               <Operations>
-                <Operation mainType="1" id="1194875">
+                <Operation id="1194875" mainType="1">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2018-08-16T15:57:29</ChangeTime>
                   <Cutting>
@@ -32259,7 +32259,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                 <SubGroup>1</SubGroup>
               </StandBasicData>
               <TreeStandData>
-                <TreeStandDataDate type="1" date="2016-09-30">
+                <TreeStandDataDate date="2016-09-30" type="1">
                   <DeadTreeStrata>
                     <DeadTreeStratum id="97928">
                       <ChangeState>0</ChangeState>
@@ -32304,7 +32304,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate date="2017-01-10" type="2">
+                <TreeStandDataDate type="2" date="2017-01-10">
                   <TreeStandSummary id="4985317">
                     <BasalArea>20</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -32396,7 +32396,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                     <ProposalYear>2019</ProposalYear>
                   </ProposalData>
                 </Operation>
-                <Operation id="2279303" mainType="2">
+                <Operation mainType="2" id="2279303">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2019-05-02T18:32:13</ChangeTime>
                   <OperationType>450</OperationType>
@@ -32539,7 +32539,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate date="2019-05-02" type="2">
+                <TreeStandDataDate type="2" date="2019-05-02">
                   <TreeStandSummary id="7788694">
                     <BasalArea>26.6</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -32644,7 +32644,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
             </Stand>
             <Stand id="2554756">
               <Operations>
-                <Operation id="1194877" mainType="1">
+                <Operation mainType="1" id="1194877">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2018-08-16T15:57:29</ChangeTime>
                   <Cutting>
@@ -32722,7 +32722,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                 <SubGroup>1</SubGroup>
               </StandBasicData>
               <TreeStandData>
-                <TreeStandDataDate date="2016-09-30" type="1">
+                <TreeStandDataDate type="1" date="2016-09-30">
                   <TreeStandSummary id="4985320">
                     <BasalArea>25</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -32770,7 +32770,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate date="2017-01-10" type="2">
+                <TreeStandDataDate type="2" date="2017-01-10">
                   <TreeStandSummary id="4985321">
                     <BasalArea>26.7</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -32841,7 +32841,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
             </Stand>
             <Stand id="2554757">
               <Operations>
-                <Operation mainType="1" id="1194878">
+                <Operation id="1194878" mainType="1">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2019-11-01T08:47:51</ChangeTime>
                   <Cutting>
@@ -32916,7 +32916,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                 <SubGroup>1</SubGroup>
               </StandBasicData>
               <TreeStandData>
-                <TreeStandDataDate date="2016-09-28" type="1">
+                <TreeStandDataDate type="1" date="2016-09-28">
                   <TreeStandSummary id="4985322">
                     <BasalArea>17</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -33049,7 +33049,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                 <SubGroup>3</SubGroup>
               </StandBasicData>
               <TreeStandData>
-                <TreeStandDataDate date="2016-11-01" type="1">
+                <TreeStandDataDate type="1" date="2016-11-01">
                   <TreeStandSummary id="4985324">
                     <BasalArea>15</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -33120,7 +33120,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate date="2017-01-10" type="2">
+                <TreeStandDataDate type="2" date="2017-01-10">
                   <TreeStandSummary id="4985325">
                     <BasalArea>17.3</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -33291,7 +33291,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                 <SubGroup>3</SubGroup>
               </StandBasicData>
               <TreeStandData>
-                <TreeStandDataDate date="2016-11-01" type="1">
+                <TreeStandDataDate type="1" date="2016-11-01">
                   <DeadTreeStrata>
                     <DeadTreeStratum id="97929">
                       <ChangeState>0</ChangeState>
@@ -33360,7 +33360,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate type="2" date="2017-01-10">
+                <TreeStandDataDate date="2017-01-10" type="2">
                   <TreeStandSummary id="4985327">
                     <BasalArea>17</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -33493,7 +33493,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                 <SubGroup>3</SubGroup>
               </StandBasicData>
               <TreeStandData>
-                <TreeStandDataDate type="1" date="2016-09-28">
+                <TreeStandDataDate date="2016-09-28" type="1">
                   <TreeStandSummary id="4985328">
                     <BasalArea>2.5</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -33519,7 +33519,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate date="2017-01-10" type="2">
+                <TreeStandDataDate type="2" date="2017-01-10">
                   <TreeStandSummary id="4985329">
                     <BasalArea>2.5</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -33555,7 +33555,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
             </Stand>
             <Stand id="2554761">
               <Operations>
-                <Operation mainType="1" id="1194879">
+                <Operation id="1194879" mainType="1">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2018-08-16T15:57:30</ChangeTime>
                   <Cutting>
@@ -33605,7 +33605,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                     </Specification>
                   </Specifications>
                 </Operation>
-                <Operation mainType="2" id="1824073">
+                <Operation id="1824073" mainType="2">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2018-08-16T15:57:30</ChangeTime>
                   <OperationType>450</OperationType>
@@ -33662,7 +33662,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                 <SubGroup>1</SubGroup>
               </StandBasicData>
               <TreeStandData>
-                <TreeStandDataDate type="1" date="2016-11-01">
+                <TreeStandDataDate date="2016-11-01" type="1">
                   <TreeStandSummary id="4985330">
                     <BasalArea>19</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -33892,7 +33892,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                 <SubGroup>1</SubGroup>
               </StandBasicData>
               <TreeStandData>
-                <TreeStandDataDate date="2016-09-28" type="1">
+                <TreeStandDataDate type="1" date="2016-09-28">
                   <TreeStandSummary id="4985332">
                     <BasalArea>20</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -34095,7 +34095,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate type="2" date="2017-01-10">
+                <TreeStandDataDate date="2017-01-10" type="2">
                   <TreeStandSummary id="4985335">
                     <BasalArea>9</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -34146,7 +34146,7 @@ RHK muuttumaa. harvennus osalla kuvioa kesken</StandInfo>
             </Stand>
             <Stand id="2554764">
               <Operations>
-                <Operation id="1824074" mainType="2">
+                <Operation mainType="2" id="1824074">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2018-08-16T15:57:32</ChangeTime>
                   <OperationType>750</OperationType>
@@ -34221,7 +34221,7 @@ contorta ) v.1989.</StandInfo>
                 <SubGroup>1</SubGroup>
               </StandBasicData>
               <TreeStandData>
-                <TreeStandDataDate date="2016-09-28" type="1">
+                <TreeStandDataDate type="1" date="2016-09-28">
                   <TreeStandSummary id="4985336">
                     <BasalArea>8.1</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -34263,7 +34263,7 @@ contorta ) v.1989.</StandInfo>
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate date="2017-01-10" type="2">
+                <TreeStandDataDate type="2" date="2017-01-10">
                   <TreeStandSummary id="4985337">
                     <BasalArea>8.3</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -34404,7 +34404,7 @@ contorta ) v.1989.</StandInfo>
                 <SubGroup>1</SubGroup>
               </StandBasicData>
               <TreeStandData>
-                <TreeStandDataDate type="1" date="2016-11-01">
+                <TreeStandDataDate date="2016-11-01" type="1">
                   <DeadTreeStrata>
                     <DeadTreeStratum id="97930">
                       <ChangeState>0</ChangeState>
@@ -34635,7 +34635,7 @@ contorta ) v.1989.</StandInfo>
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate type="2" date="2017-01-10">
+                <TreeStandDataDate date="2017-01-10" type="2">
                   <TreeStandSummary id="4985341">
                     <BasalArea>1.2</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -34766,7 +34766,7 @@ contorta ) v.1989.</StandInfo>
                 <SubGroup>1</SubGroup>
               </StandBasicData>
               <TreeStandData>
-                <TreeStandDataDate date="2016-11-01" type="1">
+                <TreeStandDataDate type="1" date="2016-11-01">
                   <DeadTreeStrata>
                     <DeadTreeStratum id="97931">
                       <ChangeState>0</ChangeState>
@@ -34945,7 +34945,7 @@ contorta ) v.1989.</StandInfo>
                 <SubGroup>3</SubGroup>
               </StandBasicData>
               <TreeStandData>
-                <TreeStandDataDate type="1" date="2016-09-30">
+                <TreeStandDataDate date="2016-09-30" type="1">
                   <TreeStandSummary id="4985344">
                     <BasalArea>15</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -34992,7 +34992,7 @@ contorta ) v.1989.</StandInfo>
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate date="2017-01-10" type="2">
+                <TreeStandDataDate type="2" date="2017-01-10">
                   <TreeStandSummary id="4985345">
                     <BasalArea>16.4</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -35107,7 +35107,7 @@ contorta ) v.1989.</StandInfo>
                     <ProposalYear>2019</ProposalYear>
                   </ProposalData>
                 </Operation>
-                <Operation id="1824076" mainType="2">
+                <Operation mainType="2" id="1824076">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2018-08-16T15:57:34</ChangeTime>
                   <OperationType>450</OperationType>
@@ -35164,7 +35164,7 @@ contorta ) v.1989.</StandInfo>
                 <SubGroup>1</SubGroup>
               </StandBasicData>
               <TreeStandData>
-                <TreeStandDataDate date="2016-11-01" type="1">
+                <TreeStandDataDate type="1" date="2016-11-01">
                   <DeadTreeStrata>
                     <DeadTreeStratum id="97932">
                       <ChangeState>0</ChangeState>
@@ -35369,7 +35369,7 @@ contorta ) v.1989.</StandInfo>
                 <SubGroup>2</SubGroup>
               </StandBasicData>
               <TreeStandData>
-                <TreeStandDataDate type="1" date="1999-08-31">
+                <TreeStandDataDate date="1999-08-31" type="1">
                   <DeadTreeStrata>
                     <DeadTreeStratum id="97933">
                       <ChangeState>0</ChangeState>
@@ -35542,7 +35542,7 @@ contorta ) v.1989.</StandInfo>
             </Stand>
             <Stand id="2554771">
               <Operations>
-                <Operation id="1824077" mainType="2">
+                <Operation mainType="2" id="1824077">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2018-08-16T15:57:34</ChangeTime>
                   <OperationType>750</OperationType>
@@ -35587,7 +35587,7 @@ contorta ) v.1989.</StandInfo>
                 <SubGroup>3</SubGroup>
               </StandBasicData>
               <TreeStandData>
-                <TreeStandDataDate date="2016-11-01" type="1">
+                <TreeStandDataDate type="1" date="2016-11-01">
                   <TreeStandSummary id="4985350">
                     <BasalArea>10</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -35625,7 +35625,7 @@ contorta ) v.1989.</StandInfo>
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate date="2017-01-10" type="2">
+                <TreeStandDataDate type="2" date="2017-01-10">
                   <TreeStandSummary id="4985351">
                     <BasalArea>10</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -35831,7 +35831,7 @@ contorta ) v.1989.</StandInfo>
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate date="2017-01-10" type="2">
+                <TreeStandDataDate type="2" date="2017-01-10">
                   <TreeStandSummary id="4985355">
                     <BasalArea>15</BasalArea>
                     <ChangeState>0</ChangeState>
@@ -35868,7 +35868,7 @@ contorta ) v.1989.</StandInfo>
             </Stand>
             <Stand id="2554774">
               <Operations>
-                <Operation id="1194884" mainType="1">
+                <Operation mainType="1" id="1194884">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2018-08-16T15:57:35</ChangeTime>
                   <Cutting>
@@ -35912,7 +35912,7 @@ contorta ) v.1989.</StandInfo>
                     <ProposalYear>2017</ProposalYear>
                   </ProposalData>
                 </Operation>
-                <Operation mainType="2" id="1824078">
+                <Operation id="1824078" mainType="2">
                   <ChangeState>0</ChangeState>
                   <ChangeTime>2018-08-16T15:57:35</ChangeTime>
                   <OperationType>450</OperationType>
@@ -36191,7 +36191,7 @@ contorta ) v.1989.</StandInfo>
                     </TreeStratum>
                   </TreeStrata>
                 </TreeStandDataDate>
-                <TreeStandDataDate type="2" date="2017-01-10">
+                <TreeStandDataDate date="2017-01-10" type="2">
                   <TreeStandSummary id="9737657">
                     <BasalArea>17</BasalArea>
                     <ChangeState>0</ChangeState>
