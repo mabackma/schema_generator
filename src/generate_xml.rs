@@ -6,7 +6,7 @@ use std::io::Cursor;
 
 pub fn create_xml_element(json_data: &Value, writer: &mut Writer<Cursor<Vec<u8>>>, parent_tag: &str, prefixes: &HashMap<String, String>, current_prefix: &mut String) {
     match json_data {
-        // Handle objects, which may include both attributes and nested elements
+        // Handle objects
         Value::Object(map) => {
             let prefix = get_current_prefix(parent_tag, prefixes);
             if prefix != "" {
@@ -20,7 +20,6 @@ pub fn create_xml_element(json_data: &Value, writer: &mut Writer<Cursor<Vec<u8>>
                 parent_tag = format!("{}:{}", current_prefix, parent_tag);
             }
 
-            //let parent_tag = format!("{}:{}", current_prefix, parent_tag);
             let mut element = BytesStart::new(parent_tag);
 
             // Extract attributes
@@ -88,7 +87,7 @@ pub fn create_xml_element(json_data: &Value, writer: &mut Writer<Cursor<Vec<u8>>
         },
         // Handle arrays by processing each item inside the array
         Value::Array(arr) => {
-            let new_tag = format!("{}:{}", current_prefix, parent_tag);
+            let parent_tag = &format!("{}:{}", current_prefix, parent_tag);
 
             for (i, value) in arr.iter().enumerate() {
                 // Get the first key of the object 
@@ -97,14 +96,11 @@ pub fn create_xml_element(json_data: &Value, writer: &mut Writer<Cursor<Vec<u8>>
 
                     // Write the start tag for all non-attribute elements, skipping the first one
                     if !first_key.starts_with('@') && i > 0 {
-                        let parent_tag = &new_tag;
                         writer
                             .write_event(Event::Start(BytesStart::new(parent_tag)))
                             .expect("Unable to write start tag"); 
                     }
                 }
-
-                let parent_tag = &new_tag;
 
                 // Process each element of the array as a separate XML tag
                 create_xml_element(value, writer, parent_tag, prefixes, current_prefix);
@@ -150,6 +146,9 @@ fn get_current_prefix(parent_tag: &str, prefixes: &HashMap<String, String>) -> S
 
     // Check if any namespaces are contained in the parent tag
     for (key, value) in prefixes {
+        if parent_tag == key {
+            return value.to_string();
+        }
 
         if parent_tag.starts_with(&*key) {
             return value.to_string();

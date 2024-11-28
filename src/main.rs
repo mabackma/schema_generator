@@ -124,6 +124,10 @@ fn json_to_xml(path: &str, file_name: &str) {
     // Extract the prefixes from the root element
     let prefixes = extract_prefixes(&json_value);
 
+    for pr in prefixes.iter() {
+        println!("{}: {}", pr.0, pr.1);
+    }
+    println!();
     // Write XML header
     let root = "ForestPropertyData";
     writer.write_event(Event::Decl(BytesDecl::new("1.0", Some("UTF-8"), None))).expect("Unable to write XML declaration");
@@ -150,11 +154,13 @@ fn extract_prefixes(json_data: &serde_json::Value) -> HashMap<String, String> {
 
                     // Extract the namespace from the struct string
                     let re = Regex::new(r"/\d{4}/\d{2}/\d{2}").unwrap();
-                    let mut namespace = re.replace(&struct_string, "").to_string();
-                    namespace = namespace.split('/').last().unwrap().to_string();
-                    namespace = capitalize_word(&namespace);
+                    let namespace = re.replace(&struct_string, "").to_string();
 
-                    prefixes.insert(namespace, prefix);
+                    // Extract the last segment of the namespace
+                    let last_segment = namespace.split('/').last().unwrap().to_string();
+                    let formatted_namespace = capitalize_word(&last_segment);
+
+                    prefixes.insert(formatted_namespace, prefix);
                 }
             }
         },
