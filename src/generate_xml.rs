@@ -4,10 +4,23 @@ use serde_json::Value;
 use std::collections::HashMap;
 use std::io::Cursor;
 
-pub fn create_xml_element(json_data: &Value, writer: &mut Writer<Cursor<Vec<u8>>>, parent_tag: &str) {
+pub fn create_xml_element(json_data: &Value, writer: &mut Writer<Cursor<Vec<u8>>>, parent_tag: &str, prefixes: &HashMap<String, String>, current_prefix: &mut String) {
     match json_data {
         // Handle objects, which may include both attributes and nested elements
         Value::Object(map) => {
+            let prefix = get_current_prefix(parent_tag, prefixes);
+            if prefix != "" {
+                *current_prefix = prefix;
+            }
+
+            let mut parent_tag = parent_tag.to_string();
+
+            // Create the parent tag with the current prefix
+            if !parent_tag.contains(":") && !current_prefix.is_empty() {
+                parent_tag = format!("{}:{}", current_prefix, parent_tag);
+            }
+
+            //let parent_tag = format!("{}:{}", current_prefix, parent_tag);
             let mut element = BytesStart::new(parent_tag);
 
             // Extract attributes
@@ -33,6 +46,11 @@ pub fn create_xml_element(json_data: &Value, writer: &mut Writer<Cursor<Vec<u8>>
 
             // Process key-value pairs
             for (key, value) in map {
+                let prefix = get_current_prefix(key, prefixes);
+                if prefix != "" {
+                    *current_prefix = prefix;
+                }
+
                 // Write self-closing tag if the object is empty
                 if value.is_object() && value.as_object().unwrap().is_empty() {
                     writer
@@ -44,9 +62,10 @@ pub fn create_xml_element(json_data: &Value, writer: &mut Writer<Cursor<Vec<u8>>
                 // Skip attributes
                 if key.starts_with('@') {
                     continue;
-                } else { 				  
-					// Reset the element for the next iteration
-					element = BytesStart::new(key);
+                } else { 
+                    // Reset the element for the next iteration				  
+                    let key_tag = format!("{}:{}", current_prefix, key);
+					element = BytesStart::new(&key_tag);
                     
                     // Write the start tag if the value is not an attribute or an array with a first key as an attribute
                     if !(is_attribute_key(value) || is_array_with_attribute_key(value)) {
@@ -56,12 +75,12 @@ pub fn create_xml_element(json_data: &Value, writer: &mut Writer<Cursor<Vec<u8>>
                     }
 
 					// Recursively process nested elements
-					create_xml_element(value, writer, key);
+					create_xml_element(value, writer, key, prefixes, current_prefix);
 					
                     // Write the closing tag if the value is not an array
                     if !value.is_array() {
                         writer
-                            .write_event(Event::End(BytesEnd::new(key)))
+                            .write_event(Event::End(BytesEnd::new(key_tag)))
                             .expect("Unable to write end tag");
                     }
                 }
@@ -69,6 +88,8 @@ pub fn create_xml_element(json_data: &Value, writer: &mut Writer<Cursor<Vec<u8>>
         },
         // Handle arrays by processing each item inside the array
         Value::Array(arr) => {
+            let new_tag = format!("{}:{}", current_prefix, parent_tag);
+
             for (i, value) in arr.iter().enumerate() {
                 // Get the first key of the object 
                 if value.is_object() {
@@ -76,14 +97,17 @@ pub fn create_xml_element(json_data: &Value, writer: &mut Writer<Cursor<Vec<u8>>
 
                     // Write the start tag for all non-attribute elements, skipping the first one
                     if !first_key.starts_with('@') && i > 0 {
+                        let parent_tag = &new_tag;
                         writer
                             .write_event(Event::Start(BytesStart::new(parent_tag)))
                             .expect("Unable to write start tag"); 
                     }
                 }
-                
+
+                let parent_tag = &new_tag;
+
                 // Process each element of the array as a separate XML tag
-                create_xml_element(value, writer, parent_tag);
+                create_xml_element(value, writer, parent_tag, prefixes, current_prefix);
 
                 // Write the closing tag
                 writer
@@ -120,4 +144,17 @@ fn is_array_with_attribute_key(value: &Value) -> bool {
             .first()
             .map(|v| is_attribute_key(v))
             .unwrap_or(false)
+}
+
+fn get_current_prefix(parent_tag: &str, prefixes: &HashMap<String, String>) -> String {
+
+    // Check if any namespaces are contained in the parent tag
+    for (key, value) in prefixes {
+
+        if parent_tag.starts_with(&*key) {
+            return value.to_string();
+        }
+    }
+
+    "".to_string()
 }
