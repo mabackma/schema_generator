@@ -19,6 +19,8 @@ pub fn create_xml_element(json_data: &Value, writer: &mut Writer<Cursor<Vec<u8>>
             if !parent_tag.contains(":") && !current_prefix.is_empty() {
                 parent_tag = format!("{}:{}", current_prefix, parent_tag);
             }
+    
+            parent_tag = check_gis_data(&parent_tag);
 
             let mut element = BytesStart::new(parent_tag);
 
@@ -50,10 +52,15 @@ pub fn create_xml_element(json_data: &Value, writer: &mut Writer<Cursor<Vec<u8>>
                     *current_prefix = prefix;
                 }
 
+                // Reset the element for the next iteration				  
+                let mut key_tag = format!("{}:{}", current_prefix, key);
+                key_tag = check_gis_data(&key_tag);
+                element = BytesStart::new(&key_tag);
+
                 // Write self-closing tag if the object is empty
                 if value.is_object() && value.as_object().unwrap().is_empty() {
                     writer
-                        .write_event(Event::Empty(BytesStart::new(key)))
+                        .write_event(Event::Empty(BytesStart::new(key_tag)))
                         .expect("Unable to write self-closing tag");
                     continue;
                 }
@@ -61,11 +68,7 @@ pub fn create_xml_element(json_data: &Value, writer: &mut Writer<Cursor<Vec<u8>>
                 // Skip attributes
                 if key.starts_with('@') {
                     continue;
-                } else { 
-                    // Reset the element for the next iteration				  
-                    let key_tag = format!("{}:{}", current_prefix, key);
-					element = BytesStart::new(&key_tag);
-                    
+                } else {
                     // Write the start tag if the value is not an attribute or an array with a first key as an attribute
                     if !(is_attribute_key(value) || is_array_with_attribute_key(value)) {
                         writer
@@ -87,7 +90,9 @@ pub fn create_xml_element(json_data: &Value, writer: &mut Writer<Cursor<Vec<u8>>
         },
         // Handle arrays by processing each item inside the array
         Value::Array(arr) => {
-            let parent_tag = &format!("{}:{}", current_prefix, parent_tag);
+            let mut parent_tag = &format!("{}:{}", current_prefix, parent_tag);
+            let gis_tag = check_gis_data(&parent_tag);
+            parent_tag = &gis_tag;
 
             for (i, value) in arr.iter().enumerate() {
                 // Get the first key of the object 
@@ -156,4 +161,19 @@ fn get_current_prefix(parent_tag: &str, prefixes: &HashMap<String, String>) -> S
     }
 
     "".to_string()
+}
+
+// Check if parent tag is GIS data
+fn check_gis_data(parent_tag: &str) -> String {
+    let gml_namespaces = vec!["Polygon", "polygon", "Point", "point", "coordinates", "exterior", "interior", "LinearRing"];
+
+    let gis_tag = if parent_tag.contains("PolygonGeometry") {
+        format!("{}:{}", "gdt", parent_tag.split(":").last().unwrap())
+    } else if gml_namespaces.iter().any(|&x| parent_tag.contains(x)) {
+        format!("{}:{}", "gml", parent_tag.split(":").last().unwrap())
+    } else {
+        parent_tag.to_string()
+    };
+
+    gis_tag
 }
