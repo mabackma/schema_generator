@@ -4,21 +4,19 @@ use serde_json::Value;
 use std::collections::HashMap;
 use std::io::Cursor;
 
-pub fn create_xml_element(json_data: &Value, writer: &mut Writer<Cursor<Vec<u8>>>, parent_tag: &str, prefixes: &HashMap<String, String>, current_prefix: &mut String) {
+pub fn create_xml_element(json_data: &Value, writer: &mut Writer<Cursor<Vec<u8>>>, parent_tag: &str, prefixes: &HashMap<String, String>, current_prefix: &str) {
     match json_data {
         // Handle objects
         Value::Object(map) => {
-            if let Some(prefix) = get_current_prefix(parent_tag, prefixes) {
-                *current_prefix = prefix;
-            }
+            // Get the updated prefix for the current tag
+            let new_prefix = get_current_prefix(parent_tag, prefixes).unwrap_or(current_prefix.to_string()).to_string();
 
             let mut parent_tag = parent_tag.to_string();
 
-            // Create the parent tag with the current prefix
-            if !parent_tag.contains(":") && !current_prefix.is_empty() {
-                parent_tag = format!("{}:{}", current_prefix, parent_tag);
+            // Create the parent tag with the prefix
+            if !parent_tag.contains(":") && !new_prefix.is_empty() {
+                parent_tag = format!("{}:{}", new_prefix, parent_tag);
             }
-
             parent_tag = update_tag(&parent_tag);
 
             let mut element = BytesStart::new(parent_tag);
@@ -46,12 +44,11 @@ pub fn create_xml_element(json_data: &Value, writer: &mut Writer<Cursor<Vec<u8>>
 
             // Process key-value pairs
             for (key, value) in map {
-                if let Some(prefix) = get_current_prefix(key, prefixes) {
-                    *current_prefix = prefix;
-                }
+                // Get the updated prefix for the current key
+                let key_prefix = get_current_prefix(key, prefixes).unwrap_or(new_prefix.to_string()).to_string();
 
                 // Reset the element for the next iteration				  
-                let mut key_tag = format!("{}:{}", current_prefix, key);
+                let mut key_tag = format!("{}:{}", key_prefix, key);
                 key_tag = update_tag(&key_tag);
                 element = BytesStart::new(key_tag.clone());
 
@@ -75,7 +72,7 @@ pub fn create_xml_element(json_data: &Value, writer: &mut Writer<Cursor<Vec<u8>>
                     }
 
 					// Recursively process nested elements
-					create_xml_element(value, writer, key, prefixes, current_prefix);
+					create_xml_element(value, writer, key, prefixes, &key_prefix);
 					
                     // Write the closing tag if the value is not an array
                     if !value.is_array() {
@@ -88,14 +85,13 @@ pub fn create_xml_element(json_data: &Value, writer: &mut Writer<Cursor<Vec<u8>>
         },
         // Handle arrays by processing each item inside the array
         Value::Array(arr) => {
-            if let Some(prefix) = get_current_prefix(parent_tag, prefixes) {
-                *current_prefix = prefix;
-            }
+            // Get the prefix for the array elements
+            let new_prefix = get_current_prefix(parent_tag, prefixes).unwrap_or(current_prefix.to_string()).to_string();
 
-            let parent_tag = &format!("{}:{}", current_prefix, parent_tag);
+            let parent_tag = &format!("{}:{}", new_prefix, parent_tag);
             let parent_tag = &update_tag(parent_tag);
 
-            let parent_prefix = &mut current_prefix.clone();
+            let parent_prefix = &mut new_prefix.clone();
 
             for (i, value) in arr.iter().enumerate() {
                 // Get the first key of the object 
@@ -111,7 +107,7 @@ pub fn create_xml_element(json_data: &Value, writer: &mut Writer<Cursor<Vec<u8>>
                 }
 
                 // Reset the parent prefix for the next iteration
-                *parent_prefix = current_prefix.clone();
+                *parent_prefix = new_prefix.clone();
 
                 // Process each element of the array as a separate XML tag
                 create_xml_element(value, writer, parent_tag, prefixes, parent_prefix);
