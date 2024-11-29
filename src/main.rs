@@ -5,14 +5,17 @@ use schema_generator::url_structs::ForestPropertyData as UrlForestPropertyData;
 use schema_generator::generate_xml::create_xml_element;
 
 use quick_xml::Writer;
-use quick_xml::events::{BytesDecl, BytesEnd, Event};
+use quick_xml::events::{BytesDecl, BytesEnd, BytesText, Event};
 use quick_xml::reader::Reader;
 use quick_xml::de::from_str;
 use reqwest::blocking::get;
 use std::fs::File;
+use std::collections::HashMap;
 use std::io::{Read, Write, Cursor};
 use std::str;
 use std::fs;
+use regex::Regex;
+use toml::Value;
 
 fn main() {    
     // Create structs schema from a file
@@ -119,10 +122,22 @@ fn json_to_xml(path: &str, file_name: &str) {
     // Create the writer
     let mut writer = Writer::new_with_indent(Cursor::new(Vec::new()), b' ', 2); // 2-space indentation
 
+    // Extract the prefixes from the root element
+    let prefixes = extract_prefixes(&json_value);
+
+    for pr in prefixes.iter() {
+        println!("{}: {}", pr.0, pr.1);
+    }
+    println!();
     // Write XML header
     let root = "ForestPropertyData";
     writer.write_event(Event::Decl(BytesDecl::new("1.0", Some("UTF-8"), None))).expect("Unable to write XML declaration");
-    create_xml_element(&json_value, &mut writer, root);
+    
+    // Write metadata comment
+    let version = get_version_from_toml("Cargo.toml").unwrap_or("0.0.0".to_string());
+    writer.write_event(Event::Comment(BytesText::new(&format!("Created with schema_generator {}", version)))).expect("Unable to write comment");
+    
+    create_xml_element(&json_value, &mut writer, root, &prefixes, &mut "".to_string());
 
     // Write the closing tag
     writer
@@ -133,3 +148,51 @@ fn json_to_xml(path: &str, file_name: &str) {
     std::fs::write(file_name, &xml_output).expect("Unable to write data");
 }
 
+fn extract_prefixes(json_data: &serde_json::Value) -> HashMap<String, String> {
+    let mut prefixes: HashMap<String, String> = HashMap::new();
+
+    match json_data {
+        serde_json::Value::Object(map) => {
+            for (key, value) in map {
+                if key.starts_with("@xmlns:") {
+                    let prefix = key.split(':').last().unwrap().to_string();
+                    let struct_string = value.as_str().unwrap().to_string();
+
+                    // Extract the namespace from the struct string
+                    let re = Regex::new(r"/\d{4}/\d{2}/\d{2}").unwrap();
+                    let namespace = re.replace(&struct_string, "").to_string();
+
+                    // Extract the last segment of the namespace
+                    let last_segment = namespace.split('/').last().unwrap().to_string();
+                    let formatted_namespace = capitalize_word(&last_segment);
+
+                    prefixes.insert(formatted_namespace, prefix);
+                }
+            }
+        },
+        _ => {}
+    }
+
+    prefixes
+}
+
+// Capitalizes the first letter of a word
+fn capitalize_word(word: &str) -> String {
+    let mut chars = word.chars();
+    match chars.next() {
+        None => String::new(),
+        Some(f) => f.to_uppercase().collect::<String>() + chars.as_str(),
+    }
+}
+
+// Get the version from the Cargo.toml file
+fn get_version_from_toml(file_path: &str) -> Option<String> {
+    let content = fs::read_to_string(file_path).expect("Unable to read the file");
+    let toml: Value = toml::de::from_str(&content).expect("Unable to parse TOML");
+
+    // Access the version from the TOML data
+    toml.get("package")
+        .and_then(|pkg| pkg.get("version"))
+        .and_then(|version| version.as_str())
+        .map(|s| s.to_string())
+}
