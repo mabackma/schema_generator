@@ -5,7 +5,7 @@ use schema_generator::url_structs::ForestPropertyData as UrlForestPropertyData;
 use schema_generator::generate_xml::create_xml_element;
 
 use quick_xml::Writer;
-use quick_xml::events::{BytesDecl, BytesEnd, Event};
+use quick_xml::events::{BytesDecl, BytesEnd, BytesText, Event};
 use quick_xml::reader::Reader;
 use quick_xml::de::from_str;
 use reqwest::blocking::get;
@@ -15,6 +15,7 @@ use std::io::{Read, Write, Cursor};
 use std::str;
 use std::fs;
 use regex::Regex;
+use toml::Value;
 
 fn main() {    
     // Create structs schema from a file
@@ -131,6 +132,11 @@ fn json_to_xml(path: &str, file_name: &str) {
     // Write XML header
     let root = "ForestPropertyData";
     writer.write_event(Event::Decl(BytesDecl::new("1.0", Some("UTF-8"), None))).expect("Unable to write XML declaration");
+    
+    // Write metadata comment
+    let version = get_version_from_toml("Cargo.toml").unwrap_or("0.0.0".to_string());
+    writer.write_event(Event::Comment(BytesText::new(&format!("Created with schema_generator {}", version)))).expect("Unable to write comment");
+    
     create_xml_element(&json_value, &mut writer, root, &prefixes, &mut "".to_string());
 
     // Write the closing tag
@@ -177,4 +183,16 @@ fn capitalize_word(word: &str) -> String {
         None => String::new(),
         Some(f) => f.to_uppercase().collect::<String>() + chars.as_str(),
     }
+}
+
+// Get the version from the Cargo.toml file
+fn get_version_from_toml(file_path: &str) -> Option<String> {
+    let content = fs::read_to_string(file_path).expect("Unable to read the file");
+    let toml: Value = toml::de::from_str(&content).expect("Unable to parse TOML");
+
+    // Access the version from the TOML data
+    toml.get("package")
+        .and_then(|pkg| pkg.get("version"))
+        .and_then(|version| version.as_str())
+        .map(|s| s.to_string())
 }
