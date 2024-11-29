@@ -8,8 +8,7 @@ pub fn create_xml_element(json_data: &Value, writer: &mut Writer<Cursor<Vec<u8>>
     match json_data {
         // Handle objects
         Value::Object(map) => {
-            let prefix = get_current_prefix(parent_tag, prefixes);
-            if prefix != "" {
+            if let Some(prefix) = get_current_prefix(parent_tag, prefixes) {
                 *current_prefix = prefix;
             }
 
@@ -19,8 +18,8 @@ pub fn create_xml_element(json_data: &Value, writer: &mut Writer<Cursor<Vec<u8>>
             if !parent_tag.contains(":") && !current_prefix.is_empty() {
                 parent_tag = format!("{}:{}", current_prefix, parent_tag);
             }
-    
-            parent_tag = check_gis_data(&parent_tag);
+
+            parent_tag = update_tag(&parent_tag);
 
             let mut element = BytesStart::new(parent_tag);
 
@@ -47,20 +46,19 @@ pub fn create_xml_element(json_data: &Value, writer: &mut Writer<Cursor<Vec<u8>>
 
             // Process key-value pairs
             for (key, value) in map {
-                let prefix = get_current_prefix(key, prefixes);
-                if prefix != "" {
+                if let Some(prefix) = get_current_prefix(key, prefixes) {
                     *current_prefix = prefix;
                 }
 
                 // Reset the element for the next iteration				  
                 let mut key_tag = format!("{}:{}", current_prefix, key);
-                key_tag = check_gis_data(&key_tag);
-                element = BytesStart::new(&key_tag);
+                key_tag = update_tag(&key_tag);
+                element = BytesStart::new(key_tag.clone());
 
                 // Write self-closing tag if the object is empty
                 if value.is_object() && value.as_object().unwrap().is_empty() {
                     writer
-                        .write_event(Event::Empty(BytesStart::new(key_tag)))
+                        .write_event(Event::Empty(element.to_owned()))
                         .expect("Unable to write self-closing tag");
                     continue;
                 }
@@ -90,9 +88,14 @@ pub fn create_xml_element(json_data: &Value, writer: &mut Writer<Cursor<Vec<u8>>
         },
         // Handle arrays by processing each item inside the array
         Value::Array(arr) => {
-            let mut parent_tag = &format!("{}:{}", current_prefix, parent_tag);
-            let gis_tag = check_gis_data(&parent_tag);
-            parent_tag = &gis_tag;
+            if let Some(prefix) = get_current_prefix(parent_tag, prefixes) {
+                *current_prefix = prefix;
+            }
+
+            let parent_tag = &format!("{}:{}", current_prefix, parent_tag);
+            let parent_tag = &update_tag(parent_tag);
+
+            let parent_prefix = &mut current_prefix.clone();
 
             for (i, value) in arr.iter().enumerate() {
                 // Get the first key of the object 
@@ -104,11 +107,14 @@ pub fn create_xml_element(json_data: &Value, writer: &mut Writer<Cursor<Vec<u8>>
                         writer
                             .write_event(Event::Start(BytesStart::new(parent_tag)))
                             .expect("Unable to write start tag"); 
-                    }
+                    } 
                 }
 
+                // Reset the parent prefix for the next iteration
+                *parent_prefix = current_prefix.clone();
+
                 // Process each element of the array as a separate XML tag
-                create_xml_element(value, writer, parent_tag, prefixes, current_prefix);
+                create_xml_element(value, writer, parent_tag, prefixes, parent_prefix);
 
                 // Write the closing tag
                 writer
@@ -147,23 +153,32 @@ fn is_array_with_attribute_key(value: &Value) -> bool {
             .unwrap_or(false)
 }
 
-fn get_current_prefix(parent_tag: &str, prefixes: &HashMap<String, String>) -> String {
-
+fn get_current_prefix(parent_tag: &str, prefixes: &HashMap<String, String>) -> Option<String> {
     // Check if any namespaces are contained in the parent tag
     for (key, value) in prefixes {
         if parent_tag == key {
-            return value.to_string();
+            return Some(value.to_string());
         }
 
         if parent_tag.starts_with(&*key) {
-            return value.to_string();
+            return Some(value.to_string());
         }
     }
 
-    "".to_string()
+    None
 }
 
-// Check if parent tag is GIS data
+// If GIS data or common prefixes are found, update the tag
+fn update_tag(parent_tag: &str) -> String {
+    if parent_tag.contains(":TreeStrata") {
+        return "tst:TreeStrata".to_string()
+    }
+
+    let new_tag = check_gis_data(&parent_tag);
+    check_common_prefixes(&new_tag) 
+}
+
+// Check if parent tag contains GIS data
 fn check_gis_data(parent_tag: &str) -> String {
     let gml_namespaces = vec!["Polygon", "polygon", "Point", "point", "coordinates", "exterior", "interior", "LinearRing"];
 
@@ -176,4 +191,17 @@ fn check_gis_data(parent_tag: &str) -> String {
     };
 
     gis_tag
+}
+
+// Check if parent tag is a common namespace
+fn check_common_prefixes(parent_tag: &str) -> String {
+    let common_namespaces = vec!["ChangeState", "ChangeTime", "DataSource", "IdentifierType", "IdentifierValue"];
+
+    let common_tag = if common_namespaces.iter().any(|&x| parent_tag.contains(x)) {
+        format!("{}:{}", "co", parent_tag.split(":").last().unwrap())
+    } else {
+        parent_tag.to_string()
+    };
+
+    common_tag
 }
