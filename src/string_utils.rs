@@ -57,3 +57,25 @@ pub fn to_snake_case(s: &str) -> String {
 
     new_string.to_lowercase()
 }
+
+// Capitalizes the first letter of a word
+pub fn capitalize_word(word: &str) -> String {
+    let mut chars = word.chars();
+    match chars.next() {
+        None => String::new(),
+        Some(f) => f.to_uppercase().collect::<String>() + chars.as_str(),
+    }
+}
+
+// Lowercases the first letter of a word. Changes @ to __
+pub fn lowercase_word(word: &str) -> String {
+    if !word.starts_with('@') {
+        let mut chars = word.chars();
+        match chars.next() {
+            None => String::new(),
+            Some(f) => f.to_lowercase().collect::<String>() + chars.as_str(),
+        }
+    } else {
+        word.to_string().replace("@", "__")
+    }
+}

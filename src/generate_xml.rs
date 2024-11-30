@@ -4,6 +4,8 @@ use serde_json::Value;
 use std::collections::HashMap;
 use std::io::Cursor;
 
+use crate::string_utils::{capitalize_word, lowercase_word};
+
 pub fn create_xml_element(json_data: &Value, writer: &mut Writer<Cursor<Vec<u8>>>, parent_tag: &str, prefixes: &HashMap<String, String>, current_prefix: &str) {
     match json_data {
         // Handle objects
@@ -15,7 +17,7 @@ pub fn create_xml_element(json_data: &Value, writer: &mut Writer<Cursor<Vec<u8>>
 
             // Create the parent tag with the prefix
             if !parent_tag.contains(":") && !new_prefix.is_empty() {
-                parent_tag = format!("{}:{}", new_prefix, parent_tag);
+                parent_tag = format!("{}:{}", new_prefix, capitalize_word(&parent_tag));
             }
             parent_tag = update_tag(&parent_tag);
 
@@ -24,8 +26,8 @@ pub fn create_xml_element(json_data: &Value, writer: &mut Writer<Cursor<Vec<u8>>
             // Extract attributes
             let attributes: HashMap<_, _> = map
                 .iter()
-                .filter(|(key, _)| key.starts_with('@'))
-                .map(|(key, value)| (&key[1..], value))
+                .filter(|(key, _)| key.starts_with("__"))
+                .map(|(key, value)| (&key[2..], value))
                 .collect();
 
             // Add attributes to the element
@@ -48,7 +50,7 @@ pub fn create_xml_element(json_data: &Value, writer: &mut Writer<Cursor<Vec<u8>>
                 let key_prefix = get_current_prefix(key, prefixes).unwrap_or(new_prefix.to_string()).to_string();
 
                 // Reset the element for the next iteration				  
-                let mut key_tag = format!("{}:{}", key_prefix, key);
+                let mut key_tag = format!("{}:{}", key_prefix, capitalize_word(&key));
                 key_tag = update_tag(&key_tag);
                 element = BytesStart::new(key_tag.clone());
 
@@ -61,7 +63,7 @@ pub fn create_xml_element(json_data: &Value, writer: &mut Writer<Cursor<Vec<u8>>
                 }
 
                 // Skip attributes
-                if key.starts_with('@') {
+                if key.starts_with("__") {
                     continue;
                 } else {
                     // Write the start tag if the value is not an attribute or an array with a first key as an attribute
@@ -88,7 +90,7 @@ pub fn create_xml_element(json_data: &Value, writer: &mut Writer<Cursor<Vec<u8>>
             // Get the prefix for the array elements
             let new_prefix = get_current_prefix(parent_tag, prefixes).unwrap_or(current_prefix.to_string()).to_string();
 
-            let parent_tag = &format!("{}:{}", new_prefix, parent_tag);
+            let parent_tag = &format!("{}:{}", new_prefix, capitalize_word(&parent_tag));
             let parent_tag = &update_tag(parent_tag);
 
             let parent_prefix = &mut new_prefix.clone();
@@ -99,7 +101,7 @@ pub fn create_xml_element(json_data: &Value, writer: &mut Writer<Cursor<Vec<u8>>
                     let first_key = value.as_object().unwrap().keys().next().unwrap();
 
                     // Write the start tag for all non-attribute elements, skipping the first one
-                    if !first_key.starts_with('@') && i > 0 {
+                    if !first_key.starts_with("__") && i > 0 {
                         writer
                             .write_event(Event::Start(BytesStart::new(parent_tag)))
                             .expect("Unable to write start tag"); 
@@ -135,7 +137,7 @@ fn is_attribute_key(value: &Value) -> bool {
             .unwrap()
             .keys()
             .next()
-            .map(|key| key.starts_with('@'))
+            .map(|key| key.starts_with("__"))
             .unwrap_or(false)
 }
 
@@ -176,12 +178,16 @@ fn update_tag(parent_tag: &str) -> String {
 
 // Check if parent tag contains GIS data
 fn check_gis_data(parent_tag: &str) -> String {
-    let gml_namespaces = vec!["Polygon", "polygon", "Point", "point", "coordinates", "exterior", "interior", "LinearRing"];
+    let gml_namespaces = vec!["Polygon", "Point", "LinearRing"];
+    let gml_lower_namespaces = vec!["Coordinates", "Exterior", "Interior", "PointProperty", "PolygonProperty"];
+    let pt = parent_tag.split(":").last().unwrap();
 
-    let gis_tag = if parent_tag.contains("PolygonGeometry") {
-        format!("{}:{}", "gdt", parent_tag.split(":").last().unwrap())
-    } else if gml_namespaces.iter().any(|&x| parent_tag.contains(x)) {
-        format!("{}:{}", "gml", parent_tag.split(":").last().unwrap())
+    let gis_tag = if pt == "PolygonGeometry" {
+        format!("{}:{}", "gdt", capitalize_word(&pt))
+    } else if gml_lower_namespaces.iter().any(|&x| pt == x) {
+        format!("{}:{}", "gml", lowercase_word(&pt))
+    } else if gml_namespaces.iter().any(|&x| pt == x) {
+        format!("{}:{}", "gml", capitalize_word(&pt))
     } else {
         parent_tag.to_string()
     };
@@ -192,9 +198,10 @@ fn check_gis_data(parent_tag: &str) -> String {
 // Check if parent tag is a common namespace
 fn check_common_prefixes(parent_tag: &str) -> String {
     let common_namespaces = vec!["ChangeState", "ChangeTime", "DataSource", "IdentifierType", "IdentifierValue"];
+    let pt = parent_tag.split(":").last().unwrap();
 
-    let common_tag = if common_namespaces.iter().any(|&x| parent_tag.contains(x)) {
-        format!("{}:{}", "co", parent_tag.split(":").last().unwrap())
+    let common_tag = if common_namespaces.iter().any(|&x| pt == x) {
+        format!("{}:{}", "co", capitalize_word(&pt))
     } else {
         parent_tag.to_string()
     };

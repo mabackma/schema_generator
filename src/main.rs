@@ -1,6 +1,7 @@
 use schema_generator::generate_string::generate_structs_string;
 use schema_generator::create_structs::create_structs;
 use schema_generator::file_structs::ForestPropertyData as FileForestPropertyData;
+use schema_generator::string_utils::lowercase_word;
 use schema_generator::url_structs::ForestPropertyData as UrlForestPropertyData;
 use schema_generator::generate_xml::create_xml_element;
 
@@ -98,6 +99,8 @@ fn property_to_json(file_property: Option<FileForestPropertyData>, url_property:
     if file_property.is_some() {
         let file_property = file_property.unwrap();
 
+        let file_property = json_keys_to_lowercase(&serde_json::to_value(file_property).expect("Could not convert to JSON"));
+
         match serde_json::to_string_pretty(&file_property) {
             Ok(json) => std::fs::write("file_forestpropertydata.json", &json).expect("Unable to write data"),
             Err(e) => println!("Error: {}", e),
@@ -107,10 +110,30 @@ fn property_to_json(file_property: Option<FileForestPropertyData>, url_property:
     if url_property.is_some() {
         let url_property = url_property.unwrap();
 
+        let url_property = json_keys_to_lowercase(&serde_json::to_value(url_property).expect("Could not convert to JSON"));
+
         match serde_json::to_string_pretty(&url_property) {
             Ok(json) => std::fs::write("url_forestpropertydata.json", &json).expect("Unable to write data"),
             Err(e) => println!("Error: {}", e),
         }
+    }
+}
+
+// Converts the keys of a JSON object to lowercase and replaces @ with __
+fn json_keys_to_lowercase(json: &serde_json::Value) -> serde_json::Value {
+    match json {
+        serde_json::Value::Object(map) => {
+            let mut new_map = serde_json::Map::new();
+            for (key, value) in map {
+                new_map.insert(lowercase_word(&key), json_keys_to_lowercase(value));
+            }
+            serde_json::Value::Object(new_map)
+        },
+        serde_json::Value::Array(vec) => {
+            let new_vec: Vec<serde_json::Value> = vec.iter().map(|v| json_keys_to_lowercase(v)).collect();
+            serde_json::Value::Array(new_vec)
+        },
+        _ => json.clone(),
     }
 }
 
@@ -125,10 +148,6 @@ fn json_to_xml(path: &str, file_name: &str) {
     // Extract the prefixes from the root element
     let prefixes = extract_prefixes(&json_value);
 
-    for pr in prefixes.iter() {
-        println!("{}: {}", pr.0, pr.1);
-    }
-    println!();
     // Write XML header
     let root = "ForestPropertyData";
     writer.write_event(Event::Decl(BytesDecl::new("1.0", Some("UTF-8"), None))).expect("Unable to write XML declaration");
@@ -154,7 +173,7 @@ fn extract_prefixes(json_data: &serde_json::Value) -> HashMap<String, String> {
     match json_data {
         serde_json::Value::Object(map) => {
             for (key, value) in map {
-                if key.starts_with("@xmlns:") {
+                if key.starts_with("__xmlns:") {
                     let prefix = key.split(':').last().unwrap().to_string();
                     let struct_string = value.as_str().unwrap().to_string();
 
@@ -164,7 +183,7 @@ fn extract_prefixes(json_data: &serde_json::Value) -> HashMap<String, String> {
 
                     // Extract the last segment of the namespace
                     let last_segment = namespace.split('/').last().unwrap().to_string();
-                    let formatted_namespace = capitalize_word(&last_segment);
+                    let formatted_namespace = lowercase_word(&last_segment);
 
                     prefixes.insert(formatted_namespace, prefix);
                 }
@@ -174,15 +193,6 @@ fn extract_prefixes(json_data: &serde_json::Value) -> HashMap<String, String> {
     }
 
     prefixes
-}
-
-// Capitalizes the first letter of a word
-fn capitalize_word(word: &str) -> String {
-    let mut chars = word.chars();
-    match chars.next() {
-        None => String::new(),
-        Some(f) => f.to_uppercase().collect::<String>() + chars.as_str(),
-    }
 }
 
 // Get the version from the Cargo.toml file
