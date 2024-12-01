@@ -46,6 +46,12 @@ fn read_xml_file(file_name: &str) -> String {
     let mut file = File::open(file_name).unwrap();
     let mut xml_string = String::new();
     file.read_to_string(&mut xml_string).unwrap();
+
+    // Remove Byte Order Mark (BOM) if it exists
+    if xml_string.starts_with("\u{feff}") {
+        xml_string = xml_string.trim_start_matches("\u{feff}").to_string();
+    }
+
     xml_string
 }
 
@@ -85,7 +91,13 @@ fn create_structs_and_save_to_file(xml_string: &str, file_name: &str) {
 
 // Reads XML content from a file and converts it to structs according to the schema
 fn file_content_to_structs(path: &str) -> FileForestPropertyData {
-    let xml = fs::read_to_string(path).expect("Could not read the XML file");
+    let mut xml = fs::read_to_string(path).expect("Could not read the XML file");
+
+    // Remove BOM if it exists
+    if xml.starts_with("\u{feff}") {
+        xml = xml.trim_start_matches("\u{feff}").to_string();
+    }
+
     from_str(&xml).expect("Could not parse the XML")
 }
 

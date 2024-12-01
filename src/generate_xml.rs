@@ -172,6 +172,14 @@ fn update_tag(parent_tag: &str) -> String {
         return "tst:TreeStrata".to_string()
     }
 
+    if parent_tag.contains(":SpecialFeatures") {
+        return "st:SpecialFeatures".to_string()
+    }
+
+    if parent_tag.ends_with(":SpecialFeature") {
+        return "st:SpecialFeature".to_string()
+    }
+
     let new_tag = check_gis_data(&parent_tag);
     check_common_prefixes(&new_tag) 
 }
