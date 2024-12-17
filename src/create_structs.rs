@@ -160,6 +160,8 @@ fn parse_attributes(e: quick_xml::events::BytesStart, new_struct: &mut XMLStruct
             let field_name = if attr_name == "type" {
                 let element_name = e.name().0.to_vec().as_slice().to_vec().iter().map(|&c| c as char).collect::<String>();
                 format!("@{}_type", to_snake_case(&to_camel_case_with_prefix(&element_name)))
+            } else if attr_name == "xlink:type" {
+                format!("@xlink_type")
             } else {
                 format!("@{}", attr_name)
             };
