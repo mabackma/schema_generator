@@ -1,4 +1,4 @@
-#### What this program does
+## What this program does
 - Converts XML file into data structures in Rust (structs) by reading the file forestpropertydata.xml located in the root of the project. The structs are saved in a file called file_structs.rs.
 - Converts XML that is fetched from API into structs and saves the the structs to a filed called url_structs.rs.
 - Uses the structs to read the XML file's data and create a Json file containing that data using serde.
