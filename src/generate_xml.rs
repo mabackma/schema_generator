@@ -44,6 +44,16 @@ pub fn create_xml_element(json_data: &Value, writer: &mut Writer<Cursor<Vec<u8>>
                     .expect("Unable to write start tag");
             }
 
+/*             let text_content = if map.contains_key("$text") {
+                "\n".to_owned() + map.get("$text").unwrap().as_str().unwrap() + "\n"
+            } else {
+                "".to_string()
+            };
+
+            writer
+                .write_event(Event::Text(BytesText::new(&text_content)))
+                .expect("Unable to write text"); */
+
             // Process key-value pairs
             for (key, value) in map {
                 // Get the updated prefix for the current key
@@ -130,18 +140,16 @@ pub fn create_xml_element(json_data: &Value, writer: &mut Writer<Cursor<Vec<u8>>
     }
 }
 
-// Check if the first key of the object is an attribute
+// Check if any key of the object is an attribute
 fn is_attribute_key(value: &Value) -> bool {
     value.is_object()
         && value.as_object()
             .unwrap()
             .keys()
-            .next()
-            .map(|key| key.starts_with("__"))
-            .unwrap_or(false)
+            .any(|key| key.starts_with("__")) // Check if any key is an attribute
 }
 
-// Check if the first key of the first object in array is an attribute
+// Check if any key of the first object in array is an attribute
 fn is_array_with_attribute_key(value: &Value) -> bool {
     value.is_array()
         && value.as_array()
@@ -187,7 +195,7 @@ fn update_tag(parent_tag: &str) -> String {
 // Check if parent tag contains GIS data
 fn check_gis_data(parent_tag: &str) -> String {
     let gml_namespaces = vec!["Polygon", "Point", "LinearRing"];
-    let gml_lower_namespaces = vec!["Coordinates", "Exterior", "Interior", "PointProperty", "PolygonProperty"];
+    let gml_lower_namespaces = vec!["Coordinates", "Exterior", "Interior", "PointProperty", "PolygonProperty", "PosList"];
     let pt = parent_tag.split(":").last().unwrap();
 
     let gis_tag = if pt == "PolygonGeometry" {
