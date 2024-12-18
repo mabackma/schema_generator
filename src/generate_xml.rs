@@ -44,15 +44,12 @@ pub fn create_xml_element(json_data: &Value, writer: &mut Writer<Cursor<Vec<u8>>
                     .expect("Unable to write start tag");
             }
 
-/*             let text_content = if map.contains_key("$text") {
-                "\n".to_owned() + map.get("$text").unwrap().as_str().unwrap() + "\n"
-            } else {
-                "".to_string()
-            };
-
-            writer
-                .write_event(Event::Text(BytesText::new(&text_content)))
-                .expect("Unable to write text"); */
+            if map.contains_key("$text") {
+                let text_content = map.get("$text").unwrap().as_str().unwrap();
+                writer
+                    .write_event(Event::Text(BytesText::new(&text_content)))
+                    .expect("Unable to write text");
+            }
 
             // Process key-value pairs
             for (key, value) in map {
@@ -73,7 +70,7 @@ pub fn create_xml_element(json_data: &Value, writer: &mut Writer<Cursor<Vec<u8>>
                 }
 
                 // Skip attributes
-                if key.starts_with("__") {
+                if key.starts_with("__") || key == "$text" {
                     continue;
                 } else {
                     // Write the start tag if the value is not an attribute or an array with a first key as an attribute
