@@ -16,3 +16,7 @@
 - TreeStrata
 
 #### xlink:type attribute in <gml:polygonProperty> tags will show up as __type in Json
+
+## License
+
+[MIT License](LICENSE)
