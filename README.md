@@ -8,6 +8,8 @@
 
 #### If the first nested element has attributes and the parent element also has attributes, the nested element will sometimes inherit the same prefix from the parent (and sometimes update to its own prefix as its meant to). This is likely due to the recursive nature of the function.
 
+#### The tags and contents inside <gdt:PolygonGeometry> will be written on their own rows, even if they are on a single row in the original XML file. This is not exactly a bug, but the generated XML file will have a different amount of rows than the original XML file.
+
 ## Other mentions
 
 #### Some namespaces are not included in the XML. The following namespace prefixes were manually added:
