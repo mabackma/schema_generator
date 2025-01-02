@@ -112,6 +112,7 @@ pub fn create_structs(reader: &mut Reader<&[u8]>) -> HashMap<String, XMLStruct> 
 
                     // Update the final struct with new fields or insert it if it doesn't exist
                     if let Some(existing_struct) = structs.get_mut(&completed_struct.name.clone()) {
+
                         // Merge fields: add only new unique fields
                         for field in completed_struct.fields {
                             if !existing_struct.fields.iter().any(|f| f.name == field.name) {
@@ -124,6 +125,7 @@ pub fn create_structs(reader: &mut Reader<&[u8]>) -> HashMap<String, XMLStruct> 
                             } 
                         }
                     } else {
+
                         // No existing struct, insert the completed struct as it is
                         structs.insert(completed_struct.name.clone(), completed_struct.clone());
                     }
@@ -196,6 +198,7 @@ fn remove_fieldless_structs(structs: &mut HashMap<String, XMLStruct>) {
 
 // Add the empty structs to the final structs
 fn add_empty_structs(structs: &mut HashMap<String, XMLStruct>, empty_structs: &mut HashMap<String, XMLStruct>) {
+
     // Remove the $text field from empty structs
     for (_, xml_struct) in &mut *empty_structs {
         xml_struct.fields.retain(|field| field.name != "$text");
@@ -213,6 +216,7 @@ fn add_empty_structs(structs: &mut HashMap<String, XMLStruct>, empty_structs: &m
 fn update_field_types(structs: &mut HashMap<String, XMLStruct>, max_counts: &HashMap<String, HashMap<String, usize>>) {
     for (parent_name, child_map) in max_counts {
         if let Some(parent_struct) = structs.get_mut(parent_name) {
+            
             // Check for fields that occur more than once
             for (child_name, child_count) in child_map {
                 if *child_count > 1 {

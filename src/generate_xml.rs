@@ -6,8 +6,15 @@ use std::io::Cursor;
 
 use crate::string_utils::{capitalize_word, lowercase_word};
 
-pub fn create_xml_element(json_data: &Value, writer: &mut Writer<Cursor<Vec<u8>>>, parent_tag: &str, prefixes: &HashMap<String, String>, current_prefix: &str) {
+pub fn create_xml_element(
+    json_data: &Value, 
+    writer: &mut Writer<Cursor<Vec<u8>>>, 
+    parent_tag: &str, 
+    prefixes: &HashMap<String, String>, 
+    current_prefix: &str
+) {
     match json_data {
+
         // Handle objects
         Value::Object(map) => {
             // Get the updated prefix for the current tag
@@ -19,6 +26,7 @@ pub fn create_xml_element(json_data: &Value, writer: &mut Writer<Cursor<Vec<u8>>
             if !parent_tag.contains(":") && !new_prefix.is_empty() {
                 parent_tag = format!("{}:{}", new_prefix, capitalize_word(&parent_tag));
             }
+
             parent_tag = update_tag(&parent_tag);
 
             let mut element = BytesStart::new(parent_tag);
@@ -53,6 +61,7 @@ pub fn create_xml_element(json_data: &Value, writer: &mut Writer<Cursor<Vec<u8>>
 
             // Process key-value pairs
             for (key, value) in map {
+
                 // Get the updated prefix for the current key
                 let key_prefix = get_current_prefix(key, prefixes).unwrap_or(new_prefix.to_string()).to_string();
 
@@ -66,6 +75,7 @@ pub fn create_xml_element(json_data: &Value, writer: &mut Writer<Cursor<Vec<u8>>
                     writer
                         .write_event(Event::Empty(element.to_owned()))
                         .expect("Unable to write self-closing tag");
+
                     continue;
                 }
 
@@ -73,6 +83,7 @@ pub fn create_xml_element(json_data: &Value, writer: &mut Writer<Cursor<Vec<u8>>
                 if key.starts_with("__") || key == "$text" {
                     continue;
                 } else {
+
                     // Write the start tag if the value is not an attribute or an array with a first key as an attribute
                     if !(is_attribute_key(value) || is_array_with_attribute_key(value)) {
                         writer
@@ -92,8 +103,10 @@ pub fn create_xml_element(json_data: &Value, writer: &mut Writer<Cursor<Vec<u8>>
                 }
             }
         },
+
         // Handle arrays by processing each item inside the array
         Value::Array(arr) => {
+
             // Get the prefix for the array elements
             let new_prefix = get_current_prefix(parent_tag, prefixes).unwrap_or(current_prefix.to_string()).to_string();
 
@@ -103,6 +116,7 @@ pub fn create_xml_element(json_data: &Value, writer: &mut Writer<Cursor<Vec<u8>>
             let parent_prefix = &mut new_prefix.clone();
 
             for (i, value) in arr.iter().enumerate() {
+
                 // Get the first key of the object 
                 if value.is_object() {
                     let first_key = value.as_object().unwrap().keys().next().unwrap();
@@ -127,13 +141,16 @@ pub fn create_xml_element(json_data: &Value, writer: &mut Writer<Cursor<Vec<u8>>
                     .expect("Unable to write end tag");
             }
         },
+
         // Handle strings as text content
         Value::String(s) => {
             writer
                 .write_event(Event::Text(BytesText::new(s)))
                 .expect("Unable to write text");
         },
-        _ => {}  // Skip unsupported types (e.g., Null)
+
+        // Skip unsupported types (e.g., Null)
+        _ => {} 
     }
 }
 
@@ -156,7 +173,11 @@ fn is_array_with_attribute_key(value: &Value) -> bool {
             .unwrap_or(false)
 }
 
-fn get_current_prefix(parent_tag: &str, prefixes: &HashMap<String, String>) -> Option<String> {
+fn get_current_prefix(
+    parent_tag: &str, 
+    prefixes: &HashMap<String, String>
+) -> Option<String> {
+
     // Check if any namespaces are contained in the parent tag
     for (key, value) in prefixes {
         if parent_tag == key {
@@ -186,6 +207,7 @@ fn update_tag(parent_tag: &str) -> String {
     }
 
     let new_tag = check_gis_data(&parent_tag);
+
     check_common_prefixes(&new_tag) 
 }
 
