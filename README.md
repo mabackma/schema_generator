@@ -12,9 +12,9 @@
 
 ### These are not exactly bugs, since the generated file will still contain all the relevant information from the original file.
 
-#### <ts:TreeStandDataDate> tags that don't have any content will be written on two rows instead of one.
+- <ts:TreeStandDataDate> tags that don't have any content will be written on two rows instead of one.
 
-#### The tags and contents inside <gdt:PolygonGeometry> will be written on their own rows, even if they are on a single row in the original XML file.
+- The tags and contents inside <gdt:PolygonGeometry> will be written on their own rows, even if they are on a single row in the original XML file.
 
 ## Other mentions
 
