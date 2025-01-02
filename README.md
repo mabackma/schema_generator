@@ -10,7 +10,7 @@
 
 ## Reasons why the generated XML file might have fewer rows than the original XML file:
 
-### These are not exactly bugs, since the generated file will still contain all the relevant information from the original file.
+#### These are not exactly bugs, since the generated file will still contain all the relevant information from the original file.
 
 - <ts:TreeStandDataDate> tags that don't have any content will be written on two rows instead of one.
 
