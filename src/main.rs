@@ -19,6 +19,7 @@ use regex::Regex;
 use toml::Value;
 
 fn main() {    
+
     // Create structs schema from a file
     let file_xml_string = read_xml_file("forestpropertydata.xml");
     create_structs_and_save_to_file(&file_xml_string, "src/file_structs.rs");
@@ -75,7 +76,10 @@ fn fetch_xml_url(url: &str) -> Option<String> {
 }
 
 // Creates structs from an XML string and saves them to a file
-fn create_structs_and_save_to_file(xml_string: &str, file_name: &str) {
+fn create_structs_and_save_to_file(
+    xml_string: &str, 
+    file_name: &str
+) {
     let mut reader = Reader::from_str(&xml_string);
     
     let mut structs = create_structs(&mut reader);
@@ -107,7 +111,10 @@ fn string_content_to_structs(xml: &str) -> UrlForestPropertyData {
 }
 
 // Converts structs to json and saves them to a json file
-fn property_to_json(file_property: Option<FileForestPropertyData>, url_property: Option<UrlForestPropertyData>) {
+fn property_to_json(
+    file_property: Option<FileForestPropertyData>, 
+    url_property: Option<UrlForestPropertyData>
+) {
     if file_property.is_some() {
         let file_property = file_property.unwrap();
 
@@ -150,7 +157,10 @@ fn json_keys_to_lowercase(json: &serde_json::Value) -> serde_json::Value {
 }
 
 // Convert Json to XML
-fn json_to_xml(path: &str, file_name: &str) {
+fn json_to_xml(
+    path: &str, 
+    file_name: &str
+) {
     let json = fs::read_to_string(path).expect("Could not read the JSON file");
     let json_value: serde_json::Value = serde_json::from_str(&json).unwrap();
 
