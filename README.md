@@ -14,7 +14,7 @@
 
 - <ts:TreeStandDataDate> tags that don't have any content will be written on two rows instead of one.
 
-- The tags and contents inside <gdt:PolygonGeometry> will be written on their own rows, even if they are on a single row in the original XML file.
+- The tags and contents inside <gdt:PolygonGeometry> and <gdt:MultiPolygonGeometry> will be written on their own rows, even if they are on a single row in the original XML file.
 
 ## Other mentions
 
