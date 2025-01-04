@@ -56,16 +56,14 @@ mod tests {
             map
         };
 
-        // Call the function with the test data
         let result = extract_prefixes(&json_data);
 
-        // Assert the result matches the expected output
         assert_eq!(result, expected);
     }
 
     #[test]
     fn test_extract_prefixes_no_xmlns() {
-        
+
         // Test with a JSON object that does not contain __xmlns: keys
         let json_data = json!({
             "someKey": "value",
