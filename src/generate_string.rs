@@ -33,7 +33,8 @@ pub fn generate_structs_string(structs: &HashMap<String, XMLStruct>) -> String {
 }
 
 // Adds field to the struct string
-fn field_to_struct_string(
+// Makes all fields optional, except for attribute fields (Makes attribute field "srsName" optional)
+pub fn field_to_struct_string(
     field: &XMLField, 
     field_type: &str, 
     mut struct_string: String

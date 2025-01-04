@@ -12,7 +12,7 @@ pub struct XMLField {
 
 #[derive(Debug)]
 pub struct XMLStruct {
-    name: String,
+    pub name: String,
     pub fields: Vec<XMLField>,
 }
 

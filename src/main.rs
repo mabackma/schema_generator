@@ -1,21 +1,20 @@
 use schema_generator::generate_string::generate_structs_string;
 use schema_generator::create_structs::create_structs;
 use schema_generator::file_structs::ForestPropertyData as FileForestPropertyData;
-use schema_generator::string_utils::lowercase_word;
 use schema_generator::url_structs::ForestPropertyData as UrlForestPropertyData;
+use schema_generator::json_utils::json_keys_to_lowercase;
+use schema_generator::json_utils::extract_prefixes;
 use schema_generator::generate_xml::create_xml_element;
 
 use quick_xml::Writer;
-use quick_xml::events::{BytesDecl, BytesEnd, BytesText, Event};
+use quick_xml::events::{Event, BytesEnd, BytesText, BytesDecl};
 use quick_xml::reader::Reader;
 use quick_xml::de::from_str;
 use reqwest::blocking::get;
 use std::fs::File;
-use std::collections::HashMap;
 use std::io::{Read, Write, Cursor};
 use std::str;
 use std::fs;
-use regex::Regex;
 use toml::Value;
 
 fn main() {    
@@ -138,25 +137,7 @@ fn property_to_json(
     }
 }
 
-// Converts the keys of a JSON object to lowercase and replaces @ with __
-fn json_keys_to_lowercase(json: &serde_json::Value) -> serde_json::Value {
-    match json {
-        serde_json::Value::Object(map) => {
-            let mut new_map = serde_json::Map::new();
-            for (key, value) in map {
-                new_map.insert(lowercase_word(&key), json_keys_to_lowercase(value));
-            }
-            serde_json::Value::Object(new_map)
-        },
-        serde_json::Value::Array(vec) => {
-            let new_vec: Vec<serde_json::Value> = vec.iter().map(|v| json_keys_to_lowercase(v)).collect();
-            serde_json::Value::Array(new_vec)
-        },
-        _ => json.clone(),
-    }
-}
-
-// Convert Json to XML
+// Convert Json to XML and save it to a file
 fn json_to_xml(
     path: &str, 
     file_name: &str
@@ -187,34 +168,6 @@ fn json_to_xml(
 
     let xml_output = String::from_utf8(writer.into_inner().into_inner()).expect("Failed to convert to UTF-8");
     std::fs::write(file_name, &xml_output).expect("Unable to write data");
-}
-
-fn extract_prefixes(json_data: &serde_json::Value) -> HashMap<String, String> {
-    let mut prefixes: HashMap<String, String> = HashMap::new();
-
-    match json_data {
-        serde_json::Value::Object(map) => {
-            for (key, value) in map {
-                if key.starts_with("__xmlns:") {
-                    let prefix = key.split(':').last().unwrap().to_string();
-                    let struct_string = value.as_str().unwrap().to_string();
-
-                    // Extract the namespace from the struct string
-                    let re = Regex::new(r"/\d{4}/\d{2}/\d{2}").unwrap();
-                    let namespace = re.replace(&struct_string, "").to_string();
-
-                    // Extract the last segment of the namespace
-                    let last_segment = namespace.split('/').last().unwrap().to_string();
-                    let formatted_namespace = lowercase_word(&last_segment);
-
-                    prefixes.insert(formatted_namespace, prefix);
-                }
-            }
-        },
-        _ => {}
-    }
-
-    prefixes
 }
 
 // Get the version from the Cargo.toml file
