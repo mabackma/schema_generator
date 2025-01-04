@@ -33,8 +33,7 @@ mod tests {
         });
         
         let result = json_keys_to_lowercase(&input);
-
-        // Compare the result with the expected output
+        
         assert_eq!(result, expected);
     }
 
