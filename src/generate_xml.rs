@@ -1,12 +1,54 @@
+use crate::json_utils::extract_prefixes;
+
+use std::fs;
 use quick_xml::Writer;
-use quick_xml::events::{BytesEnd, BytesStart, BytesText, Event};
+use quick_xml::events::{BytesEnd, BytesStart, BytesText, BytesDecl, Event};
 use serde_json::Value;
 use std::collections::HashMap;
 use std::io::Cursor;
 
 use crate::string_utils::{capitalize_word, lowercase_word};
 
-pub fn create_xml_element(
+// Convert Json to XML
+pub fn json_to_xml(json_value: &serde_json::Value) -> String {
+
+    // Create the writer
+    let mut writer = Writer::new_with_indent(Cursor::new(Vec::new()), b' ', 2); // 2-space indentation
+
+    // Extract the prefixes from the root element
+    let prefixes = extract_prefixes(json_value);
+
+    // Write XML header
+    let root = "ForestPropertyData";
+    writer.write_event(Event::Decl(BytesDecl::new("1.0", Some("UTF-8"), None))).expect("Unable to write XML declaration");
+    
+    // Write metadata comment
+    let version = get_version_from_toml("Cargo.toml").unwrap_or("0.0.0".to_string());
+    writer.write_event(Event::Comment(BytesText::new(&format!("Created with schema_generator {}", version)))).expect("Unable to write comment");
+    
+    create_xml_element(json_value, &mut writer, root, &prefixes, &mut "".to_string());
+
+    // Write the closing tag
+    writer
+        .write_event(Event::End(BytesEnd::new(root)))
+        .expect("Unable to write end tag"); 
+
+    String::from_utf8(writer.into_inner().into_inner()).expect("Failed to convert to UTF-8")
+}
+
+// Helper function to get the version from the Cargo.toml file
+fn get_version_from_toml(file_path: &str) -> Option<String> {
+    let content = fs::read_to_string(file_path).expect("Unable to read the file");
+    let toml: Value = toml::de::from_str(&content).expect("Unable to parse TOML");
+
+    // Access the version from the TOML data
+    toml.get("package")
+        .and_then(|pkg| pkg.get("version"))
+        .and_then(|version| version.as_str())
+        .map(|s| s.to_string())
+}
+
+fn create_xml_element(
     json_data: &Value, 
     writer: &mut Writer<Cursor<Vec<u8>>>, 
     parent_tag: &str, 

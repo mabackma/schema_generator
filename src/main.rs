@@ -3,19 +3,15 @@ use schema_generator::create_structs::create_structs;
 use schema_generator::file_structs::ForestPropertyData as FileForestPropertyData;
 use schema_generator::url_structs::ForestPropertyData as UrlForestPropertyData;
 use schema_generator::json_utils::json_keys_to_lowercase;
-use schema_generator::json_utils::extract_prefixes;
-use schema_generator::generate_xml::create_xml_element;
+use schema_generator::generate_xml::json_to_xml;
 
-use quick_xml::Writer;
-use quick_xml::events::{Event, BytesEnd, BytesText, BytesDecl};
 use quick_xml::reader::Reader;
 use quick_xml::de::from_str;
 use reqwest::blocking::get;
 use std::fs::File;
-use std::io::{Read, Write, Cursor};
+use std::io::{Read, Write};
 use std::str;
 use std::fs;
-use toml::Value;
 
 fn main() {    
 
@@ -37,8 +33,18 @@ fn main() {
     // Convert the structs to json and save to a json file
     property_to_json(Some(file_property), Some(url_property));
 
-    json_to_xml("file_forestpropertydata.json", "file_back_to_xml.xml");
-    json_to_xml("url_forestpropertydata.json", "url_back_to_xml.xml"); 
+    // Convert the json files back to XML
+    let file_json = fs::read_to_string("file_forestpropertydata.json").expect("Could not read the JSON file");
+    let file_json_value: serde_json::Value = serde_json::from_str(&file_json).unwrap();
+    let file_new_xml = json_to_xml(&file_json_value);
+
+    let url_json = fs::read_to_string("url_forestpropertydata.json").expect("Could not read the JSON file");
+    let url_json_value: serde_json::Value = serde_json::from_str(&url_json).unwrap();
+    let url_new_xml = json_to_xml(&url_json_value);
+
+    // Save the new XML content to files
+    std::fs::write("file_back_to_xml.xml", &file_new_xml).expect("Unable to write data");
+    std::fs::write("url_back_to_xml.xml", &url_new_xml).expect("Unable to write data");
 }
 
 // Reads an XML file and returns its contents as a string
@@ -135,49 +141,4 @@ fn property_to_json(
             Err(e) => println!("Error: {}", e),
         }
     }
-}
-
-// Convert Json to XML and save it to a file
-fn json_to_xml(
-    path: &str, 
-    file_name: &str
-) {
-    let json = fs::read_to_string(path).expect("Could not read the JSON file");
-    let json_value: serde_json::Value = serde_json::from_str(&json).unwrap();
-
-    // Create the writer
-    let mut writer = Writer::new_with_indent(Cursor::new(Vec::new()), b' ', 2); // 2-space indentation
-
-    // Extract the prefixes from the root element
-    let prefixes = extract_prefixes(&json_value);
-
-    // Write XML header
-    let root = "ForestPropertyData";
-    writer.write_event(Event::Decl(BytesDecl::new("1.0", Some("UTF-8"), None))).expect("Unable to write XML declaration");
-    
-    // Write metadata comment
-    let version = get_version_from_toml("Cargo.toml").unwrap_or("0.0.0".to_string());
-    writer.write_event(Event::Comment(BytesText::new(&format!("Created with schema_generator {}", version)))).expect("Unable to write comment");
-    
-    create_xml_element(&json_value, &mut writer, root, &prefixes, &mut "".to_string());
-
-    // Write the closing tag
-    writer
-        .write_event(Event::End(BytesEnd::new(root)))
-        .expect("Unable to write end tag"); 
-
-    let xml_output = String::from_utf8(writer.into_inner().into_inner()).expect("Failed to convert to UTF-8");
-    std::fs::write(file_name, &xml_output).expect("Unable to write data");
-}
-
-// Get the version from the Cargo.toml file
-fn get_version_from_toml(file_path: &str) -> Option<String> {
-    let content = fs::read_to_string(file_path).expect("Unable to read the file");
-    let toml: Value = toml::de::from_str(&content).expect("Unable to parse TOML");
-
-    // Access the version from the TOML data
-    toml.get("package")
-        .and_then(|pkg| pkg.get("version"))
-        .and_then(|version| version.as_str())
-        .map(|s| s.to_string())
 }
