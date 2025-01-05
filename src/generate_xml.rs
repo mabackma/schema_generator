@@ -15,6 +15,8 @@ use std::io::Cursor;
 /// # Example
 /// 
 /// ```rust
+/// use schema_generator::generate_xml::json_to_xml;
+/// 
 /// let json_data = r#"
 /// {
 ///     "__xmlns:addr": "http://standards.fi/schemas/personData/addresses",
