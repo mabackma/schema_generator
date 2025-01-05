@@ -1,4 +1,5 @@
 use crate::json_utils::extract_prefixes;
+use crate::string_utils::{capitalize_word, lowercase_word};
 
 use std::fs;
 use quick_xml::Writer;
@@ -6,8 +7,6 @@ use quick_xml::events::{BytesEnd, BytesStart, BytesText, BytesDecl, Event};
 use serde_json::Value;
 use std::collections::HashMap;
 use std::io::Cursor;
-
-use crate::string_utils::{capitalize_word, lowercase_word};
 
 // Convert Json to XML
 pub fn json_to_xml(json_value: &serde_json::Value) -> String {
@@ -41,13 +40,13 @@ fn get_version_from_toml(file_path: &str) -> Option<String> {
     let content = fs::read_to_string(file_path).expect("Unable to read the file");
     let toml: Value = toml::de::from_str(&content).expect("Unable to parse TOML");
 
-    // Access the version from the TOML data
     toml.get("package")
         .and_then(|pkg| pkg.get("version"))
         .and_then(|version| version.as_str())
         .map(|s| s.to_string())
 }
 
+// Recursively create XML elements from JSON data
 fn create_xml_element(
     json_data: &Value, 
     writer: &mut Writer<Cursor<Vec<u8>>>, 
@@ -215,6 +214,7 @@ fn is_array_with_attribute_key(value: &Value) -> bool {
             .unwrap_or(false)
 }
 
+// Get the current prefix for the tag
 fn get_current_prefix(
     parent_tag: &str, 
     prefixes: &HashMap<String, String>
