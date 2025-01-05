@@ -14,7 +14,6 @@ use std::str;
 use std::fs;
 
 fn main() {    
-
     // Create structs schema from a file
     let file_xml_string = read_xml_file("forestpropertydata.xml");
     create_structs_and_save_to_file(&file_xml_string, "src/file_structs.rs");
@@ -36,11 +35,11 @@ fn main() {
     // Convert the json files back to XML
     let file_json = fs::read_to_string("file_forestpropertydata.json").expect("Could not read the JSON file");
     let file_json_value: serde_json::Value = serde_json::from_str(&file_json).unwrap();
-    let file_new_xml = json_to_xml(&file_json_value);
+    let file_new_xml = json_to_xml(&file_json_value, "ForestPropertyData");
 
     let url_json = fs::read_to_string("url_forestpropertydata.json").expect("Could not read the JSON file");
     let url_json_value: serde_json::Value = serde_json::from_str(&url_json).unwrap();
-    let url_new_xml = json_to_xml(&url_json_value);
+    let url_new_xml = json_to_xml(&url_json_value, "ForestPropertyData");
 
     // Save the new XML content to files
     std::fs::write("file_back_to_xml.xml", &file_new_xml).expect("Unable to write data");

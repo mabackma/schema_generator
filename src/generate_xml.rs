@@ -8,8 +8,78 @@ use serde_json::Value;
 use std::collections::HashMap;
 use std::io::Cursor;
 
-// Convert Json to XML
-pub fn json_to_xml(json_value: &serde_json::Value) -> String {
+
+
+
+/// # Example
+/// 
+/// ```rust
+/// let json_data = r#"
+/// {
+///     "__xmlns:addr": "http://standards.fi/schemas/personData/addresses",
+///     "__xmlns:pr": "http://standards.fi/schemas/personData/person",
+///     "person": {
+///         "name": "John Doe",
+///         "age": "30",
+///         "__id": 1234,
+///         "addresses": [
+///             {
+///                 "street": "123 Main St",
+///                 "city": "Springfield",
+///                 "__type": "primary"
+///             },
+///             {
+///                 "street": "456 Oak Ave",
+///                 "city": "Shelbyville",
+///                 "__type": "secondary"
+///             }
+///         ]
+///     }
+/// }
+/// "#;
+/// 
+/// let json: serde_json::Value = serde_json::from_str(json_data).unwrap();
+/// 
+/// let xml_output = json_to_xml(&json, "People");
+/// 
+/// println!("{}", xml_output);
+/// ```
+/// 
+/// ## Expected Output (XML):
+/// 
+/// ```xml
+/// <?xml version="1.0" encoding="UTF-8"?>
+/// <!--Created with schema_generator 0.1.0-->
+/// <People xmlns:pr="http://standards.fi/schemas/personData/person" xmlns:addr="http://standards.fi/schemas/personData/addresses">
+///   <pr:Person>
+///     <addr:Addresses type="primary">
+///       <addr:City>Springfield</addr:City>
+///       <addr:Street>123 Main St</addr:Street>
+///     </addr:Addresses>
+///     <addr:Addresses type="secondary">
+///       <addr:City>Shelbyville</addr:City>
+///       <addr:Street>456 Oak Ave</addr:Street>
+///     </addr:Addresses>
+///     <pr:Age>30</pr:Age>
+///     <pr:Name>John Doe</pr:Name>
+///   </pr:Person>
+/// </People>
+/// ```
+/// 
+/// ## Parameters:
+/// - `json_value`: The input JSON value to be converted into XML. It can contain objects, arrays, and strings.
+/// - `root`: The name of the root element in the XML document.
+///
+/// ## Returns:
+/// A string containing the XML representation of the input JSON, including necessary XML namespaces and attributes.
+///
+/// ## Notes:
+/// - Attributes are prefixed with `__` in the JSON input and are converted to XML attributes.
+/// - This function works recursively to handle nested structures and arrays.
+/// - The order of elements in the XML output may differ from the JSON input.
+/// 
+/// Convert Json to XML
+pub fn json_to_xml(json_value: &Value, root: &str) -> String {
 
     // Create the writer
     let mut writer = Writer::new_with_indent(Cursor::new(Vec::new()), b' ', 2); // 2-space indentation
@@ -18,7 +88,6 @@ pub fn json_to_xml(json_value: &serde_json::Value) -> String {
     let prefixes = extract_prefixes(json_value);
 
     // Write XML header
-    let root = "ForestPropertyData";
     writer.write_event(Event::Decl(BytesDecl::new("1.0", Some("UTF-8"), None))).expect("Unable to write XML declaration");
     
     // Write metadata comment
