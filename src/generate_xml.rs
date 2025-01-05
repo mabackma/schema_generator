@@ -10,7 +10,8 @@ use std::io::Cursor;
 
 
 
-
+/// # Convert JSON to XML with Namespaces
+/// 
 /// # Example
 /// 
 /// ```rust
@@ -77,8 +78,6 @@ use std::io::Cursor;
 /// - Attributes are prefixed with `__` in the JSON input and are converted to XML attributes.
 /// - This function works recursively to handle nested structures and arrays.
 /// - The order of elements in the XML output may differ from the JSON input.
-/// 
-/// Convert Json to XML
 pub fn json_to_xml(json_value: &Value, root: &str) -> String {
 
     // Create the writer
