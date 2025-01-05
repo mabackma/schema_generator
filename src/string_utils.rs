@@ -7,7 +7,7 @@ pub fn remove_vec(s: &str) -> String {
     }
 }
 
-// Converts a string to camel case and adds prefix. Used for struct names and field types
+// Converts a string to camel case and adds prefix. Used for struct names and field types (eg. re:AreaNumber -> ReAreaNumber)
 pub fn to_camel_case_with_prefix(s: &str) -> String {
     let mut new_string = String::new();
     let mut char_vec: Vec<char>;
@@ -41,7 +41,7 @@ pub fn to_camel_case_with_prefix(s: &str) -> String {
     char_vec.into_iter().collect()
 }
 
-// Converts a string to snake case. Used for field names
+// Converts a string to snake case. Used for field names (eg. AreaNumber -> area_number)
 pub fn to_snake_case(s: &str) -> String {
     let char_vec: Vec<char> = s.chars().collect();
     let mut new_string  = String::new();
