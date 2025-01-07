@@ -25,14 +25,86 @@ impl Clone for XMLStruct {
     }
 }
 
-// Create structs from the XML document
-pub fn create_structs(reader: &mut Reader<&[u8]>) -> HashMap<String, XMLStruct> {
+/// Parses an XML string and generates a set of Rust structs representing the XML elements
+/// and their attributes.
+///
+/// Each struct corresponds to an XML element, with fields representing its attributes,
+/// child elements, or text content. The field type is set to the name of the child element or String when there are no child elements.
+///
+/// # Parameters
+/// - `xml_string`: A string slice containing the XML document to parse.
+///
+/// # Returns
+/// - `HashMap<String, XMLStruct>`: A map where the keys are the names of XML elements,
+///   and the values are `XMLStruct` objects representing the element and its fields.
+///
+/// # Structs
+/// - **`XMLStruct`**
+///   - `name: String` - The name of the XML element.
+///   - `fields: Vec<XMLField>` - A list of fields within the struct
+///
+/// - **`XMLField`**
+///   - `name: String` - The name of the field.
+///   - `field_type: String` - The type of the field (e.g., `String`, `Vec<T>`).
+///
+/// # Behavior
+/// - Parses XML start tags (`<tag>`), self-closing tags (`<tag/>`), and end tags (`</tag>`).
+/// - Converts attributes into fields prefixed with `@` (e.g., `@id` for an attribute `id`).
+/// - Represents text content using a field named `$text`.
+/// - Handles nested elements and maintains relationships between parent and child structs.
+/// - Updates the field type to `Vec<T>` if an element occurs multiple times within its parent.
+///
+/// # Example
+///
+/// ```rust
+/// let xml_data = r#"
+/// <library>
+///     <book id="1" author="Author One">
+///         <title>Book One</title>
+///         <genre>Fiction</genre>
+///     </book>
+///     <book id="2" author="Author Two">
+///         <title>Book Two</title>
+///         <genre>Non-Fiction</genre>
+///     </book>
+/// </library>
+/// "#;
+///
+/// let structs = create_structs(xml_data);
+///
+/// for (name, xml_struct) in &structs {
+///     println!("Struct: {}", name);
+///     for field in &xml_struct.fields {
+///         println!("  Field: {} -> {}", field.name, field.field_type);
+///     }
+/// }
+/// ```
+///
+/// Expected output:
+/// ```text
+/// Struct: book
+///   Field: @id -> String
+///   Field: @author -> String
+///   Field: $text -> String
+///   Field: title -> title
+///   Field: genre -> genre
+/// Struct: library
+///   Field: $text -> String
+///   Field: book -> Vec<book>
+/// ```
+///
+/// # Notes
+/// - Structs without meaningful fields (other than `$text`) are removed.
+/// - Attributes are treated as strings.
+pub fn create_structs(xml_string: &str) -> HashMap<String, XMLStruct> {
     let mut stack: Vec<XMLStruct> = Vec::new(); // Stack of structs being constructed
     let mut empty_structs: HashMap<String, XMLStruct> = HashMap::new(); // Structs from self-closing tags
     let mut structs: HashMap<String, XMLStruct> = HashMap::new(); // Finalized structs
     let mut field_counts: HashMap<String, HashMap<String, usize>> = HashMap::new(); // Count of fields per struct
     let mut max_counts: HashMap<String, HashMap<String, usize>> = HashMap::new(); // Maximum count of fields per struct
     let mut start_tags: Vec<String> = Vec::new(); // Start tags for elements
+
+    let mut reader = Reader::from_str(xml_string);
 
     loop {
         match reader.read_event() {

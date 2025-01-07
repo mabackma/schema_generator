@@ -5,7 +5,6 @@ use schema_generator::url_structs::ForestPropertyData as UrlForestPropertyData;
 use schema_generator::json_utils::json_keys_to_lowercase;
 use schema_generator::generate_xml::json_to_xml;
 
-use quick_xml::reader::Reader;
 use quick_xml::de::from_str;
 use reqwest::blocking::get;
 use std::fs::File;
@@ -85,9 +84,8 @@ fn create_structs_and_save_to_file(
     xml_string: &str, 
     file_name: &str
 ) {
-    let mut reader = Reader::from_str(&xml_string);
-    
-    let mut structs = create_structs(&mut reader);
+
+    let mut structs = create_structs(xml_string);
 
     let struct_string = generate_structs_string(&mut structs);
 
