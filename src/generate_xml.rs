@@ -8,8 +8,6 @@ use serde_json::Value;
 use std::collections::HashMap;
 use std::io::Cursor;
 
-
-
 /// # Convert JSON to XML with Namespaces
 /// 
 /// # Example
@@ -24,7 +22,7 @@ use std::io::Cursor;
 ///     "person": {
 ///         "name": "John Doe",
 ///         "age": "30",
-///         "__id": 1234,
+///         "__id": "1234",
 ///         "addresses": [
 ///             {
 ///                 "street": "123 Main St",
@@ -54,7 +52,7 @@ use std::io::Cursor;
 /// <?xml version="1.0" encoding="UTF-8"?>
 /// <!--Created with schema_generator 0.1.0-->
 /// <People xmlns:pr="http://standards.fi/schemas/personData/person" xmlns:addr="http://standards.fi/schemas/personData/addresses">
-///   <pr:Person>
+///   <pr:Person id="1234">
 ///     <addr:Addresses type="primary">
 ///       <addr:City>Springfield</addr:City>
 ///       <addr:Street>123 Main St</addr:Street>
@@ -85,15 +83,23 @@ pub fn json_to_xml(json_value: &Value, root: &str) -> String {
     // Create the writer
     let mut writer = Writer::new_with_indent(Cursor::new(Vec::new()), b' ', 2); // 2-space indentation
 
-    // Extract the prefixes from the root element
-    let prefixes = extract_prefixes(json_value);
-
     // Write XML header
-    writer.write_event(Event::Decl(BytesDecl::new("1.0", Some("UTF-8"), None))).expect("Unable to write XML declaration");
+    writer
+        .write_event(Event::Decl(BytesDecl::new("1.0", Some("UTF-8"), None)))
+        .expect("Unable to write XML declaration");
     
     // Write metadata comment
     let version = get_version_from_toml("Cargo.toml").unwrap_or("0.0.0".to_string());
-    writer.write_event(Event::Comment(BytesText::new(&format!("Created with schema_generator {}", version)))).expect("Unable to write comment");
+    writer
+        .write_event(
+            Event::Comment(BytesText::new(&format!(
+            "Created with schema_generator {}", 
+            version
+        ))))
+        .expect("Unable to write comment");
+    
+    // Extract the prefixes from the root element
+    let prefixes = extract_prefixes(json_value);
     
     create_xml_element(json_value, &mut writer, root, &prefixes, &mut "".to_string());
 
@@ -136,6 +142,8 @@ fn create_xml_element(
             // Create the parent tag with the prefix
             if !parent_tag.contains(":") && !new_prefix.is_empty() {
                 parent_tag = format!("{}:{}", new_prefix, capitalize_word(&parent_tag));
+            } else {
+                parent_tag = capitalize_word(&parent_tag);
             }
 
             parent_tag = update_tag(&parent_tag);
@@ -177,8 +185,15 @@ fn create_xml_element(
                 let key_prefix = get_current_prefix(key, prefixes).unwrap_or(new_prefix.to_string()).to_string();
 
                 // Reset the element for the next iteration				  
-                let mut key_tag = format!("{}:{}", key_prefix, capitalize_word(&key));
+                let mut key_tag = key.to_string();
+                if !key_tag.contains(":") && !key_prefix.is_empty() {
+                    key_tag = format!("{}:{}", key_prefix, capitalize_word(&key));
+                } else {
+                    key_tag = capitalize_word(&key_tag);
+                }
+
                 key_tag = update_tag(&key_tag);
+
                 element = BytesStart::new(key_tag.clone());
 
                 // Write self-closing tag if the object is empty
@@ -221,8 +236,16 @@ fn create_xml_element(
             // Get the prefix for the array elements
             let new_prefix = get_current_prefix(parent_tag, prefixes).unwrap_or(current_prefix.to_string()).to_string();
 
-            let parent_tag = &format!("{}:{}", new_prefix, capitalize_word(&parent_tag));
-            let parent_tag = &update_tag(parent_tag);
+            let mut parent_tag = parent_tag.to_string();
+
+            // Create the parent tag with the prefix
+            if !parent_tag.contains(":") && !new_prefix.is_empty() {
+                parent_tag = format!("{}:{}", new_prefix, capitalize_word(&parent_tag));
+            } else {
+                parent_tag = capitalize_word(&parent_tag);
+            }
+            
+            let parent_tag = &update_tag(&parent_tag);
 
             let parent_prefix = &mut new_prefix.clone();
 

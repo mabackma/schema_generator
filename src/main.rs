@@ -14,6 +14,7 @@ use std::str;
 use std::fs;
 
 fn main() {    
+    
     // Create structs schema from a file
     let file_xml_string = read_xml_file("forestpropertydata.xml");
     create_structs_and_save_to_file(&file_xml_string, "src/file_structs.rs");

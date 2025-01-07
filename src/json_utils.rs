@@ -30,11 +30,11 @@ pub fn extract_prefixes(json_data: &serde_json::Value) -> HashMap<String, String
             for (key, value) in map {
                 if key.starts_with("__xmlns:") {
                     let prefix = key.split(':').last().unwrap().to_string();
-                    let struct_string = value.as_str().unwrap().to_string();
+                    let value_string = value.as_str().unwrap().to_string();
 
-                    // Extract the namespace from the struct string
+                    // Remove the date from value string (e.g. /2021/05/01)
                     let re = Regex::new(r"/\d{4}/\d{2}/\d{2}").unwrap();
-                    let namespace = re.replace(&struct_string, "").to_string();
+                    let namespace = re.replace(&value_string, "").to_string();
 
                     // Extract the last segment of the namespace
                     let last_segment = namespace.split('/').last().unwrap().to_string();
