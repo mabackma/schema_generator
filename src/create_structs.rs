@@ -225,7 +225,10 @@ pub fn create_structs(xml_string: &str) -> HashMap<String, XMLStruct> {
 }
 
 // Parse attributes and add them as fields
-fn parse_attributes(e: quick_xml::events::BytesStart, new_struct: &mut XMLStruct) {
+fn parse_attributes(
+    e: quick_xml::events::BytesStart, 
+    new_struct: &mut XMLStruct) {
+
     for attr in e.attributes() {
         if let Ok(attr) = attr {
             let attr_name = std::str::from_utf8(attr.key.as_ref()).unwrap().to_string();
@@ -269,7 +272,10 @@ fn remove_fieldless_structs(structs: &mut HashMap<String, XMLStruct>) {
 }
 
 // Add the empty structs to the final structs
-fn add_empty_structs(structs: &mut HashMap<String, XMLStruct>, empty_structs: &mut HashMap<String, XMLStruct>) {
+fn add_empty_structs(
+    structs: &mut HashMap<String, XMLStruct>, 
+    empty_structs: &mut HashMap<String, XMLStruct>
+) {
 
     // Remove the $text field from empty structs
     for (_, xml_struct) in &mut *empty_structs {
@@ -285,7 +291,11 @@ fn add_empty_structs(structs: &mut HashMap<String, XMLStruct>, empty_structs: &m
 }
 
 // Update the field types for fields that occur more than once to Vec<T>
-fn update_field_types(structs: &mut HashMap<String, XMLStruct>, max_counts: &HashMap<String, HashMap<String, usize>>) {
+fn update_field_types(
+    structs: &mut HashMap<String, XMLStruct>, 
+    max_counts: &HashMap<String, HashMap<String, usize>>
+) {
+    
     for (parent_name, child_map) in max_counts {
         if let Some(parent_struct) = structs.get_mut(parent_name) {
             
