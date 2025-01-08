@@ -1,3 +1,4 @@
+use crate::generate_string::generate_structs_string;
 use crate::string_utils::{to_camel_case_with_prefix, to_snake_case};
 
 use std::collections::HashMap;
@@ -35,8 +36,7 @@ impl Clone for XMLStruct {
 /// - `xml_string`: A string slice containing the XML document to parse.
 ///
 /// # Returns
-/// - `HashMap<String, XMLStruct>`: A map where the keys are the names of XML elements,
-///   and the values are `XMLStruct` objects representing the element and its fields.
+/// - `String`: A string containing the Rust structs generated from the XML document.
 ///
 /// # Structs
 /// - **`XMLStruct`**
@@ -54,6 +54,22 @@ impl Clone for XMLStruct {
 /// - Handles nested elements and maintains relationships between parent and child structs.
 /// - Updates the field type to `Vec<T>` if an element occurs multiple times within its parent.
 ///
+/// - **Text Fields (`$text`)**:
+///   - Prefixed with `$` in the field name.
+///   - Represented as `Option<String>` and marked as `#[serde(rename = "$text", skip_serializing_if = "Option::is_none")]`.
+///
+/// - **Attributes (`@name`)**:
+///   - Attributes are prefixed with `@`.
+///   - Fields use the attribute's name (e.g., `@id` becomes `pub id: String`).
+///   - Special cases:
+///     - `@xsi:type` attributes are renamed to `type` using `#[serde(rename = "type")]`.
+///     - `@type` attributes are supported with specific renaming.
+///     - `@srsName` attributes are marked as optional with `Option<String>`.
+///
+/// - **Regular Fields**:
+///   - Child elements are represented as optional fields (e.g., `pub child_name: Option<ChildType>`).
+///   - Names are converted to snake_case with prefixes to handle XML namespaces (e.g., `ns:tag` becomes `ns_tag`).
+/// 
 /// # Example
 ///
 /// ```rust
@@ -70,33 +86,42 @@ impl Clone for XMLStruct {
 /// </library>
 /// "#;
 ///
-/// let structs = create_structs(xml_data);
+/// let structs_string = create_structs(xml_data);
 ///
-/// for (name, xml_struct) in &structs {
-///     println!("Struct: {}", name);
-///     for field in &xml_struct.fields {
-///         println!("  Field: {} -> {}", field.name, field.field_type);
-///     }
-/// }
+/// println!("{}", structs_string);
 /// ```
 ///
 /// Expected output:
 /// ```text
-/// Struct: book
-///   Field: @id -> String
-///   Field: @author -> String
-///   Field: $text -> String
-///   Field: title -> title
-///   Field: genre -> genre
-/// Struct: library
-///   Field: $text -> String
-///   Field: book -> Vec<book>
+/// use serde::{Serialize, Deserialize};
+/// 
+/// #[derive(Serialize, Deserialize, Debug)]
+/// pub struct Book {
+///         #[serde(rename = "@id")]
+///         pub id: String,
+///         #[serde(rename = "@author")]
+///         pub author: String,
+///         #[serde(rename = "$text", skip_serializing_if = "Option::is_none")]
+///         pub text: Option<String>,
+///         #[serde(rename = "title", skip_serializing_if = "Option::is_none")]
+///         pub title_title: Option<String>,
+///         #[serde(rename = "genre", skip_serializing_if = "Option::is_none")]
+///         pub genre_genre: Option<String>,
+/// }
+/// 
+/// #[derive(Serialize, Deserialize, Debug)]
+/// pub struct Library {
+///         #[serde(rename = "$text", skip_serializing_if = "Option::is_none")]
+///         pub text: Option<String>,
+///         #[serde(rename = "book", skip_serializing_if = "Option::is_none")]
+///         pub book_book: Option<Vec<Book>>,
+/// }
 /// ```
 ///
 /// # Notes
-/// - Structs without meaningful fields (other than `$text`) are removed.
-/// - Attributes are treated as strings.
-pub fn create_structs(xml_string: &str) -> HashMap<String, XMLStruct> {
+/// - If a field type matches an existing struct name, the field type is set to the corresponding struct.
+/// - If a field has no matching struct, its type is defaulted to `String`.
+pub fn create_structs(xml_string: &str) -> String {
     let mut stack: Vec<XMLStruct> = Vec::new(); // Stack of structs being constructed
     let mut empty_structs: HashMap<String, XMLStruct> = HashMap::new(); // Structs from self-closing tags
     let mut structs: HashMap<String, XMLStruct> = HashMap::new(); // Finalized structs
@@ -221,7 +246,8 @@ pub fn create_structs(xml_string: &str) -> HashMap<String, XMLStruct> {
 
     update_field_types(&mut structs, &max_counts);
 
-    structs
+    // Return the generated structs as a string
+    generate_structs_string(&structs)
 }
 
 // Parse attributes and add them as fields
@@ -295,7 +321,7 @@ fn update_field_types(
     structs: &mut HashMap<String, XMLStruct>, 
     max_counts: &HashMap<String, HashMap<String, usize>>
 ) {
-    
+
     for (parent_name, child_map) in max_counts {
         if let Some(parent_struct) = structs.get_mut(parent_name) {
             

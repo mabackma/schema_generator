@@ -10,6 +10,7 @@ pub fn generate_structs_string(structs: &HashMap<String, XMLStruct>) -> String {
 
     for (name, xml_struct) in structs {
         let struct_name = to_camel_case_with_prefix(&name); 
+        
         struct_string += &format!("#[derive(Serialize, Deserialize, Debug)]\n");
         struct_string += &format!("pub struct {} {{\n", struct_name);
 

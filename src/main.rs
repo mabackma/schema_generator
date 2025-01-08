@@ -1,4 +1,3 @@
-use schema_generator::generate_string::generate_structs_string;
 use schema_generator::create_structs::create_structs;
 use schema_generator::file_structs::ForestPropertyData as FileForestPropertyData;
 use schema_generator::url_structs::ForestPropertyData as UrlForestPropertyData;
@@ -85,9 +84,8 @@ fn create_structs_and_save_to_file(
     file_name: &str
 ) {
 
-    let mut structs = create_structs(xml_string);
-
-    let struct_string = generate_structs_string(&mut structs);
+    // Create string representation of structs from the XML string
+    let struct_string = create_structs(xml_string);
 
     // Save the generated structs to a file
     let mut struct_file = File::create(file_name).unwrap();
