@@ -1,6 +1,12 @@
 [package]
 name = "schema_generator"
 version = "0.1.0"
+authors = ["Marc Bäckman"]
+license = "MIT"
+description = "Parses XML files and generates corresponding Rust structs. It parses XML documents and automatically generates Rust data structures that map XML elements to fields, including attributes, child elements, and text content."
+repository = "https://github.com/mabackma/schema_generator"
+keywords = ["xml", "json", "rust", "parser"]
+categories = ["parsing", "data-structures"]
 edition = "2021"
 
 [dependencies]
