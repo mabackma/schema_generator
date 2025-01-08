@@ -3,7 +3,7 @@ use crate::string_utils::lowercase_word;
 use std::collections::HashMap;
 use regex::Regex;
 
-// Converts the keys of a JSON object to lowercase and replaces @ with __
+/// Converts the keys of a JSON object to lowercase and replaces @ with __
 pub fn json_keys_to_lowercase(json: &serde_json::Value) -> serde_json::Value {
     match json {
         serde_json::Value::Object(map) => {
@@ -21,7 +21,9 @@ pub fn json_keys_to_lowercase(json: &serde_json::Value) -> serde_json::Value {
     }
 }
 
-// Create a map of prefixes from the root element of the JSON data
+/// Creates a map of namespace prefixes from the root element of the JSON data
+/// The keys are the last segment of the namespace and the values are the prefixes 
+/// (e.g. "__xmlns:co": "http://standardit.tapio.fi/schemas/forestData/common" -> "common": "co")
 pub fn extract_prefixes(json_data: &serde_json::Value) -> HashMap<String, String> {
     let mut prefixes: HashMap<String, String> = HashMap::new();
 

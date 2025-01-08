@@ -3,14 +3,14 @@ use crate::string_utils::{remove_vec, to_camel_case_with_prefix, to_snake_case};
 
 use std::collections::HashMap;
 
-// Generates String for Rust structs with fields 
+/// Generates String for Rust structs with fields 
 pub fn generate_structs_string(structs: &HashMap<String, XMLStruct>) -> String {
     let mut struct_string = String::new();
     struct_string += &format!("use serde::{{Serialize, Deserialize}};\n\n");
 
     for (name, xml_struct) in structs {
         let struct_name = to_camel_case_with_prefix(&name); 
-        
+
         struct_string += &format!("#[derive(Serialize, Deserialize, Debug)]\n");
         struct_string += &format!("pub struct {} {{\n", struct_name);
 
@@ -33,8 +33,9 @@ pub fn generate_structs_string(structs: &HashMap<String, XMLStruct>) -> String {
     struct_string
 }
 
-// Adds field to the struct string
-// Makes all fields optional, except for attribute fields (Makes attribute field "srsName" optional)
+/// Adds field to the struct string
+/// Makes all fields optional, except for attribute fields
+/// Makes attribute field "srsName" optional for GmlPolygon and GmlMultiPolygon
 pub fn field_to_struct_string(
     field: &XMLField, 
     field_type: &str, 

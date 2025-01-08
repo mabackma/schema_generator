@@ -1,4 +1,4 @@
-// Removes Vec< and > from a string
+/// Removes Vec< and > from a string
 pub fn remove_vec(s: &str) -> String {
     if s.starts_with("Vec<") {
         s.chars().skip(4).take(s.len() - 5).collect()
@@ -7,7 +7,8 @@ pub fn remove_vec(s: &str) -> String {
     }
 }
 
-// Converts a string to camel case and adds prefix. Used for struct names and field types (eg. re:AreaNumber -> ReAreaNumber)
+/// Converts a string to camel case and adds prefix. 
+/// Used for struct names and field types (eg. re:AreaNumber -> ReAreaNumber)
 pub fn to_camel_case_with_prefix(s: &str) -> String {
     let mut new_string = String::new();
     let mut char_vec: Vec<char>;
@@ -41,7 +42,8 @@ pub fn to_camel_case_with_prefix(s: &str) -> String {
     char_vec.into_iter().collect()
 }
 
-// Converts a string to snake case. Used for field names (eg. AreaNumber -> area_number)
+/// Converts a string to snake case. 
+/// Used for field names (eg. AreaNumber -> area_number)
 pub fn to_snake_case(s: &str) -> String {
     let char_vec: Vec<char> = s.chars().collect();
     let mut new_string  = String::new();
@@ -58,7 +60,7 @@ pub fn to_snake_case(s: &str) -> String {
     new_string.to_lowercase()
 }
 
-// Capitalizes the first letter of a word
+/// Capitalizes the first letter of a word
 pub fn capitalize_word(word: &str) -> String {
     let mut chars = word.chars();
     match chars.next() {
@@ -67,7 +69,7 @@ pub fn capitalize_word(word: &str) -> String {
     }
 }
 
-// Lowercases the first letter of a word. Changes @ to __
+/// Lowercases the first letter of a word. Changes @ to __
 pub fn lowercase_word(word: &str) -> String {
     if !word.starts_with('@') {
         let mut chars = word.chars();
