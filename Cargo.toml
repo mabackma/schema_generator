@@ -1,6 +1,6 @@
 [package]
 name = "schema_generator"
-version = "0.1.0"
+version = "0.1.1"
 authors = ["Marc Bäckman"]
 license = "MIT"
 description = "schema_generator is a Rust crate initially created for parsing XML files containing forestry data and generating corresponding Rust structs. It parses XML documents and automatically generates Rust data structures that map XML elements to fields, including attributes, child elements, and text content. It integrates with the serde library for serialization and deserialization.
