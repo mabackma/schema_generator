@@ -290,28 +290,28 @@
         "specialFeatures": {
           "specialFeature": [
             {
-              "__id": "49247485",
+              "__id": "51192702",
               "featureAdditionalCode": "40",
               "featureCode": "500",
               "mainFeature": "1"
             },
             {
-              "__id": "49247486",
+              "__id": "51192703",
               "featureCode": "530",
               "mainFeature": "0"
             },
             {
-              "__id": "49247489",
+              "__id": "51192704",
               "featureCode": "540",
               "mainFeature": "0"
             },
             {
-              "__id": "49247490",
+              "__id": "51192705",
               "featureCode": "98",
               "mainFeature": "0"
             },
             {
-              "__id": "49247492",
+              "__id": "51192706",
               "featureCode": "91",
               "mainFeature": "0"
             }
@@ -5096,18 +5096,18 @@
         "specialFeatures": {
           "specialFeature": [
             {
-              "__id": "49248621",
+              "__id": "51187644",
               "featureAdditionalCode": "43",
               "featureCode": "578",
               "mainFeature": "1"
             },
             {
-              "__id": "49248622",
+              "__id": "51187645",
               "featureCode": "618",
               "mainFeature": "0"
             },
             {
-              "__id": "49248625",
+              "__id": "51187646",
               "featureCode": "91",
               "mainFeature": "0"
             }
@@ -5513,18 +5513,18 @@
         "specialFeatures": {
           "specialFeature": [
             {
-              "__id": "49251582",
+              "__id": "51207233",
               "featureAdditionalCode": "43",
               "featureCode": "545",
               "mainFeature": "1"
             },
             {
-              "__id": "49251583",
+              "__id": "51207234",
               "featureCode": "549",
               "mainFeature": "0"
             },
             {
-              "__id": "49251587",
+              "__id": "51207235",
               "featureCode": "91",
               "mainFeature": "0"
             }
@@ -5695,18 +5695,18 @@
         "specialFeatures": {
           "specialFeature": [
             {
-              "__id": "49248142",
+              "__id": "51193620",
               "featureAdditionalCode": "40",
               "featureCode": "500",
               "mainFeature": "1"
             },
             {
-              "__id": "49248143",
+              "__id": "51193621",
               "featureCode": "98",
               "mainFeature": "0"
             },
             {
-              "__id": "49248144",
+              "__id": "51193622",
               "featureCode": "91",
               "mainFeature": "0"
             }
@@ -5998,13 +5998,13 @@
         "specialFeatures": {
           "specialFeature": [
             {
-              "__id": "49249303",
+              "__id": "51207264",
               "featureAdditionalCode": "43",
               "featureCode": "618",
               "mainFeature": "1"
             },
             {
-              "__id": "49249305",
+              "__id": "51207265",
               "featureCode": "91",
               "mainFeature": "0"
             }
@@ -6209,18 +6209,18 @@
         "specialFeatures": {
           "specialFeature": [
             {
-              "__id": "49246314",
+              "__id": "51193971",
               "featureAdditionalCode": "40",
               "featureCode": "500",
               "mainFeature": "1"
             },
             {
-              "__id": "49246315",
+              "__id": "51193972",
               "featureCode": "98",
               "mainFeature": "0"
             },
             {
-              "__id": "49246316",
+              "__id": "51193973",
               "featureCode": "91",
               "mainFeature": "0"
             }
@@ -6705,7 +6705,7 @@
         "specialFeatures": {
           "specialFeature": [
             {
-              "__id": "49248386",
+              "__id": "51189876",
               "featureAdditionalCode": "43",
               "featureCode": "618",
               "mainFeature": "1"

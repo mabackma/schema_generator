@@ -72,17 +72,19 @@ impl Clone for XMLStruct {
 /// # Example
 ///
 /// ```rust
+/// use schema_generator::create_structs::create_structs;
+/// 
 /// let xml_data = r#"
-/// <library>
-///     <book id="1" author="Author One">
-///         <title>Book One</title>
-///         <genre>Fiction</genre>
-///     </book>
-///     <book id="2" author="Author Two">
-///         <title>Book Two</title>
-///         <genre>Non-Fiction</genre>
-///     </book>
-/// </library>
+/// <Library xmlns:lib="http://example.com/library" xmlns:bo="http://example.com/book">
+///     <bo:Book id="1" author="Author One">
+///         <bo:Title>Book One</bo:Title>
+///         <bo:Genre>Fiction</bo:Genre>
+///     </bo:Book>
+///     <bo:Book id="2" author="Author Two">
+///         <bo:Title>Book Two</bo:Title>
+///         <bo:Genre>Non-Fiction</bo:Genre>
+///     </bo:Book>
+/// </Library>
 /// "#;
 ///
 /// let structs_string = create_structs(xml_data);
@@ -95,25 +97,29 @@ impl Clone for XMLStruct {
 /// use serde::{Serialize, Deserialize};
 /// 
 /// #[derive(Serialize, Deserialize, Debug)]
-/// pub struct Book {
+/// pub struct Library {
+///         #[serde(rename = "@xmlns:lib")]
+///         pub xmlns_lib: String,
+///         #[serde(rename = "@xmlns:bo")]
+///         pub xmlns_bo: String,
+///         #[serde(rename = "$text", skip_serializing_if = "Option::is_none")]
+///         pub text: Option<String>,
+///         #[serde(rename = "Book", skip_serializing_if = "Option::is_none")]
+///         pub bo_book: Option<Vec<BoBook>>,
+/// }
+/// 
+/// #[derive(Serialize, Deserialize, Debug)]
+/// pub struct BoBook {
 ///         #[serde(rename = "@id")]
 ///         pub id: String,
 ///         #[serde(rename = "@author")]
 ///         pub author: String,
 ///         #[serde(rename = "$text", skip_serializing_if = "Option::is_none")]
 ///         pub text: Option<String>,
-///         #[serde(rename = "title", skip_serializing_if = "Option::is_none")]
-///         pub title_title: Option<String>,
-///         #[serde(rename = "genre", skip_serializing_if = "Option::is_none")]
-///         pub genre_genre: Option<String>,
-/// }
-/// 
-/// #[derive(Serialize, Deserialize, Debug)]
-/// pub struct Library {
-///         #[serde(rename = "$text", skip_serializing_if = "Option::is_none")]
-///         pub text: Option<String>,
-///         #[serde(rename = "book", skip_serializing_if = "Option::is_none")]
-///         pub book_book: Option<Vec<Book>>,
+///         #[serde(rename = "Title", skip_serializing_if = "Option::is_none")]
+///         pub bo_title: Option<String>,
+///         #[serde(rename = "Genre", skip_serializing_if = "Option::is_none")]
+///         pub bo_genre: Option<String>,
 /// }
 /// ```
 ///
