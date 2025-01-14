@@ -8,7 +8,7 @@ use serde_json::Value;
 use std::collections::HashMap;
 use std::io::Cursor;
 
-/// # Convert JSON to XML with Namespaces
+/// # Convert JSON to XML with Namespaces.
 /// 
 /// # Example
 /// 

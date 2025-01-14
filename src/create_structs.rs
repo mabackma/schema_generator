@@ -26,8 +26,7 @@ impl Clone for XMLStruct {
     }
 }
 
-/// Parses an XML string and generates a set of Rust structs representing the XML elements
-/// and their attributes.
+/// Parses an XML string and generates a set of Rust structs representing the XML elements and their attributes.
 ///
 /// Each struct corresponds to an XML element, with fields representing its attributes,
 /// child elements, or text content. The field type is set to the name of the child element or String when there are no child elements.
@@ -41,7 +40,7 @@ impl Clone for XMLStruct {
 /// # Structs
 /// - **`XMLStruct`**
 ///   - `name: String` - The name of the XML element.
-///   - `fields: Vec<XMLField>` - A list of fields within the struct
+///   - `fields: Vec<XMLField>` - A list of fields within the struct.
 ///
 /// - **`XMLField`**
 ///   - `name: String` - The name of the field.
