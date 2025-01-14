@@ -75,7 +75,7 @@ impl Clone for XMLStruct {
 /// use schema_generator::create_structs::create_structs;
 /// 
 /// let xml_data = r#"
-/// <Library xmlns:lib="http://example.com/library" xmlns:bo="http://example.com/book">
+/// <Library xmlns="http://example.com/library" xmlns:bo="http://example.com/library/book">
 ///     <bo:Book id="1" author="Author One">
 ///         <bo:Title>Book One</bo:Title>
 ///         <bo:Genre>Fiction</bo:Genre>
@@ -98,8 +98,8 @@ impl Clone for XMLStruct {
 /// 
 /// #[derive(Serialize, Deserialize, Debug)]
 /// pub struct Library {
-///         #[serde(rename = "@xmlns:lib")]
-///         pub xmlns_lib: String,
+///         #[serde(rename = "@xmlns")]
+///         pub xmlns: String,
 ///         #[serde(rename = "@xmlns:bo")]
 ///         pub xmlns_bo: String,
 ///         #[serde(rename = "$text", skip_serializing_if = "Option::is_none")]
