@@ -914,7 +914,7 @@ dependencies = [
 
 [[package]]
 name = "schema_generator"
-version = "0.1.7"
+version = "0.1.8"
 dependencies = [
  "dotenv",
  "quick-xml",
