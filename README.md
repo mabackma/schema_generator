@@ -1,8 +1,6 @@
 ## schema_generator
-- Converts XML file into data structures in Rust (structs) by reading the file forestpropertydata.xml located in the root of the project. The structs are saved in the file src/file_structs.rs.
-- Converts XML that is fetched from API into structs and saves the the structs to the file src/url_structs.rs.
-- Uses the structs to read the XML file's data and creates a Json file containing that data using quick-xml and Serde.
-- Converts the Json file back into XML using a recursive function. The recursive function is not dependent on the structs.
+
+#### schema_generator is a Rust crate initially created for parsing XML files containing forestry data and generating corresponding Rust structs. It parses XML documents and automatically generates Rust data structures that map XML elements to fields, including attributes, child elements, and text content. It integrates with the serde library for serialization and deserialization. While it was originally designed for forestry-related XML data, it can be used with any XML data structure, making it a versatile tool for developers working with XML. Additionally, schema_generator supports JSON to XML conversion.
 
 ## Known bugs in Json to XML conversion:
 

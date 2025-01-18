@@ -4,6 +4,8 @@ use crate::string_utils::{to_camel_case_with_prefix, to_snake_case};
 use std::collections::HashMap;
 use quick_xml::events::Event::{Start, Empty, End, Eof};
 use quick_xml::reader::Reader;
+use std::fs::File;
+use std::io::Write;
 
 #[derive(Debug, Clone)]
 pub struct XMLField {
@@ -345,4 +347,20 @@ fn update_field_types(
             }
         }
     } 
+}
+
+// Creates structs from an XML string and saves them to a file
+pub fn create_structs_and_save_to_file(
+    xml_string: &str, 
+    file_name: &str
+) {
+
+    // Create string representation of structs from the XML string
+    let struct_string = create_structs(xml_string);
+
+    // Save the generated structs to a file
+    let mut struct_file = File::create(file_name).unwrap();
+    struct_file.write_all(&struct_string.as_bytes()).unwrap();
+
+    println!("Structs saved to {}\n", file_name);
 }
