@@ -50,7 +50,7 @@ use std::io::Cursor;
 /// 
 /// ```xml
 /// <?xml version="1.0" encoding="UTF-8"?>
-/// <!--Created with schema_generator 0.1.0-->
+/// <!--Generated with schema_generator 0.1.0-->
 /// <People xmlns:pr="http://standards.fi/schemas/personData/person" xmlns:addr="http://standards.fi/schemas/personData/addresses">
 ///   <pr:Person id="1234">
 ///     <addr:Addresses type="primary">
@@ -89,11 +89,11 @@ pub fn json_to_xml(json_value: &Value, root: &str) -> String {
         .expect("Unable to write XML declaration");
     
     // Write metadata comment
-    let version = get_version_from_toml("Cargo.toml").unwrap_or("0.0.0".to_string());
+    let version = get_dependency_version("Cargo.toml").unwrap_or("0.0.0".to_string());
     writer
         .write_event(
             Event::Comment(BytesText::new(&format!(
-            "Created with schema_generator {}", 
+            "Generated with schema_generator {}", 
             version
         ))))
         .expect("Unable to write comment");
@@ -112,14 +112,19 @@ pub fn json_to_xml(json_value: &Value, root: &str) -> String {
 }
 
 // Helper function to get the version from the Cargo.toml file
-fn get_version_from_toml(file_path: &str) -> Option<String> {
+pub fn get_dependency_version(file_path: &str) -> Option<String> {
     let content = fs::read_to_string(file_path).expect("Unable to read the file");
     let toml: Value = toml::de::from_str(&content).expect("Unable to parse TOML");
 
-    toml.get("package")
-        .and_then(|pkg| pkg.get("version"))
-        .and_then(|version| version.as_str())
-        .map(|s| s.to_string())
+    toml.get("dependencies")
+        .and_then(|deps| deps.get("schema_generator"))
+        .and_then(|dep| {
+            if dep.is_object() {
+                dep.get("version").and_then(|v| v.as_str()).map(|s| s.to_string())
+            } else {
+                dep.as_str().map(|s| s.to_string())
+            }
+        })
 }
 
 // Recursively create XML elements from JSON data

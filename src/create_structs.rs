@@ -335,7 +335,6 @@ fn update_field_types(
             // Check for fields that occur more than once
             for (child_name, child_count) in child_map {
                 if *child_count > 1 {
-                    println!("--------{}: {} -> {}", parent_name, child_name, child_count);
 
                     // Update the field type to Vec<T>
                     for field in &mut parent_struct.fields {

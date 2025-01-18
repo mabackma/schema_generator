@@ -1,6 +1,6 @@
 [package]
 name = "schema_generator"
-version = "0.1.9"
+version = "0.2.0"
 authors = ["Marc Bäckman"]
 license = "MIT"
 description = "This crate is a part of the ClimateForest project, which takes place between 01.03.2024–28.02.2027. It is funded by Interreg Aurora and supported by its contributors, including Metsäkeskus, Lapland University of Applied Sciences, Luke luonnonvarakeskus, Luleå Tekniska Universitet, Skoggstyrelsen, and SLU."
@@ -11,10 +11,8 @@ edition = "2021"
 
 [dependencies]
 quick-xml = { version = "0.37.0", features = ["serialize"] }
-reqwest = { version = "0.12", features = ["blocking"] }
 serde = { version = "1.0.207", features = ["derive"] }
 serde_json = "1.0.124"
-dotenv = "0.15.0"
 serde-xml-rs = "0.6.0"
 regex = "1.11.1"
 toml = "0.8.19"

@@ -1,4 +1,5 @@
 use crate::create_structs::{XMLField, XMLStruct}; 
+use crate::generate_xml::get_dependency_version;
 use crate::string_utils::{remove_vec, to_camel_case_with_prefix, to_snake_case};
 
 use std::collections::HashMap;
@@ -6,6 +7,7 @@ use std::collections::HashMap;
 /// Generates String for Rust structs with fields. 
 pub fn generate_structs_string(structs: &HashMap<String, XMLStruct>) -> String {
     let mut struct_string = String::new();
+    struct_string += &format!("// Generated with schema_generator Generated with schema_generator {}\n", get_dependency_version("Cargo.toml").unwrap_or("0.0.0".to_string()));
     struct_string += &format!("use serde::{{Serialize, Deserialize}};\n\n");
 
     for (name, xml_struct) in structs {
