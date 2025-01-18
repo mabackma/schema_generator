@@ -349,7 +349,11 @@ fn update_field_types(
     } 
 }
 
-// Creates structs from an XML string and saves them to a file
+/// Creates structs from an XML string and saves them to a file
+/// 
+/// # Parameters
+/// - `xml_string`: A string slice containing the XML document to parse.
+/// - `file_name`: A string slice containing the name of the file to save the structs to.
 pub fn create_structs_and_save_to_file(
     xml_string: &str, 
     file_name: &str
