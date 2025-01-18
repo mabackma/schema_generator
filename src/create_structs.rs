@@ -96,6 +96,7 @@ impl Clone for XMLStruct {
 ///
 /// Expected output:
 /// ```text
+/// // Generated with schema_generator Generated with schema_generator 0.1.0
 /// use serde::{Serialize, Deserialize};
 /// 
 /// #[derive(Serialize, Deserialize, Debug)]
