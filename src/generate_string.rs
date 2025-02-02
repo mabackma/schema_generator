@@ -1,4 +1,4 @@
-use crate::create_structs::{XMLField, XMLStruct}; 
+use crate::create_structs::{XMLField, XMLStruct, PRIMITIVE_TYPES}; 
 use crate::generate_xml::get_dependency_version;
 use crate::string_utils::{remove_vec, to_camel_case_with_prefix, to_snake_case};
 
@@ -22,7 +22,13 @@ pub fn generate_structs_string(structs: &HashMap<String, XMLStruct>) -> String {
             let field_type = if (*structs).contains_key(remove_vec(&field.field_type).as_str()) {
                 to_camel_case_with_prefix(&field.field_type)
             } else {
-                "String".to_string()
+                let primitive_types_guard = PRIMITIVE_TYPES.lock().unwrap(); // Lock the Mutex
+
+                if let Some(value) = primitive_types_guard.get(&field.field_type) {
+                    value.to_string()
+                } else {
+                    "String".to_string()
+                }
             };
 
             struct_string = field_to_struct_string(field, &field_type, struct_string.clone());

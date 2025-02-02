@@ -81,3 +81,15 @@ pub fn lowercase_word(word: &str) -> String {
         word.to_string().replace("@", "__")
     }
 }
+
+/// Gets the primitive type of a string if it is a number.
+/// Returns "i64" for integers, "f64" for floats, and "String" for strings.
+pub fn get_primitives(input: &str) -> String {
+    if input.parse::<i64>().is_ok() {
+        "i64".to_string()
+    } else if input.parse::<f64>().is_ok() {
+        "f64".to_string()
+    } else {
+        "String".to_string()
+    }
+}

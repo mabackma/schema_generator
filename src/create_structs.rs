@@ -1,11 +1,13 @@
 use crate::generate_string::generate_structs_string;
-use crate::string_utils::{to_camel_case_with_prefix, to_snake_case};
+use crate::string_utils::{get_primitives, to_camel_case_with_prefix, to_snake_case};
 
 use std::collections::HashMap;
-use quick_xml::events::Event::{Start, Empty, End, Eof};
+use quick_xml::events::Event::{Start, Empty, End, Text, Eof};
 use quick_xml::reader::Reader;
 use std::fs::File;
 use std::io::Write;
+use once_cell::sync::Lazy;
+use std::sync::Mutex;
 
 #[derive(Debug, Clone)]
 pub struct XMLField {
@@ -27,6 +29,8 @@ impl Clone for XMLStruct {
         }
     }
 }
+
+pub static PRIMITIVE_TYPES: Lazy<Mutex<HashMap<String, String>>> = Lazy::new(|| Mutex::new(HashMap::new()));
 
 /// Parses an XML string and generates a set of Rust structs representing the XML elements and their attributes.
 ///
@@ -89,7 +93,7 @@ impl Clone for XMLStruct {
 /// </Library>
 /// "#;
 ///
-/// let structs_string = create_structs(xml_data);
+/// let structs_string = create_structs(xml_data, false);
 ///
 /// println!("{}", structs_string);
 /// ```
@@ -129,7 +133,7 @@ impl Clone for XMLStruct {
 /// # Notes
 /// - If a field type matches an existing struct name, the field type is set to the corresponding struct.
 /// - If a field has no matching struct, its type is defaulted to `String`.
-pub fn create_structs(xml_string: &str) -> String {
+pub fn create_structs(xml_string: &str, use_primitives: bool) -> String {
     let mut stack: Vec<XMLStruct> = Vec::new(); // Stack of structs being constructed
     let mut empty_structs: HashMap<String, XMLStruct> = HashMap::new(); // Structs from self-closing tags
     let mut structs: HashMap<String, XMLStruct> = HashMap::new(); // Finalized structs
@@ -138,11 +142,13 @@ pub fn create_structs(xml_string: &str) -> String {
     let mut start_tags: Vec<String> = Vec::new(); // Start tags for elements
 
     let mut reader = Reader::from_str(xml_string);
+    let mut current_element = String::new();
 
     loop {
         match reader.read_event() {
             Ok(Start(ref e)) => {
                 let element_name = std::str::from_utf8(e.name().as_ref()).unwrap().to_string();
+                current_element = element_name.clone();
 
                 start_tags.push(element_name.clone());
 
@@ -181,6 +187,20 @@ pub fn create_structs(xml_string: &str) -> String {
                 // Push this struct onto the stack if it's not already there
                 if !stack.iter().any(|s| s.name == element_name) {
                     stack.push(new_struct);
+                }
+            },
+            Ok(Text(ref e)) => {
+                if use_primitives {
+                    // Read the text content of the current element
+                    let text_content = e.unescape().unwrap().trim().to_string();
+
+                    if text_content.is_empty() || current_element.ends_with("IdentifierValue") {
+                        continue;
+                    } 
+
+                    // Access primitive_types via the Mutex and insert into it
+                    let mut primitive_types_guard = PRIMITIVE_TYPES.lock().unwrap();
+                    primitive_types_guard.insert(current_element.clone(), get_primitives(&text_content));
                 }
             },
             Ok(Empty(ref e)) => {
@@ -360,7 +380,7 @@ pub fn create_structs_and_save_to_file(
 ) {
 
     // Create string representation of structs from the XML string
-    let struct_string = create_structs(xml_string);
+    let struct_string = create_structs(xml_string, false);
 
     // Save the generated structs to a file
     let mut struct_file = File::create(file_name).unwrap();
