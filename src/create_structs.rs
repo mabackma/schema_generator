@@ -376,11 +376,12 @@ fn update_field_types(
 /// - `file_name`: A string slice containing the name of the file to save the structs to.
 pub fn create_structs_and_save_to_file(
     xml_string: &str, 
-    file_name: &str
+    file_name: &str,
+    use_primitives: bool
 ) {
 
     // Create string representation of structs from the XML string
-    let struct_string = create_structs(xml_string, false);
+    let struct_string = create_structs(xml_string, use_primitives);
 
     // Save the generated structs to a file
     let mut struct_file = File::create(file_name).unwrap();

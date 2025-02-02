@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--Generated with schema_generator 0.0.0-->
-<ForestPropertyData xmlns:gdt="http://standardit.tapio.fi/schemas/forestData/common/geometricDataTypes" schemaPackageVersion="V20" xmlns:op="http://standardit.tapio.fi/schemas/forestData/operation" xmlns:dts="http://standardit.tapio.fi/schemas/forestData/deadTreeStrata" xmlns:tss="http://standardit.tapio.fi/schemas/forestData/treeStandSummary" xmlns:ts="http://standardit.tapio.fi/schemas/forestData/treeStand" xmlns:gml="http://www.opengis.net/gml" xmlns:tst="http://standardit.tapio.fi/schemas/forestData/treeStratum" xmlns:co="http://standardit.tapio.fi/schemas/forestData/common" xmlns:st="http://standardit.tapio.fi/schemas/forestData/Stand" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" schemaPackageSubversion="V20.01" xmlns:xlink="http://www.w3.org/1999/xlink" schemaLocation="http://standardit.tapio.fi/schemas/forestData ForestData.xsd" xmlns:sf="http://standardit.tapio.fi/schemas/forestData/specialFeature" xmlns="http://standardit.tapio.fi/schemas/forestData">
+<ForestPropertyData xmlns:gdt="http://standardit.tapio.fi/schemas/forestData/common/geometricDataTypes" xmlns:gml="http://www.opengis.net/gml" xmlns:ts="http://standardit.tapio.fi/schemas/forestData/treeStand" xmlns="http://standardit.tapio.fi/schemas/forestData" xmlns:tss="http://standardit.tapio.fi/schemas/forestData/treeStandSummary" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/1999/xlink" schemaPackageSubversion="V20.01" xmlns:op="http://standardit.tapio.fi/schemas/forestData/operation" xmlns:sf="http://standardit.tapio.fi/schemas/forestData/specialFeature" xmlns:dts="http://standardit.tapio.fi/schemas/forestData/deadTreeStrata" xmlns:co="http://standardit.tapio.fi/schemas/forestData/common" schemaPackageVersion="V20" xmlns:st="http://standardit.tapio.fi/schemas/forestData/Stand" xmlns:tst="http://standardit.tapio.fi/schemas/forestData/treeStratum" schemaLocation="http://standardit.tapio.fi/schemas/forestData ForestData.xsd">
   <st:Stands>
     <St:Stand id="35569484">
       <op:Operations>
-        <Op:Operation id="26269827" mainType="1">
+        <Op:Operation mainType="1" id="26269827">
           <op:Cutting>
             <op:Assortments>
               <Op:Assortment id="123747675">
@@ -216,7 +216,7 @@
             </tst:TreeStratum>
           </tst:TreeStrata>
         </ts:TreeStandDataDate>
-        <Ts:TreeStandDataDate type="3" date="2035-01-01">
+        <Ts:TreeStandDataDate date="2035-01-01" type="3">
           <ts:TreeStandSummary id="155713155">
             <ts:BasalArea>20.4</ts:BasalArea>
             <ts:DevelopmentClass>03</ts:DevelopmentClass>
@@ -454,7 +454,7 @@
             </tst:TreeStratum>
           </tst:TreeStrata>
         </ts:TreeStandDataDate>
-        <Ts:TreeStandDataDate type="3" date="2035-01-01">
+        <Ts:TreeStandDataDate date="2035-01-01" type="3">
           <ts:TreeStandSummary id="193194761">
             <ts:BasalArea>34.7</ts:BasalArea>
             <ts:DevelopmentClass>04</ts:DevelopmentClass>
@@ -473,7 +473,7 @@
     </st:Stand>
     <St:Stand id="35569486">
       <op:Operations>
-        <Op:Operation mainType="1" id="26269859">
+        <Op:Operation id="26269859" mainType="1">
           <op:Cutting>
             <op:Assortments>
               <Op:Assortment id="123747834">
@@ -710,7 +710,7 @@
     </st:Stand>
     <St:Stand id="35569487">
       <op:Operations>
-        <Op:Operation mainType="1" id="1981608">
+        <Op:Operation id="1981608" mainType="1">
           <op:CompletionData>
             <op:CompletionDate>2021-06-14</op:CompletionDate>
           </op:CompletionData>
@@ -764,7 +764,7 @@
         <st:SubGroup>3</st:SubGroup>
       </st:StandBasicData>
       <ts:TreeStandData>
-        <Ts:TreeStandDataDate date="2019-07-21" type="1">
+        <Ts:TreeStandDataDate type="1" date="2019-07-21">
           <tst:TreeStrata>
             <Tst:TreeStratum id="65218111">
               <tst:Age>38</tst:Age>
@@ -871,7 +871,7 @@
             </tst:TreeStratum>
           </tst:TreeStrata>
         </ts:TreeStandDataDate>
-        <Ts:TreeStandDataDate type="3" date="2035-01-01">
+        <Ts:TreeStandDataDate date="2035-01-01" type="3">
           <ts:TreeStandSummary id="155713345">
             <ts:BasalArea>26.7</ts:BasalArea>
             <ts:DevelopmentClass>03</ts:DevelopmentClass>
@@ -906,7 +906,7 @@
           </op:ProposalData>
           <op:Silviculture/>
         </op:Operation>
-        <Op:Operation id="1981609" mainType="1">
+        <Op:Operation mainType="1" id="1981609">
           <op:CompletionData>
             <op:CompletionDate>2021-08-03</op:CompletionDate>
           </op:CompletionData>
@@ -1093,7 +1093,7 @@
     </st:Stand>
     <St:Stand id="35569489">
       <op:Operations>
-        <Op:Operation id="40425418" mainType="2">
+        <Op:Operation mainType="2" id="40425418">
           <op:OperationType>660</op:OperationType>
           <op:ProposalData>
             <op:ProposalType>0</op:ProposalType>
@@ -1101,7 +1101,7 @@
           </op:ProposalData>
           <op:Silviculture/>
         </op:Operation>
-        <Op:Operation id="40425419" mainType="2">
+        <Op:Operation mainType="2" id="40425419">
           <op:OperationType>740</op:OperationType>
           <op:ProposalData>
             <op:ProposalType>0</op:ProposalType>
@@ -1109,7 +1109,7 @@
           </op:ProposalData>
           <op:Silviculture/>
         </op:Operation>
-        <Op:Operation id="1981611" mainType="1">
+        <Op:Operation mainType="1" id="1981611">
           <op:CompletionData>
             <op:CompletionDate>2021-08-03</op:CompletionDate>
           </op:CompletionData>
@@ -1117,7 +1117,7 @@
           <co:DataSource>2</co:DataSource>
           <op:OperationType>5</op:OperationType>
         </op:Operation>
-        <Op:Operation mainType="1" id="1981610">
+        <Op:Operation id="1981610" mainType="1">
           <op:CompletionData>
             <op:CompletionDate>2020-01-29</op:CompletionDate>
           </op:CompletionData>
@@ -1125,7 +1125,7 @@
           <co:DataSource>2</co:DataSource>
           <op:OperationType>3</op:OperationType>
         </op:Operation>
-        <Op:Operation mainType="2" id="1391153">
+        <Op:Operation id="1391153" mainType="2">
           <op:CompletionData>
             <op:CompletionDate>2023-06-01</op:CompletionDate>
           </op:CompletionData>
@@ -1179,7 +1179,7 @@
         <st:SubGroup>2</st:SubGroup>
       </st:StandBasicData>
       <ts:TreeStandData>
-        <Ts:TreeStandDataDate type="1" date="2019-07-21">
+        <Ts:TreeStandDataDate date="2019-07-21" type="1">
           <tst:TreeStrata>
             <Tst:TreeStratum id="229960295">
               <tst:Age>49</tst:Age>
@@ -1203,7 +1203,7 @@
             </tst:TreeStratum>
           </tst:TreeStrata>
         </ts:TreeStandDataDate>
-        <Ts:TreeStandDataDate type="2" date="2025-01-01">
+        <Ts:TreeStandDataDate date="2025-01-01" type="2">
           <ts:TreeStandSummary id="135921719">
             <ts:BasalArea>0.0</ts:BasalArea>
             <ts:BranchBiomass>0.00</ts:BranchBiomass>
@@ -1295,7 +1295,7 @@
     </st:Stand>
     <St:Stand id="35569490">
       <op:Operations>
-        <Op:Operation mainType="1" id="1981613">
+        <Op:Operation id="1981613" mainType="1">
           <op:CompletionData>
             <op:CompletionDate>2021-06-14</op:CompletionDate>
           </op:CompletionData>
@@ -1349,7 +1349,7 @@
         <st:SubGroup>3</st:SubGroup>
       </st:StandBasicData>
       <ts:TreeStandData>
-        <Ts:TreeStandDataDate date="2019-07-21" type="1">
+        <Ts:TreeStandDataDate type="1" date="2019-07-21">
           <tst:TreeStrata>
             <Tst:TreeStratum id="229960486">
               <tst:Age>70</tst:Age>
@@ -1383,7 +1383,7 @@
             </tst:TreeStratum>
           </tst:TreeStrata>
         </ts:TreeStandDataDate>
-        <Ts:TreeStandDataDate date="2025-01-01" type="2">
+        <Ts:TreeStandDataDate type="2" date="2025-01-01">
           <ts:TreeStandSummary id="135921774">
             <ts:BasalArea>19.5</ts:BasalArea>
             <ts:BranchBiomass>16.35</ts:BranchBiomass>
@@ -1456,7 +1456,7 @@
             </tst:TreeStratum>
           </tst:TreeStrata>
         </ts:TreeStandDataDate>
-        <Ts:TreeStandDataDate date="2035-01-01" type="3">
+        <Ts:TreeStandDataDate type="3" date="2035-01-01">
           <ts:TreeStandSummary id="155713527">
             <ts:BasalArea>23.2</ts:BasalArea>
             <ts:DevelopmentClass>04</ts:DevelopmentClass>
@@ -1475,7 +1475,7 @@
     </st:Stand>
     <St:Stand id="35569491">
       <op:Operations>
-        <Op:Operation id="1981614" mainType="1">
+        <Op:Operation mainType="1" id="1981614">
           <op:CompletionData>
             <op:CompletionDate>2021-06-14</op:CompletionDate>
           </op:CompletionData>
@@ -1529,7 +1529,7 @@
         <st:SubGroup>3</st:SubGroup>
       </st:StandBasicData>
       <ts:TreeStandData>
-        <Ts:TreeStandDataDate date="2019-07-21" type="1">
+        <Ts:TreeStandDataDate type="1" date="2019-07-21">
           <tst:TreeStrata>
             <Tst:TreeStratum id="65218388">
               <tst:Age>54</tst:Age>
@@ -1543,7 +1543,7 @@
             </tst:TreeStratum>
           </tst:TreeStrata>
         </ts:TreeStandDataDate>
-        <Ts:TreeStandDataDate date="2025-01-01" type="2">
+        <Ts:TreeStandDataDate type="2" date="2025-01-01">
           <ts:TreeStandSummary id="135921825">
             <ts:BasalArea>12.1</ts:BasalArea>
             <ts:BranchBiomass>8.02</ts:BranchBiomass>
@@ -1580,7 +1580,7 @@
             </tst:TreeStratum>
           </tst:TreeStrata>
         </ts:TreeStandDataDate>
-        <Ts:TreeStandDataDate type="3" date="2035-01-01">
+        <Ts:TreeStandDataDate date="2035-01-01" type="3">
           <ts:TreeStandSummary id="155713578">
             <ts:BasalArea>13.8</ts:BasalArea>
             <ts:DevelopmentClass>03</ts:DevelopmentClass>
@@ -1599,7 +1599,7 @@
     </st:Stand>
     <St:Stand id="35569492">
       <op:Operations>
-        <Op:Operation id="1981615" mainType="1">
+        <Op:Operation mainType="1" id="1981615">
           <op:CompletionData>
             <op:CompletionDate>2021-06-14</op:CompletionDate>
           </op:CompletionData>
@@ -1653,7 +1653,7 @@
         <st:SubGroup>3</st:SubGroup>
       </st:StandBasicData>
       <ts:TreeStandData>
-        <Ts:TreeStandDataDate type="1" date="2019-07-21">
+        <Ts:TreeStandDataDate date="2019-07-21" type="1">
           <tst:TreeStrata>
             <Tst:TreeStratum id="65218248">
               <tst:Age>55</tst:Age>
@@ -1687,7 +1687,7 @@
             </tst:TreeStratum>
           </tst:TreeStrata>
         </ts:TreeStandDataDate>
-        <Ts:TreeStandDataDate date="2025-01-01" type="2">
+        <Ts:TreeStandDataDate type="2" date="2025-01-01">
           <ts:TreeStandSummary id="135921879">
             <ts:BasalArea>19.9</ts:BasalArea>
             <ts:BranchBiomass>15.62</ts:BranchBiomass>
@@ -1821,7 +1821,7 @@
             <op:ProposalYear>2032</op:ProposalYear>
           </op:ProposalData>
         </op:Operation>
-        <Op:Operation id="40425447" mainType="2">
+        <Op:Operation mainType="2" id="40425447">
           <op:OperationType>410</op:OperationType>
           <op:ProposalData>
             <op:ProposalType>0</op:ProposalType>
@@ -1829,7 +1829,7 @@
           </op:ProposalData>
           <op:Silviculture/>
         </op:Operation>
-        <Op:Operation mainType="2" id="40425448">
+        <Op:Operation id="40425448" mainType="2">
           <op:OperationType>520</op:OperationType>
           <op:ProposalData>
             <op:ProposalType>0</op:ProposalType>
@@ -1837,7 +1837,7 @@
           </op:ProposalData>
           <op:Silviculture/>
         </op:Operation>
-        <Op:Operation id="40425449" mainType="2">
+        <Op:Operation mainType="2" id="40425449">
           <op:OperationType>302</op:OperationType>
           <op:ProposalData>
             <op:ProposalType>0</op:ProposalType>
@@ -1845,7 +1845,7 @@
           </op:ProposalData>
           <op:Silviculture/>
         </op:Operation>
-        <Op:Operation mainType="1" id="1981612">
+        <Op:Operation id="1981612" mainType="1">
           <op:CompletionData>
             <op:CompletionDate>2021-06-14</op:CompletionDate>
           </op:CompletionData>
@@ -1898,7 +1898,7 @@
         <st:SubGroup>1</st:SubGroup>
       </st:StandBasicData>
       <ts:TreeStandData>
-        <Ts:TreeStandDataDate type="1" date="2019-07-21">
+        <Ts:TreeStandDataDate date="2019-07-21" type="1">
           <tst:TreeStrata>
             <Tst:TreeStratum id="229961075">
               <tst:Age>83</tst:Age>
@@ -1932,7 +1932,7 @@
             </tst:TreeStratum>
           </tst:TreeStrata>
         </ts:TreeStandDataDate>
-        <Ts:TreeStandDataDate date="2025-01-01" type="2">
+        <Ts:TreeStandDataDate type="2" date="2025-01-01">
           <ts:TreeStandSummary id="135921928">
             <ts:BasalArea>22.1</ts:BasalArea>
             <ts:BranchBiomass>20.54</ts:BranchBiomass>
@@ -2005,7 +2005,7 @@
             </tst:TreeStratum>
           </tst:TreeStrata>
         </ts:TreeStandDataDate>
-        <Ts:TreeStandDataDate type="3" date="2035-01-01">
+        <Ts:TreeStandDataDate date="2035-01-01" type="3">
           <ts:TreeStandSummary id="155713682">
             <ts:BasalArea>0.0</ts:BasalArea>
             <ts:DevelopmentClass>T1</ts:DevelopmentClass>
@@ -2024,7 +2024,7 @@
     </st:Stand>
     <St:Stand id="35569494">
       <op:Operations>
-        <Op:Operation id="26269970" mainType="1">
+        <Op:Operation mainType="1" id="26269970">
           <op:Cutting>
             <op:Assortments>
               <Op:Assortment id="123748387">
@@ -2152,7 +2152,7 @@
         <st:SubGroup>2</st:SubGroup>
       </st:StandBasicData>
       <ts:TreeStandData>
-        <Ts:TreeStandDataDate date="2019-07-21" type="1">
+        <Ts:TreeStandDataDate type="1" date="2019-07-21">
           <tst:TreeStrata>
             <Tst:TreeStratum id="65217942">
               <tst:Age>91</tst:Age>
@@ -2186,7 +2186,7 @@
             </tst:TreeStratum>
           </tst:TreeStrata>
         </ts:TreeStandDataDate>
-        <Ts:TreeStandDataDate date="2025-01-01" type="2">
+        <Ts:TreeStandDataDate type="2" date="2025-01-01">
           <ts:TreeStandSummary id="135921986">
             <ts:BasalArea>20.4</ts:BasalArea>
             <ts:BranchBiomass>17.05</ts:BranchBiomass>
@@ -2278,7 +2278,7 @@
     </st:Stand>
     <St:Stand id="35569495">
       <op:Operations>
-        <Op:Operation mainType="1" id="1981617">
+        <Op:Operation id="1981617" mainType="1">
           <op:CompletionData>
             <op:CompletionDate>2021-06-14</op:CompletionDate>
           </op:CompletionData>
@@ -2510,7 +2510,7 @@
         <st:SubGroup>1</st:SubGroup>
       </st:StandBasicData>
       <ts:TreeStandData>
-        <Ts:TreeStandDataDate date="2019-07-21" type="1">
+        <Ts:TreeStandDataDate type="1" date="2019-07-21">
           <tst:TreeStrata>
             <Tst:TreeStratum id="47246470">
               <tst:Age>58</tst:Age>
@@ -2636,7 +2636,7 @@
     </st:Stand>
     <St:Stand id="35569497">
       <op:Operations>
-        <Op:Operation id="1981619" mainType="1">
+        <Op:Operation mainType="1" id="1981619">
           <op:CompletionData>
             <op:CompletionDate>2021-06-14</op:CompletionDate>
           </op:CompletionData>
@@ -2723,7 +2723,7 @@
             </tst:TreeStratum>
           </tst:TreeStrata>
         </ts:TreeStandDataDate>
-        <Ts:TreeStandDataDate type="2" date="2025-01-01">
+        <Ts:TreeStandDataDate date="2025-01-01" type="2">
           <ts:TreeStandSummary id="135922108">
             <ts:BasalArea>16.9</ts:BasalArea>
             <ts:BranchBiomass>13.76</ts:BranchBiomass>
@@ -2796,7 +2796,7 @@
             </tst:TreeStratum>
           </tst:TreeStrata>
         </ts:TreeStandDataDate>
-        <Ts:TreeStandDataDate date="2035-01-01" type="3">
+        <Ts:TreeStandDataDate type="3" date="2035-01-01">
           <ts:TreeStandSummary id="155713856">
             <ts:BasalArea>18.0</ts:BasalArea>
             <ts:DevelopmentClass>04</ts:DevelopmentClass>
@@ -2815,7 +2815,7 @@
     </st:Stand>
     <St:Stand id="35569498">
       <op:Operations>
-        <Op:Operation id="26270005" mainType="1">
+        <Op:Operation mainType="1" id="26270005">
           <op:Cutting>
             <op:Assortments>
               <Op:Assortment id="123748566">
@@ -3077,7 +3077,7 @@
         <st:SubGroup>1</st:SubGroup>
       </st:StandBasicData>
       <ts:TreeStandData>
-        <Ts:TreeStandDataDate date="2019-07-21" type="1">
+        <Ts:TreeStandDataDate type="1" date="2019-07-21">
           <tst:TreeStrata>
             <Tst:TreeStratum id="65218400">
               <tst:Age>40</tst:Age>
@@ -3184,7 +3184,7 @@
             </tst:TreeStratum>
           </tst:TreeStrata>
         </ts:TreeStandDataDate>
-        <Ts:TreeStandDataDate date="2035-01-01" type="3">
+        <Ts:TreeStandDataDate type="3" date="2035-01-01">
           <ts:TreeStandSummary id="155713920">
             <ts:BasalArea>24.0</ts:BasalArea>
             <ts:DevelopmentClass>03</ts:DevelopmentClass>
@@ -3203,7 +3203,7 @@
     </st:Stand>
     <St:Stand id="35569500">
       <op:Operations>
-        <Op:Operation id="26269703" mainType="1">
+        <Op:Operation mainType="1" id="26269703">
           <op:Cutting>
             <op:Assortments>
               <Op:Assortment id="123747100">
@@ -3304,7 +3304,7 @@
             </tst:TreeStratum>
           </tst:TreeStrata>
         </ts:TreeStandDataDate>
-        <Ts:TreeStandDataDate date="2025-01-01" type="2">
+        <Ts:TreeStandDataDate type="2" date="2025-01-01">
           <ts:TreeStandSummary id="135920899">
             <ts:BasalArea>29.4</ts:BasalArea>
             <ts:BranchBiomass>24.23</ts:BranchBiomass>
@@ -3378,7 +3378,7 @@
     </st:Stand>
     <St:Stand id="35569501">
       <op:Operations>
-        <Op:Operation mainType="2" id="40425296">
+        <Op:Operation id="40425296" mainType="2">
           <op:OperationType>660</op:OperationType>
           <op:ProposalData>
             <op:ProposalType>0</op:ProposalType>
@@ -3394,7 +3394,7 @@
           </op:ProposalData>
           <op:Silviculture/>
         </op:Operation>
-        <Op:Operation id="1981620" mainType="1">
+        <Op:Operation mainType="1" id="1981620">
           <op:CompletionData>
             <op:CompletionDate>2021-06-14</op:CompletionDate>
           </op:CompletionData>
@@ -3402,7 +3402,7 @@
           <co:DataSource>2</co:DataSource>
           <op:OperationType>5</op:OperationType>
         </op:Operation>
-        <Op:Operation mainType="2" id="1391154">
+        <Op:Operation id="1391154" mainType="2">
           <op:CompletionData>
             <op:CompletionDate>2023-06-01</op:CompletionDate>
           </op:CompletionData>
@@ -3562,7 +3562,7 @@
             </tst:TreeStratum>
           </tst:TreeStrata>
         </ts:TreeStandDataDate>
-        <Ts:TreeStandDataDate type="3" date="2035-01-01">
+        <Ts:TreeStandDataDate date="2035-01-01" type="3">
           <ts:TreeStandSummary id="155712721">
             <ts:BasalArea>1.8</ts:BasalArea>
             <ts:DevelopmentClass>T2</ts:DevelopmentClass>
@@ -3756,7 +3756,7 @@
     </st:Stand>
     <St:Stand id="35569503">
       <op:Operations>
-        <Op:Operation id="26269751" mainType="1">
+        <Op:Operation mainType="1" id="26269751">
           <op:Cutting>
             <op:Assortments>
               <Op:Assortment id="123747333">
@@ -3857,7 +3857,7 @@
             </tst:TreeStratum>
           </tst:TreeStrata>
         </ts:TreeStandDataDate>
-        <Ts:TreeStandDataDate date="2025-01-01" type="2">
+        <Ts:TreeStandDataDate type="2" date="2025-01-01">
           <ts:TreeStandSummary id="135921091">
             <ts:BasalArea>18.5</ts:BasalArea>
             <ts:BranchBiomass>13.11</ts:BranchBiomass>
@@ -3931,7 +3931,7 @@
     </st:Stand>
     <St:Stand id="35569504">
       <op:Operations>
-        <Op:Operation id="26269767" mainType="1">
+        <Op:Operation mainType="1" id="26269767">
           <op:Cutting>
             <op:Assortments>
               <Op:Assortment id="123747403">
@@ -4087,7 +4087,7 @@
             </tst:TreeStratum>
           </tst:TreeStrata>
         </ts:TreeStandDataDate>
-        <Ts:TreeStandDataDate date="2035-01-01" type="3">
+        <Ts:TreeStandDataDate type="3" date="2035-01-01">
           <ts:TreeStandSummary id="155712912">
             <ts:BasalArea>25.3</ts:BasalArea>
             <ts:DevelopmentClass>03</ts:DevelopmentClass>
@@ -4198,7 +4198,7 @@
         <st:SubGroup>1</st:SubGroup>
       </st:StandBasicData>
       <ts:TreeStandData>
-        <Ts:TreeStandDataDate type="1" date="2019-07-21">
+        <Ts:TreeStandDataDate date="2019-07-21" type="1">
           <tst:TreeStrata>
             <Tst:TreeStratum id="65218416">
               <tst:Age>33</tst:Age>
@@ -4660,7 +4660,7 @@
             </tst:TreeStratum>
           </tst:TreeStrata>
         </ts:TreeStandDataDate>
-        <Ts:TreeStandDataDate date="2035-01-01" type="3">
+        <Ts:TreeStandDataDate type="3" date="2035-01-01">
           <ts:TreeStandSummary id="155713123">
             <ts:BasalArea>20.4</ts:BasalArea>
             <ts:DevelopmentClass>03</ts:DevelopmentClass>
@@ -4815,7 +4815,7 @@
             </tst:TreeStratum>
           </tst:TreeStrata>
         </ts:TreeStandDataDate>
-        <Ts:TreeStandDataDate type="3" date="2035-01-01">
+        <Ts:TreeStandDataDate date="2035-01-01" type="3">
           <ts:TreeStandSummary id="193194900">
             <ts:BasalArea>4.0</ts:BasalArea>
             <ts:MainTreeSpecies>2</ts:MainTreeSpecies>
@@ -4893,7 +4893,7 @@
         <st:SubGroup>1</st:SubGroup>
       </st:StandBasicData>
       <ts:TreeStandData>
-        <Ts:TreeStandDataDate date="2015-09-02" type="1">
+        <Ts:TreeStandDataDate type="1" date="2015-09-02">
           <dts:DeadTreeStrata>
             <Dts:DeadTreeStratum id="1652427">
               <dts:DeadTreeType>3</dts:DeadTreeType>
@@ -5065,7 +5065,7 @@
             </tst:TreeStratum>
           </tst:TreeStrata>
         </ts:TreeStandDataDate>
-        <Ts:TreeStandDataDate type="3" date="2035-01-01">
+        <Ts:TreeStandDataDate date="2035-01-01" type="3">
           <ts:TreeStandSummary id="193195027">
             <ts:BasalArea>29.2</ts:BasalArea>
             <ts:DevelopmentClass>03</ts:DevelopmentClass>
@@ -5336,7 +5336,7 @@
         <st:SubGroup>1</st:SubGroup>
       </st:StandBasicData>
       <ts:TreeStandData>
-        <Ts:TreeStandDataDate date="2015-09-02" type="1">
+        <Ts:TreeStandDataDate type="1" date="2015-09-02">
           <dts:DeadTreeStrata>
             <Dts:DeadTreeStratum id="1652440">
               <dts:DeadTreeType>3</dts:DeadTreeType>
@@ -5372,7 +5372,7 @@
             </tst:TreeStratum>
           </tst:TreeStrata>
         </ts:TreeStandDataDate>
-        <Ts:TreeStandDataDate date="2025-01-01" type="2">
+        <Ts:TreeStandDataDate type="2" date="2025-01-01">
           <ts:TreeStandSummary id="171505560">
             <ts:BasalArea>34.2</ts:BasalArea>
             <ts:BranchBiomass>33.01</ts:BranchBiomass>
@@ -5427,7 +5427,7 @@
             </tst:TreeStratum>
           </tst:TreeStrata>
         </ts:TreeStandDataDate>
-        <Ts:TreeStandDataDate date="2035-01-01" type="3">
+        <Ts:TreeStandDataDate type="3" date="2035-01-01">
           <ts:TreeStandSummary id="193195276">
             <ts:BasalArea>38.4</ts:BasalArea>
             <ts:DevelopmentClass>04</ts:DevelopmentClass>
@@ -5488,7 +5488,7 @@
             <op:ProposalYear>2025</op:ProposalYear>
           </op:ProposalData>
         </op:Operation>
-        <Op:Operation mainType="1" id="1981641">
+        <Op:Operation id="1981641" mainType="1">
           <op:CompletionData>
             <op:CompletionDate>2020-06-08</op:CompletionDate>
           </op:CompletionData>
@@ -5496,7 +5496,7 @@
           <co:DataSource>2</co:DataSource>
           <op:OperationType>5</op:OperationType>
         </op:Operation>
-        <Op:Operation id="1981640" mainType="1">
+        <Op:Operation mainType="1" id="1981640">
           <op:CompletionData>
             <op:CompletionDate>2020-03-26</op:CompletionDate>
           </op:CompletionData>
@@ -5591,7 +5591,7 @@
             </tst:TreeStratum>
           </tst:TreeStrata>
         </ts:TreeStandDataDate>
-        <Ts:TreeStandDataDate type="2" date="2025-01-01">
+        <Ts:TreeStandDataDate date="2025-01-01" type="2">
           <ts:TreeStandSummary id="135920957">
             <ts:BasalArea>27.9</ts:BasalArea>
             <ts:BranchBiomass>25.85</ts:BranchBiomass>
@@ -5745,7 +5745,7 @@
         <st:SubGroup>1</st:SubGroup>
       </st:StandBasicData>
       <ts:TreeStandData>
-        <Ts:TreeStandDataDate type="1" date="2019-07-21">
+        <Ts:TreeStandDataDate date="2019-07-21" type="1">
           <tst:TreeStrata>
             <Tst:TreeStratum id="65217857">
               <tst:Age>25</tst:Age>
@@ -5908,7 +5908,7 @@
             </tst:TreeStratum>
           </tst:TreeStrata>
         </ts:TreeStandDataDate>
-        <Ts:TreeStandDataDate type="3" date="2035-01-01">
+        <Ts:TreeStandDataDate date="2035-01-01" type="3">
           <ts:TreeStandSummary id="155712992">
             <ts:BasalArea>34.5</ts:BasalArea>
             <ts:DevelopmentClass>03</ts:DevelopmentClass>
@@ -6014,7 +6014,7 @@
             </tst:TreeStratum>
           </tst:TreeStrata>
         </ts:TreeStandDataDate>
-        <Ts:TreeStandDataDate date="2025-01-01" type="2">
+        <Ts:TreeStandDataDate type="2" date="2025-01-01">
           <ts:TreeStandSummary id="135920881">
             <ts:BasalArea>21.6</ts:BasalArea>
             <ts:BranchBiomass>20.27</ts:BranchBiomass>
@@ -6087,7 +6087,7 @@
             </tst:TreeStratum>
           </tst:TreeStrata>
         </ts:TreeStandDataDate>
-        <Ts:TreeStandDataDate type="3" date="2035-01-01">
+        <Ts:TreeStandDataDate date="2035-01-01" type="3">
           <ts:TreeStandSummary id="155712633">
             <ts:BasalArea>26.7</ts:BasalArea>
             <ts:DevelopmentClass>03</ts:DevelopmentClass>
@@ -6106,7 +6106,7 @@
     </st:Stand>
     <St:Stand id="35570030">
       <op:Operations>
-        <Op:Operation id="1981656" mainType="1">
+        <Op:Operation mainType="1" id="1981656">
           <op:CompletionData>
             <op:CompletionDate>2021-05-12</op:CompletionDate>
           </op:CompletionData>
@@ -6380,7 +6380,7 @@
         <st:SubGroup>1</st:SubGroup>
       </st:StandBasicData>
       <ts:TreeStandData>
-        <Ts:TreeStandDataDate date="2019-07-21" type="1">
+        <Ts:TreeStandDataDate type="1" date="2019-07-21">
           <tst:TreeStrata>
             <Tst:TreeStratum id="229973953">
               <tst:Age>50</tst:Age>
@@ -6487,7 +6487,7 @@
             </tst:TreeStratum>
           </tst:TreeStrata>
         </ts:TreeStandDataDate>
-        <Ts:TreeStandDataDate type="3" date="2035-01-01">
+        <Ts:TreeStandDataDate date="2035-01-01" type="3">
           <ts:TreeStandSummary id="155713604">
             <ts:BasalArea>24.8</ts:BasalArea>
             <ts:DevelopmentClass>03</ts:DevelopmentClass>
@@ -6543,7 +6543,7 @@
             <op:ProposalYear>2029</op:ProposalYear>
           </op:ProposalData>
         </op:Operation>
-        <Op:Operation id="1981590" mainType="1">
+        <Op:Operation mainType="1" id="1981590">
           <op:CompletionData>
             <op:CompletionDate>2022-04-05</op:CompletionDate>
           </op:CompletionData>
@@ -6703,7 +6703,7 @@
             </tst:TreeStratum>
           </tst:TreeStrata>
         </ts:TreeStandDataDate>
-        <Ts:TreeStandDataDate date="2035-01-01" type="3">
+        <Ts:TreeStandDataDate type="3" date="2035-01-01">
           <ts:TreeStandSummary id="155712762">
             <ts:BasalArea>21.8</ts:BasalArea>
             <ts:DevelopmentClass>03</ts:DevelopmentClass>
@@ -6799,7 +6799,7 @@
         <st:SubGroup>1</st:SubGroup>
       </st:StandBasicData>
       <ts:TreeStandData>
-        <Ts:TreeStandDataDate type="1" date="2019-07-21">
+        <Ts:TreeStandDataDate date="2019-07-21" type="1">
           <tst:TreeStrata>
             <Tst:TreeStratum id="65217928">
               <tst:Age>42</tst:Age>
@@ -6823,7 +6823,7 @@
             </tst:TreeStratum>
           </tst:TreeStrata>
         </ts:TreeStandDataDate>
-        <Ts:TreeStandDataDate type="2" date="2025-01-01">
+        <Ts:TreeStandDataDate date="2025-01-01" type="2">
           <ts:TreeStandSummary id="135921887">
             <ts:BasalArea>27.8</ts:BasalArea>
             <ts:BranchBiomass>23.41</ts:BranchBiomass>
@@ -6878,7 +6878,7 @@
             </tst:TreeStratum>
           </tst:TreeStrata>
         </ts:TreeStandDataDate>
-        <Ts:TreeStandDataDate type="3" date="2035-01-01">
+        <Ts:TreeStandDataDate date="2035-01-01" type="3">
           <ts:TreeStandSummary id="155713639">
             <ts:BasalArea>25.3</ts:BasalArea>
             <ts:DevelopmentClass>03</ts:DevelopmentClass>
@@ -7018,7 +7018,7 @@
             </tst:TreeStratum>
           </tst:TreeStrata>
         </ts:TreeStandDataDate>
-        <Ts:TreeStandDataDate date="2025-01-01" type="2">
+        <Ts:TreeStandDataDate type="2" date="2025-01-01">
           <ts:TreeStandSummary id="135920711">
             <ts:BasalArea>23.9</ts:BasalArea>
             <ts:BranchBiomass>19.66</ts:BranchBiomass>
@@ -7118,7 +7118,7 @@
           </op:ProposalData>
           <op:Silviculture/>
         </op:Operation>
-        <Op:Operation mainType="2" id="40425228">
+        <Op:Operation id="40425228" mainType="2">
           <op:OperationType>740</op:OperationType>
           <op:ProposalData>
             <op:ProposalType>0</op:ProposalType>
@@ -7321,7 +7321,7 @@
     </st:Stand>
     <St:Stand id="39944387">
       <op:Operations>
-        <Op:Operation mainType="2" id="40425241">
+        <Op:Operation id="40425241" mainType="2">
           <op:OperationType>660</op:OperationType>
           <op:ProposalData>
             <op:ProposalType>0</op:ProposalType>
@@ -7337,7 +7337,7 @@
           </op:ProposalData>
           <op:Silviculture/>
         </op:Operation>
-        <Op:Operation mainType="1" id="1981595">
+        <Op:Operation id="1981595" mainType="1">
           <op:CompletionData>
             <op:CompletionDate>2021-06-14</op:CompletionDate>
           </op:CompletionData>
@@ -7345,7 +7345,7 @@
           <co:DataSource>2</co:DataSource>
           <op:OperationType>5</op:OperationType>
         </op:Operation>
-        <Op:Operation id="1981596" mainType="1">
+        <Op:Operation mainType="1" id="1981596">
           <op:CompletionData>
             <op:CompletionDate>2021-06-14</op:CompletionDate>
           </op:CompletionData>
@@ -7353,7 +7353,7 @@
           <co:DataSource>2</co:DataSource>
           <op:OperationType>3</op:OperationType>
         </op:Operation>
-        <Op:Operation mainType="2" id="1391141">
+        <Op:Operation id="1391141" mainType="2">
           <op:CompletionData>
             <op:CompletionDate>2023-06-01</op:CompletionDate>
           </op:CompletionData>
@@ -7514,7 +7514,7 @@
             </tst:TreeStratum>
           </tst:TreeStrata>
         </ts:TreeStandDataDate>
-        <Ts:TreeStandDataDate type="3" date="2035-01-01">
+        <Ts:TreeStandDataDate date="2035-01-01" type="3">
           <ts:TreeStandSummary id="155712420">
             <ts:BasalArea>3.8</ts:BasalArea>
             <ts:DevelopmentClass>T2</ts:DevelopmentClass>

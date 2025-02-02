@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--Generated with schema_generator 0.0.0-->
-<ForestPropertyData xmlns:dts="http://standardit.tapio.fi/schemas/forestData/deadTreeStrata" xmlns:sf="http://standardit.tapio.fi/schemas/forestData/specialFeature" xmlns="http://standardit.tapio.fi/schemas/forestData" xmlns:op="http://standardit.tapio.fi/schemas/forestData/operation" xmlns:tst="http://standardit.tapio.fi/schemas/forestData/treeStratum" xmlns:ts="http://standardit.tapio.fi/schemas/forestData/treeStand" schemaLocation="http://standardit.tapio.fi/schemas/forestData ForestData.xsd" schemaPackageVersion="V20" xmlns:co="http://standardit.tapio.fi/schemas/forestData/common" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tss="http://standardit.tapio.fi/schemas/forestData/treeStandSummary" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:st="http://standardit.tapio.fi/schemas/forestData/Stand" xmlns:gml="http://www.opengis.net/gml" schemaPackageSubversion="V20.01" xmlns:gdt="http://standardit.tapio.fi/schemas/forestData/common/geometricDataTypes">
+<ForestPropertyData xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dts="http://standardit.tapio.fi/schemas/forestData/deadTreeStrata" schemaPackageVersion="V20" schemaLocation="http://standardit.tapio.fi/schemas/forestData ForestData.xsd" xmlns:gdt="http://standardit.tapio.fi/schemas/forestData/common/geometricDataTypes" xmlns:co="http://standardit.tapio.fi/schemas/forestData/common" xmlns:st="http://standardit.tapio.fi/schemas/forestData/Stand" xmlns:ts="http://standardit.tapio.fi/schemas/forestData/treeStand" xmlns="http://standardit.tapio.fi/schemas/forestData" schemaPackageSubversion="V20.01" xmlns:sf="http://standardit.tapio.fi/schemas/forestData/specialFeature" xmlns:op="http://standardit.tapio.fi/schemas/forestData/operation" xmlns:tst="http://standardit.tapio.fi/schemas/forestData/treeStratum" xmlns:gml="http://www.opengis.net/gml" xmlns:tss="http://standardit.tapio.fi/schemas/forestData/treeStandSummary">
   <st:Stands>
     <St:Stand id="37339713">
       <st:SpecialFeatures>
@@ -55,7 +55,7 @@
         <st:SubGroup>1</st:SubGroup>
       </st:StandBasicData>
       <ts:TreeStandData>
-        <Ts:TreeStandDataDate type="1" date="2022-08-09">
+        <Ts:TreeStandDataDate date="2022-08-09" type="1">
           <tst:TreeStrata>
             <Tst:TreeStratum id="218518888">
               <tst:Age>112</tst:Age>
@@ -79,22 +79,22 @@
             </tst:TreeStratum>
           </tst:TreeStrata>
         </ts:TreeStandDataDate>
-        <Ts:TreeStandDataDate date="2024-01-01" type="2">
-          <ts:TreeStandSummary id="110415979">
-            <ts:BasalArea>24.5</ts:BasalArea>
-            <ts:BranchBiomass>21.90</ts:BranchBiomass>
-            <ts:LeafBiomass>5.95</ts:LeafBiomass>
-            <ts:MeanAge>112</ts:MeanAge>
-            <ts:MeanDiameter>26.3</ts:MeanDiameter>
-            <ts:MeanHeight>15.5</ts:MeanHeight>
-            <ts:PulpWoodVolume>112.1</ts:PulpWoodVolume>
-            <ts:SawLogVolume>69.8</ts:SawLogVolume>
-            <ts:StemBiomass>71.13</ts:StemBiomass>
-            <ts:StemCount>708</ts:StemCount>
-            <ts:StumpBiomass>27.63</ts:StumpBiomass>
-            <ts:Volume>184.4</ts:Volume>
-            <ts:VolumeGrowth>2.50</ts:VolumeGrowth>
-          </ts:TreeStandSummary>
+        <Ts:TreeStandDataDate type="2" date="2024-01-01">
+          <tss:TreeStandSummary id="110415979">
+            <tss:BasalArea>24.5</tss:BasalArea>
+            <tss:BranchBiomass>21.90</tss:BranchBiomass>
+            <tss:LeafBiomass>5.95</tss:LeafBiomass>
+            <tss:MeanAge>112</tss:MeanAge>
+            <tss:MeanDiameter>26.3</tss:MeanDiameter>
+            <tss:MeanHeight>15.5</tss:MeanHeight>
+            <tss:PulpWoodVolume>112.1</tss:PulpWoodVolume>
+            <tss:SawLogVolume>69.8</tss:SawLogVolume>
+            <tss:StemBiomass>71.13</tss:StemBiomass>
+            <tss:StemCount>708</tss:StemCount>
+            <tss:StumpBiomass>27.63</tss:StumpBiomass>
+            <tss:Volume>184.4</tss:Volume>
+            <tss:VolumeGrowth>2.50</tss:VolumeGrowth>
+          </tss:TreeStandSummary>
           <tst:TreeStrata>
             <Tst:TreeStratum id="218518890">
               <tst:Age>113</tst:Age>
@@ -135,19 +135,19 @@
           </tst:TreeStrata>
         </ts:TreeStandDataDate>
         <Ts:TreeStandDataDate date="2034-01-01" type="3">
-          <ts:TreeStandSummary id="125470790">
-            <ts:BasalArea>25.8</ts:BasalArea>
-            <ts:DevelopmentClass>04</ts:DevelopmentClass>
-            <ts:MainTreeSpecies>1</ts:MainTreeSpecies>
-            <ts:MeanAge>122</ts:MeanAge>
-            <ts:MeanDiameter>27.5</ts:MeanDiameter>
-            <ts:MeanHeight>16.2</ts:MeanHeight>
-            <ts:PulpWoodVolume>121.6</ts:PulpWoodVolume>
-            <ts:SawLogVolume>78.2</ts:SawLogVolume>
-            <ts:StemCount>606</ts:StemCount>
-            <ts:Volume>201.7</ts:Volume>
-            <ts:VolumeGrowth>2.34</ts:VolumeGrowth>
-          </ts:TreeStandSummary>
+          <tss:TreeStandSummary id="125470790">
+            <tss:BasalArea>25.8</tss:BasalArea>
+            <tss:DevelopmentClass>04</tss:DevelopmentClass>
+            <tss:MainTreeSpecies>1</tss:MainTreeSpecies>
+            <tss:MeanAge>122</tss:MeanAge>
+            <tss:MeanDiameter>27.5</tss:MeanDiameter>
+            <tss:MeanHeight>16.2</tss:MeanHeight>
+            <tss:PulpWoodVolume>121.6</tss:PulpWoodVolume>
+            <tss:SawLogVolume>78.2</tss:SawLogVolume>
+            <tss:StemCount>606</tss:StemCount>
+            <tss:Volume>201.7</tss:Volume>
+            <tss:VolumeGrowth>2.34</tss:VolumeGrowth>
+          </tss:TreeStandSummary>
         </ts:TreeStandDataDate>
       </ts:TreeStandData>
     </st:Stand>
@@ -204,7 +204,7 @@
         <st:SubGroup>1</st:SubGroup>
       </st:StandBasicData>
       <ts:TreeStandData>
-        <Ts:TreeStandDataDate type="1" date="2022-08-09">
+        <Ts:TreeStandDataDate date="2022-08-09" type="1">
           <tst:TreeStrata>
             <Tst:TreeStratum id="218518909">
               <tst:Age>109</tst:Age>
@@ -229,21 +229,21 @@
           </tst:TreeStrata>
         </ts:TreeStandDataDate>
         <Ts:TreeStandDataDate date="2024-01-01" type="2">
-          <ts:TreeStandSummary id="110415988">
-            <ts:BasalArea>14.3</ts:BasalArea>
-            <ts:BranchBiomass>12.61</ts:BranchBiomass>
-            <ts:LeafBiomass>3.52</ts:LeafBiomass>
-            <ts:MeanAge>110</ts:MeanAge>
-            <ts:MeanDiameter>25.6</ts:MeanDiameter>
-            <ts:MeanHeight>14.5</ts:MeanHeight>
-            <ts:PulpWoodVolume>63.9</ts:PulpWoodVolume>
-            <ts:SawLogVolume>34.9</ts:SawLogVolume>
-            <ts:StemBiomass>39.18</ts:StemBiomass>
-            <ts:StemCount>685</ts:StemCount>
-            <ts:StumpBiomass>15.59</ts:StumpBiomass>
-            <ts:Volume>101.7</ts:Volume>
-            <ts:VolumeGrowth>1.87</ts:VolumeGrowth>
-          </ts:TreeStandSummary>
+          <tss:TreeStandSummary id="110415988">
+            <tss:BasalArea>14.3</tss:BasalArea>
+            <tss:BranchBiomass>12.61</tss:BranchBiomass>
+            <tss:LeafBiomass>3.52</tss:LeafBiomass>
+            <tss:MeanAge>110</tss:MeanAge>
+            <tss:MeanDiameter>25.6</tss:MeanDiameter>
+            <tss:MeanHeight>14.5</tss:MeanHeight>
+            <tss:PulpWoodVolume>63.9</tss:PulpWoodVolume>
+            <tss:SawLogVolume>34.9</tss:SawLogVolume>
+            <tss:StemBiomass>39.18</tss:StemBiomass>
+            <tss:StemCount>685</tss:StemCount>
+            <tss:StumpBiomass>15.59</tss:StumpBiomass>
+            <tss:Volume>101.7</tss:Volume>
+            <tss:VolumeGrowth>1.87</tss:VolumeGrowth>
+          </tss:TreeStandSummary>
           <tst:TreeStrata>
             <Tst:TreeStratum id="218518911">
               <tst:Age>110</tst:Age>
@@ -283,20 +283,20 @@
             </tst:TreeStratum>
           </tst:TreeStrata>
         </ts:TreeStandDataDate>
-        <Ts:TreeStandDataDate type="3" date="2034-01-01">
-          <ts:TreeStandSummary id="125470802">
-            <ts:BasalArea>16.2</ts:BasalArea>
-            <ts:DevelopmentClass>04</ts:DevelopmentClass>
-            <ts:MainTreeSpecies>1</ts:MainTreeSpecies>
-            <ts:MeanAge>120</ts:MeanAge>
-            <ts:MeanDiameter>26.2</ts:MeanDiameter>
-            <ts:MeanHeight>15.2</ts:MeanHeight>
-            <ts:PulpWoodVolume>75.9</ts:PulpWoodVolume>
-            <ts:SawLogVolume>40.9</ts:SawLogVolume>
-            <ts:StemCount>612</ts:StemCount>
-            <ts:Volume>119.5</ts:Volume>
-            <ts:VolumeGrowth>1.91</ts:VolumeGrowth>
-          </ts:TreeStandSummary>
+        <Ts:TreeStandDataDate date="2034-01-01" type="3">
+          <tss:TreeStandSummary id="125470802">
+            <tss:BasalArea>16.2</tss:BasalArea>
+            <tss:DevelopmentClass>04</tss:DevelopmentClass>
+            <tss:MainTreeSpecies>1</tss:MainTreeSpecies>
+            <tss:MeanAge>120</tss:MeanAge>
+            <tss:MeanDiameter>26.2</tss:MeanDiameter>
+            <tss:MeanHeight>15.2</tss:MeanHeight>
+            <tss:PulpWoodVolume>75.9</tss:PulpWoodVolume>
+            <tss:SawLogVolume>40.9</tss:SawLogVolume>
+            <tss:StemCount>612</tss:StemCount>
+            <tss:Volume>119.5</tss:Volume>
+            <tss:VolumeGrowth>1.91</tss:VolumeGrowth>
+          </tss:TreeStandSummary>
         </ts:TreeStandDataDate>
       </ts:TreeStandData>
     </st:Stand>
@@ -353,7 +353,7 @@
         <st:SubGroup>1</st:SubGroup>
       </st:StandBasicData>
       <ts:TreeStandData>
-        <Ts:TreeStandDataDate date="2022-08-09" type="1">
+        <Ts:TreeStandDataDate type="1" date="2022-08-09">
           <tst:TreeStrata>
             <Tst:TreeStratum id="218519336">
               <tst:Age>118</tst:Age>
@@ -377,22 +377,22 @@
             </tst:TreeStratum>
           </tst:TreeStrata>
         </ts:TreeStandDataDate>
-        <Ts:TreeStandDataDate date="2024-01-01" type="2">
-          <ts:TreeStandSummary id="110416189">
-            <ts:BasalArea>16.4</ts:BasalArea>
-            <ts:BranchBiomass>14.08</ts:BranchBiomass>
-            <ts:LeafBiomass>4.09</ts:LeafBiomass>
-            <ts:MeanAge>118</ts:MeanAge>
-            <ts:MeanDiameter>26.0</ts:MeanDiameter>
-            <ts:MeanHeight>16.1</ts:MeanHeight>
-            <ts:PulpWoodVolume>80.5</ts:PulpWoodVolume>
-            <ts:SawLogVolume>44.6</ts:SawLogVolume>
-            <ts:StemBiomass>49.31</ts:StemBiomass>
-            <ts:StemCount>575</ts:StemCount>
-            <ts:StumpBiomass>18.20</ts:StumpBiomass>
-            <ts:Volume>127.6</ts:Volume>
-            <ts:VolumeGrowth>2.23</ts:VolumeGrowth>
-          </ts:TreeStandSummary>
+        <Ts:TreeStandDataDate type="2" date="2024-01-01">
+          <tss:TreeStandSummary id="110416189">
+            <tss:BasalArea>16.4</tss:BasalArea>
+            <tss:BranchBiomass>14.08</tss:BranchBiomass>
+            <tss:LeafBiomass>4.09</tss:LeafBiomass>
+            <tss:MeanAge>118</tss:MeanAge>
+            <tss:MeanDiameter>26.0</tss:MeanDiameter>
+            <tss:MeanHeight>16.1</tss:MeanHeight>
+            <tss:PulpWoodVolume>80.5</tss:PulpWoodVolume>
+            <tss:SawLogVolume>44.6</tss:SawLogVolume>
+            <tss:StemBiomass>49.31</tss:StemBiomass>
+            <tss:StemCount>575</tss:StemCount>
+            <tss:StumpBiomass>18.20</tss:StumpBiomass>
+            <tss:Volume>127.6</tss:Volume>
+            <tss:VolumeGrowth>2.23</tss:VolumeGrowth>
+          </tss:TreeStandSummary>
           <tst:TreeStrata>
             <Tst:TreeStratum id="218519410">
               <tst:Age>119</tst:Age>
@@ -433,19 +433,19 @@
           </tst:TreeStrata>
         </ts:TreeStandDataDate>
         <Ts:TreeStandDataDate type="3" date="2034-01-01">
-          <ts:TreeStandSummary id="125471060">
-            <ts:BasalArea>18.5</ts:BasalArea>
-            <ts:DevelopmentClass>04</ts:DevelopmentClass>
-            <ts:MainTreeSpecies>1</ts:MainTreeSpecies>
-            <ts:MeanAge>128</ts:MeanAge>
-            <ts:MeanDiameter>26.9</ts:MeanDiameter>
-            <ts:MeanHeight>16.6</ts:MeanHeight>
-            <ts:PulpWoodVolume>95.3</ts:PulpWoodVolume>
-            <ts:SawLogVolume>50.9</ts:SawLogVolume>
-            <ts:StemCount>542</ts:StemCount>
-            <ts:Volume>148.1</ts:Volume>
-            <ts:VolumeGrowth>2.21</ts:VolumeGrowth>
-          </ts:TreeStandSummary>
+          <tss:TreeStandSummary id="125471060">
+            <tss:BasalArea>18.5</tss:BasalArea>
+            <tss:DevelopmentClass>04</tss:DevelopmentClass>
+            <tss:MainTreeSpecies>1</tss:MainTreeSpecies>
+            <tss:MeanAge>128</tss:MeanAge>
+            <tss:MeanDiameter>26.9</tss:MeanDiameter>
+            <tss:MeanHeight>16.6</tss:MeanHeight>
+            <tss:PulpWoodVolume>95.3</tss:PulpWoodVolume>
+            <tss:SawLogVolume>50.9</tss:SawLogVolume>
+            <tss:StemCount>542</tss:StemCount>
+            <tss:Volume>148.1</tss:Volume>
+            <tss:VolumeGrowth>2.21</tss:VolumeGrowth>
+          </tss:TreeStandSummary>
         </ts:TreeStandDataDate>
       </ts:TreeStandData>
     </st:Stand>
