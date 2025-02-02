@@ -22,6 +22,8 @@
 - SpecialFeature
 - TreeStrata
 
+#### The field for IdentifierValue will be given type `Option<String>` even when `use_primitives` is set to true.
+
 #### xlink:type attribute in <gml:polygonProperty> tags will show up as __type in Json
 
 ## License
