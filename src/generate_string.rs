@@ -10,15 +10,8 @@ pub fn generate_structs_string(structs: &HashMap<String, XMLStruct>) -> String {
 
     struct_string += &format!("// Generated with schema_generator {}\n", get_dependency_version("Cargo.toml").unwrap_or("0.0.0".to_string()));
     struct_string += &format!("use crate::de::{{Number, deserialize_optional_number}};\n");
-    struct_string += &format!("use serde::{{Serialize, Deserialize}};\n");
-/*     struct_string += &format!("#[derive(Serialize, Deserialize, Debug)]\n");
-    struct_string += &format!("pub struct Number {{\n");
-    struct_string += &format!("\t#[serde(rename = \"int\", skip_serializing_if = \"Option::is_none\")]\n");
-    struct_string += &format!("\tpub int: Option<i64>,\n");
-    struct_string += &format!("\t#[serde(rename = \"float\", skip_serializing_if = \"Option::is_none\")]\n");
-    struct_string += &format!("\tpub float: Option<f64>,\n");
-    struct_string += &format!("}}\n\n"); */
-
+    struct_string += &format!("use serde::{{Serialize, Deserialize}};\n\n");
+    
     for (name, xml_struct) in structs {
         let struct_name = to_camel_case_with_prefix(&name); 
 
