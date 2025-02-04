@@ -1,9 +1,11 @@
 use crate::generate_string::generate_structs_string;
-use crate::string_utils::{get_primitives, to_camel_case_with_prefix, to_snake_case};
+use crate::string_utils::{to_camel_case_with_prefix, to_snake_case};
 
 use std::collections::HashMap;
+use std::str::FromStr;
 use quick_xml::events::Event::{Start, Empty, End, Text, Eof};
 use quick_xml::reader::Reader;
+use serde::{Deserialize, Serialize};
 use std::fs::File;
 use std::io::Write;
 use once_cell::sync::Lazy;
@@ -30,7 +32,29 @@ impl Clone for XMLStruct {
     }
 }
 
+// Keeps track of element types that are i64 or f64
 pub static PRIMITIVE_TYPES: Lazy<Mutex<HashMap<String, String>>> = Lazy::new(|| Mutex::new(HashMap::new()));
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum Number {
+    Int(i64),
+    Float(f64),
+}
+
+impl FromStr for Number {
+    type Err = ();
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        if let Ok(i) = s.parse::<i64>() {
+            Ok(Number::Int(i))
+        } else if let Ok(f) = s.parse::<f64>() {
+            Ok(Number::Float(f))
+        } else {
+            Err(())
+        }
+    }
+}
 
 /// Parses an XML string and generates a set of Rust structs representing the XML elements and their attributes.
 ///
@@ -198,9 +222,15 @@ pub fn create_structs(xml_string: &str, use_primitives: bool) -> String {
                         continue;
                     } 
 
+                    let e_type = if let Ok(_) = Number::from_str(&text_content) {
+                        "Number".to_string()
+                    } else {
+                        "String".to_string()
+                    };
+
                     // Access primitive_types via the Mutex and insert into it
                     let mut primitive_types_guard = PRIMITIVE_TYPES.lock().unwrap();
-                    primitive_types_guard.insert(current_element.clone(), get_primitives(&text_content));
+                    primitive_types_guard.insert(current_element.clone(), e_type);
                 }
             },
             Ok(Empty(ref e)) => {
