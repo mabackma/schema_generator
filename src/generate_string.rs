@@ -102,14 +102,12 @@ pub fn field_to_struct_string(
         let field_name = field.name.split(":").next().unwrap().to_owned() + "_" + to_snake_case(&renaming).as_str();
 
         if field_type == "Number" {
-            struct_string += &format!("\t#[serde(rename = \"{}\", deserialize_with = \"deserialize_optional_number\", skip_serializing_if = \"Option::is_none\")]\n", renaming);
-            struct_string += &format!("\t#[serde(default)]\n");
-            struct_string += &format!("\tpub {}: Option<{}>,\n", field_name, field_type);  
+            struct_string += &format!("\t#[serde(rename = \"{}\", deserialize_with = \"deserialize_optional_number\", skip_serializing_if = \"Option::is_none\", default)]\n", renaming);
         } else {
-            struct_string += &format!("\t#[serde(rename = \"{}\", skip_serializing_if = \"Option::is_none\")]\n", renaming);
-            struct_string += &format!("\tpub {}: Option<{}>,\n", field_name, field_type);  
+            struct_string += &format!("\t#[serde(rename = \"{}\", skip_serializing_if = \"Option::is_none\")]\n", renaming); 
         }
         
+        struct_string += &format!("\tpub {}: Option<{}>,\n", field_name, field_type); 
     }
 
     struct_string
