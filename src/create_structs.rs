@@ -157,7 +157,11 @@ impl FromStr for Number {
 /// # Notes
 /// - If a field type matches an existing struct name, the field type is set to the corresponding struct.
 /// - If a field has no matching struct, its type is defaulted to `String`.
-pub fn create_structs(xml_string: &str, use_primitives: bool) -> String {
+pub fn create_structs(
+    xml_string: &str, 
+    use_primitives: bool
+) -> String {
+    
     let mut stack: Vec<XMLStruct> = Vec::new(); // Stack of structs being constructed
     let mut empty_structs: HashMap<String, XMLStruct> = HashMap::new(); // Structs from self-closing tags
     let mut structs: HashMap<String, XMLStruct> = HashMap::new(); // Finalized structs
