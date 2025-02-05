@@ -16,11 +16,11 @@ use std::env;
 fn main() {    
 
     // Create structs schema from a file
-    let file_xml_string = read_xml_file("forestpropertydata.xml");
+    let file_xml_string = read_xml_file("forestpropertydata_.xml");
     create_structs_and_save_to_file(&file_xml_string, "src/file_structs.rs", true);
 
     // Convert the file XML content to structs according to the schema
-    let file_property: FileForestPropertyData = file_content_to_structs("forestpropertydata.xml");
+    let file_property: FileForestPropertyData = file_content_to_structs("forestpropertydata_.xml");
 
     // Create structs schema from a URL
     dotenv().ok();
