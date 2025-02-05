@@ -10,6 +10,21 @@ pub enum Number {
     Float(f64),
 }
 
+impl FromStr for Number {
+    type Err = ();
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        if let Ok(i) = s.parse::<i64>() {
+            Ok(Number::Int(i))
+        } else if let Ok(f) = s.parse::<f64>() {
+            Ok(Number::Float(f))
+        } else {
+            Err(())
+        }
+    }
+}
+
+// Custom deserializer for mixed number types
 impl<'de> Deserialize<'de> for Number {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where

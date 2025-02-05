@@ -1,11 +1,11 @@
 use crate::generate_string::generate_structs_string;
 use crate::string_utils::{to_camel_case_with_prefix, to_snake_case};
+use crate::number::Number;
 
 use std::collections::HashMap;
 use std::str::FromStr;
 use quick_xml::events::Event::{Start, Empty, End, Text, Eof};
 use quick_xml::reader::Reader;
-use serde::{Deserialize, Serialize};
 use std::fs::File;
 use std::io::Write;
 use once_cell::sync::Lazy;
@@ -32,29 +32,8 @@ impl Clone for XMLStruct {
     }
 }
 
-// Keeps track of element types that are i64 or f64
+/// Keeps track of element types that are i64 or f64
 pub static PRIMITIVE_TYPES: Lazy<Mutex<HashMap<String, String>>> = Lazy::new(|| Mutex::new(HashMap::new()));
-
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(untagged)]
-pub enum Number {
-    Int(i64),
-    Float(f64),
-}
-
-impl FromStr for Number {
-    type Err = ();
-
-    fn from_str(s: &str) -> Result<Self, Self::Err> {
-        if let Ok(i) = s.parse::<i64>() {
-            Ok(Number::Int(i))
-        } else if let Ok(f) = s.parse::<f64>() {
-            Ok(Number::Float(f))
-        } else {
-            Err(())
-        }
-    }
-}
 
 /// Parses an XML string and generates a set of Rust structs representing the XML elements and their attributes.
 ///
@@ -63,6 +42,7 @@ impl FromStr for Number {
 ///
 /// # Parameters
 /// - `xml_string`: A string slice containing the XML document to parse.
+/// - `use_primitives`: A boolean indicating whether to use primitive types for fields (e.g., i64, f64).
 ///
 /// # Returns
 /// - `String`: A string containing the Rust structs generated from the XML document.
@@ -161,7 +141,7 @@ pub fn create_structs(
     xml_string: &str, 
     use_primitives: bool
 ) -> String {
-    
+
     let mut stack: Vec<XMLStruct> = Vec::new(); // Stack of structs being constructed
     let mut empty_structs: HashMap<String, XMLStruct> = HashMap::new(); // Structs from self-closing tags
     let mut structs: HashMap<String, XMLStruct> = HashMap::new(); // Finalized structs
@@ -408,6 +388,7 @@ fn update_field_types(
 /// # Parameters
 /// - `xml_string`: A string slice containing the XML document to parse.
 /// - `file_name`: A string slice containing the name of the file to save the structs to.
+/// - `use_primitives`: A boolean indicating whether to use primitive types for fields (e.g., i64, f64).
 pub fn create_structs_and_save_to_file(
     xml_string: &str, 
     file_name: &str,

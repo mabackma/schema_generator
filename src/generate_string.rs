@@ -9,9 +9,9 @@ pub fn generate_structs_string(structs: &HashMap<String, XMLStruct>) -> String {
     let mut struct_string = String::new();
 
     struct_string += &format!("// Generated with schema_generator {}\n", get_dependency_version("Cargo.toml").unwrap_or("0.0.0".to_string()));
-    struct_string += &format!("use crate::de::{{Number, deserialize_optional_number}};\n");
+    struct_string += &format!("use crate::number::{{Number, deserialize_optional_number}};\n");
     struct_string += &format!("use serde::{{Serialize, Deserialize}};\n\n");
-    
+
     for (name, xml_struct) in structs {
         let struct_name = to_camel_case_with_prefix(&name); 
 
