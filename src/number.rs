@@ -3,6 +3,7 @@ use serde::de::{self, Visitor};
 use std::fmt;
 use std::str::FromStr;
 
+/// Represents a number that can be an integer or a float.
 #[derive(Serialize, Debug)]
 #[serde(untagged)]
 pub enum Number {
@@ -24,7 +25,7 @@ impl FromStr for Number {
     }
 }
 
-// Custom deserializer for mixed number types
+/// Custom deserializer for mixed number types
 impl<'de> Deserialize<'de> for Number {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
@@ -59,7 +60,7 @@ impl<'de> Deserialize<'de> for Number {
     }
 }
 
-// Custom deserializer to handle Option<Number>
+/// Custom deserializer to handle Option<Number>
 pub fn deserialize_optional_number<'de, D>(deserializer: D) -> Result<Option<Number>, D::Error>
 where
     D: Deserializer<'de>,

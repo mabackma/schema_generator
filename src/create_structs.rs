@@ -42,7 +42,7 @@ pub static PRIMITIVE_TYPES: Lazy<Mutex<HashMap<String, String>>> = Lazy::new(|| 
 ///
 /// # Parameters
 /// - `xml_string`: A string slice containing the XML document to parse.
-/// - `use_primitives`: A boolean indicating whether to use primitive types for fields (e.g., i64, f64).
+/// - `use_primitives`: A boolean indicating whether to use primitive types for numeric fields (e.g., i64, f64).
 ///
 /// # Returns
 /// - `String`: A string containing the Rust structs generated from the XML document.
@@ -388,7 +388,7 @@ fn update_field_types(
 /// # Parameters
 /// - `xml_string`: A string slice containing the XML document to parse.
 /// - `file_name`: A string slice containing the name of the file to save the structs to.
-/// - `use_primitives`: A boolean indicating whether to use primitive types for fields (e.g., i64, f64).
+/// - `use_primitives`: A boolean indicating whether to use primitive types for numeric fields (e.g., i64, f64).
 pub fn create_structs_and_save_to_file(
     xml_string: &str, 
     file_name: &str,
