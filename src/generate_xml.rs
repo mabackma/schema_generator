@@ -288,7 +288,22 @@ fn create_xml_element(
                 .expect("Unable to write text");
         },
 
-        // Skip unsupported types (e.g., Null)
+        // Handle number as text content
+        Value::Number(num) => {
+            let num_str = if num.is_i64() {
+                num.as_i64().unwrap().to_string()
+            } else if num.is_f64() {
+                format!("{}", num.as_f64().unwrap()) // Convert float properly
+            } else {
+                String::new()
+            };
+
+            writer
+                .write_event(Event::Text(BytesText::new(&num_str)))
+                .expect("Unable to write number");
+        }
+
+        // Skip unsupported types
         _ => {} 
     }
 }

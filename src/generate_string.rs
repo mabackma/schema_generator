@@ -1,4 +1,4 @@
-use crate::create_structs::{XMLField, XMLStruct}; 
+use crate::create_structs::{XMLField, XMLStruct, PRIMITIVE_TYPES};
 use crate::generate_xml::get_dependency_version;
 use crate::string_utils::{remove_vec, to_camel_case_with_prefix, to_snake_case};
 
@@ -7,7 +7,9 @@ use std::collections::HashMap;
 /// Generates String for Rust structs with fields and attributes. 
 pub fn generate_structs_string(structs: &HashMap<String, XMLStruct>) -> String {
     let mut struct_string = String::new();
+
     struct_string += &format!("// Generated with schema_generator {}\n", get_dependency_version("Cargo.toml").unwrap_or("0.0.0".to_string()));
+    struct_string += &format!("use crate::number::{{Number, deserialize_optional_number}};\n");
     struct_string += &format!("use serde::{{Serialize, Deserialize}};\n\n");
 
     for (name, xml_struct) in structs {
@@ -22,7 +24,13 @@ pub fn generate_structs_string(structs: &HashMap<String, XMLStruct>) -> String {
             let field_type = if (*structs).contains_key(remove_vec(&field.field_type).as_str()) {
                 to_camel_case_with_prefix(&field.field_type)
             } else {
-                "String".to_string()
+                let primitive_types_guard = PRIMITIVE_TYPES.lock().unwrap(); // Lock the Mutex
+
+                if let Some(value) = primitive_types_guard.get(&field.field_type) {
+                    value.to_string()
+                } else {
+                    "String".to_string()
+                }
             };
 
             struct_string = field_to_struct_string(field, &field_type, struct_string.clone());
@@ -85,9 +93,14 @@ pub fn field_to_struct_string(
     } else {
         let renaming = field.name.split(":").last().unwrap();
         let field_name = field.name.split(":").next().unwrap().to_owned() + "_" + to_snake_case(&renaming).as_str();
+
+        if field_type == "Number" {
+            struct_string += &format!("\t#[serde(rename = \"{}\", deserialize_with = \"deserialize_optional_number\", skip_serializing_if = \"Option::is_none\", default)]\n", renaming);
+        } else {
+            struct_string += &format!("\t#[serde(rename = \"{}\", skip_serializing_if = \"Option::is_none\")]\n", renaming); 
+        }
         
-        struct_string += &format!("\t#[serde(rename = \"{}\", skip_serializing_if = \"Option::is_none\")]\n", renaming);
-        struct_string += &format!("\tpub {}: Option<{}>,\n", field_name, field_type);
+        struct_string += &format!("\tpub {}: Option<{}>,\n", field_name, field_type); 
     }
 
     struct_string
