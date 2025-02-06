@@ -1,6 +1,4 @@
 use serde::{Serialize, Deserialize, Deserializer};
-use serde::de::{self, Visitor};
-use std::fmt;
 use std::str::FromStr;
 
 /// Represents a number that can be an integer or a float.
@@ -22,41 +20,6 @@ impl FromStr for Number {
         } else {
             Err(())
         }
-    }
-}
-
-/// Custom deserializer for mixed number types
-impl<'de> Deserialize<'de> for Number {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
-    where
-        D: Deserializer<'de>,
-    {
-        struct NumberVisitor;
-
-        impl<'de> Visitor<'de> for NumberVisitor {
-            type Value = Number;
-
-            fn expecting(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
-                formatter.write_str("a number that can be an integer or a float")
-            }
-
-            fn visit_str<E>(self, value: &str) -> Result<Self::Value, E>
-            where
-                E: de::Error,
-            {
-                let trimmed = value.trim();
-                
-                if let Ok(int_value) = i64::from_str(trimmed) {
-                    Ok(Number::Int(int_value))
-                } else if let Ok(float_value) = f64::from_str(trimmed) {
-                    Ok(Number::Float(float_value))
-                } else {
-                    Err(E::custom(format!("invalid number format: '{}'", value)))
-                }
-            }
-        }
-
-        deserializer.deserialize_str(NumberVisitor)
     }
 }
 
