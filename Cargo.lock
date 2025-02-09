@@ -927,7 +927,7 @@ dependencies = [
 
 [[package]]
 name = "schema_generator"
-version = "0.2.6"
+version = "0.2.7"
 dependencies = [
  "dotenv",
  "once_cell",

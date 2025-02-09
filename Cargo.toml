@@ -1,6 +1,6 @@
 [package]
 name = "schema_generator"
-version = "0.2.6"
+version = "0.2.7"
 authors = ["Marc Bäckman"]
 license = "MIT"
 description = "This crate is a part of the ClimateForest project, which takes place between 01.03.2024–28.02.2027. It is funded by Interreg Aurora and supported by its contributors, including Metsäkeskus, Lapland University of Applied Sciences, Luke luonnonvarakeskus, Luleå Tekniska Universitet, Skoggstyrelsen, and SLU."
