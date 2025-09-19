@@ -28,6 +28,8 @@
 
 #### xlink:type attribute in <gml:polygonProperty> tags will show up as __type in Json
 
+This repository is a part of my [Bachelor's Thesis](https://www.theseus.fi/handle/10024/880034)
+
 ## License
 
 [MIT License](LICENSE)
