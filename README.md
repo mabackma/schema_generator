@@ -2,7 +2,7 @@
 
 #### `schema_generator` is a Rust crate initially created for parsing XML files containing forestry data and generating corresponding Rust structs. It parses XML documents and automatically generates Rust data structures that map XML elements to fields, including attributes, child elements, and text content. It integrates with the serde library for serialization and deserialization. While it was originally designed for forestry-related XML data, it can be used with any XML data structure, making it a versatile tool for developers working with XML. Additionally, schema_generator supports JSON to XML conversion.
 
-[Crate](https://crates.io/crates/schema_generator)
+[schema_generator crate at crates.io](https://crates.io/crates/schema_generator)
 
 ## Features
 - `create_structs_and_save_to_file`: creates structs from an XML String and saves them to a file into the /src folder, making the structs ready for use in an application. When use_primitives is set to true, numeric fields will have type Number (e.g. i64 or f64). When it is set to false, all fields will have String type.
