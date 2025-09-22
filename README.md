@@ -4,6 +4,8 @@
 
 [schema_generator at crates.io](https://crates.io/crates/schema_generator)
 
+[Documentation](https://docs.rs/schema_generator/0.2.8/schema_generator/)
+
 ## Features
 - `create_structs_and_save_to_file`: creates structs from an XML String and saves them to a file into the /src folder, making the structs ready for use in an application. When use_primitives is set to true, numeric fields will have type Number (e.g. i64 or f64). When it is set to false, all fields will have String type.
 - `json_keys_to_lowercase`: converts all keys in a serde_json value to lowercase. Additionally, it replaces all @ characters with __ to avoid unexpected behavior during JSON processing.
